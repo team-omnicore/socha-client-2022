@@ -5,16 +5,16 @@ use std::fmt::{Debug, Display};
 
 pub trait IMove/*: Debug + Display*/ {}
 
-pub trait MinMax: Copy + Display + Default + PartialEq + Debug{
+pub trait MinMax: Copy + Display + Debug{
 
     type MoveType: IMove + Copy + Sized;
-    type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Neg<Output = Self>;
+    type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded;
 
     /// Get the available, legal moves of the current player
     fn available_moves(&self)->ThinVec<Self::MoveType>;
 
     /// Apply a Move to the the gamestate
-    fn apply_move<E: IMove>(&mut self, game_move:&E);
+    fn apply_move(&mut self, game_move:&Self::MoveType);
 
     /// Return, whether the game has ended with this gamestate
     fn game_over(&self)->bool;
@@ -24,9 +24,11 @@ pub trait MinMax: Copy + Display + Default + PartialEq + Debug{
 
     /// Evaluate the current position
     fn evaluate(&self, maximizing_player: bool)->Self::EvalType;
+}
 
+pub trait Priv: MinMax{
     /// Calculate the best legal move of the current player
-    fn best_move(&self, search_depth: u8) -> Option<Self::MoveType> {
+    fn calculate_best_move(&self, search_depth: u8) -> Option<Self::MoveType> {
         let mut max_eval = Self::EvalType::max_value();
         let mut best_move = None;
 
@@ -56,6 +58,14 @@ pub trait MinMax: Copy + Display + Default + PartialEq + Debug{
         }
         best_move
     }
+
+    fn do_seomt_shit(){
+        println!("Hi")
+    }
+}
+
+impl<E: MinMax> Priv for E {
+
 }
 
 /// Run min max algorithm, keep function in private scope.

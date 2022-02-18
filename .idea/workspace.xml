@@ -7,16 +7,43 @@
     <cargoProject FILE="$PROJECT_DIR$/util/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Initial commit">
+    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Added workspace.xml">
+      <change afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/src/fen.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/min_max.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/util/src/fen.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/util/src/bitboard.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/min_max.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/move_generation.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
@@ -34,12 +61,23 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/util/Cargo.toml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/game_lib/src" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
   </component>
-  <component name="RunManager" selected="Cargo.run [perft]">
+  <component name="ReaderModeSettings">
+    <option name="enabled" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\game_lib\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Cargo.build [game_lib]">
     <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run" />
       <option name="channel" value="DEFAULT" />
@@ -121,10 +159,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.run [perft]" />
-        <item itemvalue="Cargo.run [perft]" />
         <item itemvalue="Cargo.build [game_lib]" />
-        <item itemvalue="Cargo.run [client]" />
+        <item itemvalue="Cargo.build [game_lib]" />
+        <item itemvalue="Cargo.build [game_lib]" />
+        <item itemvalue="Cargo.build [game_lib]" />
         <item itemvalue="Cargo.build [game_lib]" />
       </list>
     </recent_temporary>
@@ -140,7 +178,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1645201557065</updated>
-      <workItem from="1645201558476" duration="1541000" />
+      <workItem from="1645201558476" duration="6388000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1645203015261</created>
@@ -149,7 +187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645203015261</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added workspace.xml">
+      <created>1645203267865</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645203267865</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,6 +213,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <MESSAGE value="Added workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added workspace.xml" />
   </component>
 </project>
