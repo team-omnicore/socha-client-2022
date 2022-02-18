@@ -1,0 +1,10 @@
+[package]
+name = "game_lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8.4"
+thincollections = "0.5.0"
+num-traits = "0.2.14"
+util = {path = "../util" }

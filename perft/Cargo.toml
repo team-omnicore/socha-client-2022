@@ -1,0 +1,8 @@
+[package]
+name = "perft"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+util = {path = "../util" }
+game_lib = {path = "../game_lib" }
