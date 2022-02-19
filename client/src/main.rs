@@ -31,10 +31,13 @@ struct Args {
     /// Reservationnumber for a game
     #[clap(short, long)]
     reservation: Option<String>,
+
+    /// Room ID for a game
+    #[clap(long)]
+    room: Option<String>,
 }
 
 fn main() {
-
     let args = Args::parse();
 
     Builder::new()
@@ -42,25 +45,19 @@ fn main() {
         .filter_level(LevelFilter::Info)
         .init();
 
+
+    let join = if let Some(reservation) = args.reservation {
+        Join::PREPARED(reservation)
+    } else if let Some(room) = args.room {
+        Join::ROOM(room)
+    } else {
+        Join::ANY
+    };
+
     let network_address = format!("{}:{}", args.host, args.port);
-
-    let mut game;
-
-    match args.reservation {
-        Some(reservation) => {
-            game = Join::PREPARED(reservation.as_str())
-                .connect(network_address.as_str())
-                .expect("Connection failed");
-        }
-        _=>{
-            game = Join::ANY
-                .connect(network_address.as_str())
-                .expect("Connection failed");
-        }
-    }
+    let mut game = join.connect(network_address.as_str()).expect("Connection failed");
 
     let result = game.game_loop();
-
     match result {
         Ok(res) => {
             log::info!("{:?}", res);

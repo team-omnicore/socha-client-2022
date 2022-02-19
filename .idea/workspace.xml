@@ -12,11 +12,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Initial commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,8 +68,11 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/client" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
@@ -95,11 +95,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Cargo.run [client]">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="build [game_lib]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --package game_lib --lib" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/game_lib" />
@@ -164,6 +159,11 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Cargo.build [game_lib]" />
       <item itemvalue="Cargo.build [util]" />
@@ -195,6 +195,7 @@
       <workItem from="1645201558476" duration="7058000" />
       <workItem from="1645216307934" duration="3351000" />
       <workItem from="1645266814743" duration="15533000" />
+      <workItem from="1645299914088" duration="5208000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1645203015261</created>

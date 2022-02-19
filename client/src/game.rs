@@ -210,13 +210,13 @@ impl Clone for Game {
     }
 }
 
-pub enum Join<'a> {
+pub enum Join {
     ANY,
-    ROOM(&'a str),
-    PREPARED(&'a str),
+    ROOM(String),
+    PREPARED(String),
 }
 
-impl<'a> Join<'a> {
+impl Join {
     pub fn connect(&self, network_address: &str) -> Result<Game> {
         let stream = TcpStream::connect(network_address)?;
 
