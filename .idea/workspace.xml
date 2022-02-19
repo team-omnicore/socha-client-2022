@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
   <component name="CargoProjects">
     <cargoProject FILE="$PROJECT_DIR$/client/Cargo.toml" />
     <cargoProject FILE="$PROJECT_DIR$/game_lib/Cargo.toml" />
@@ -7,31 +10,16 @@
     <cargoProject FILE="$PROJECT_DIR$/util/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Added most stuff for game_lib.">
-      <change afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/game_result.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/team.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/xml_node.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/game_move.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/piece.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/score.rs" afterDir="false" />
+    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Initial commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/min_max.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ideas.md" beforeDir="false" afterPath="$PROJECT_DIR$/ideas.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/bitboard.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/bitboard.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/fen.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/fen.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -57,14 +45,12 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/util/src/fen.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/util/src/bitboard.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/game_lib/src/min_max.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/move_generation.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/game_lib/src/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/util/src/bitboard.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/move_generation.rs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
@@ -103,6 +89,11 @@
     </key>
   </component>
   <component name="RunManager" selected="Cargo.run [client]">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="build [game_lib]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --package game_lib --lib" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/game_lib" />
