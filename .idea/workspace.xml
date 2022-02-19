@@ -7,26 +7,14 @@
     <cargoProject FILE="$PROJECT_DIR$/util/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Added most stuff for game_lib.">
-      <change afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/game_result.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/team.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/xml_node.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/game_move.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/piece.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/score.rs" afterDir="false" />
+    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Aww man it's not working and it feels slow. Probably an error in Alpha-Beta implementation?">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/game_move.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/game_move.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/min_max.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ideas.md" beforeDir="false" afterPath="$PROJECT_DIR$/ideas.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/bitboard.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/bitboard.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/fen.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/fen.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +124,7 @@
       </method>
     </configuration>
     <configuration name="run [client]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package client --bin client --release" />
+      <option name="command" value="run --package client --bin client" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -197,7 +185,7 @@
       <updated>1645201557065</updated>
       <workItem from="1645201558476" duration="7058000" />
       <workItem from="1645216307934" duration="3351000" />
-      <workItem from="1645266814743" duration="15533000" />
+      <workItem from="1645266814743" duration="35334000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1645203015261</created>
@@ -220,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645208363495</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Aww man it's not working and it feels slow. Probably an error in Alpha-Beta implementation?">
+      <created>1645284539486</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1645284539486</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,6 +237,7 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Added workspace.xml" />
     <MESSAGE value="Added most stuff for game_lib." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added most stuff for game_lib." />
+    <MESSAGE value="Aww man it's not working and it feels slow. Probably an error in Alpha-Beta implementation?" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aww man it's not working and it feels slow. Probably an error in Alpha-Beta implementation?" />
   </component>
 </project>

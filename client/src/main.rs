@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use env_logger::Builder;
 use std::env;
 use log::LevelFilter;
@@ -8,6 +10,8 @@ use game_lib::board::Board;
 use rand::rngs::ThreadRng;
 use rand::thread_rng;
 use game_lib::min_max::{Priv, MinMax};
+use game_lib::game_move::Move;
+use game_lib::piece::PieceType;
 
 mod xml_node;
 mod game_result;
@@ -35,22 +39,4 @@ fn main() {
             log::error!("Network error! {:?}", err);
         }
     }
-
-
-    //let mut rng = thread_rng();
-//
-    //let mut g = Gamestate{
-    //    board: Board::new_random(&mut rng),
-    //    round: 0,
-    //    is_maximizing_player: true,
-    //    score: Score{ bytes: [0,0] }
-    //};
-//
-    //println!("{}", g);
-//
-    //let game_move = g.calculate_best_move(6).unwrap();
-    //println!("From {} to {}", game_move.from, game_move.to);
-//
-    //g.apply_move(&game_move);
-    //println!("{}", g);
 }

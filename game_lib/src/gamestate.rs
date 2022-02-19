@@ -11,6 +11,8 @@ use util::fen::FenString;
 use util::{bit_loop, square_of};
 use crate::score::Score;
 use crate::game_move::Move;
+use std::time::SystemTime;
+use crate::piece::PieceType;
 
 #[derive(Debug, Copy)]
 pub struct Gamestate {
@@ -19,6 +21,9 @@ pub struct Gamestate {
     pub is_maximizing_player: bool,
     pub score: Score, // [client_player | other_player]
 }
+
+static mut AVERAGE_SIZE: f64 = 0f64;
+static mut COUNT: f64 = 0f64;
 
 impl Gamestate {
     pub const fn new() -> Self {
@@ -31,7 +36,16 @@ impl Gamestate {
     }
 
     pub fn best_move(&self) -> Move {
-        self.calculate_best_move(4).unwrap()
+        let start = SystemTime::now();
+        let best_move = self.calculate_best_move(8).unwrap();
+        let duration = SystemTime::now().duration_since(start);
+        println!("Calculation took {:?}", duration.unwrap());
+        unsafe {
+            println!("Average move count: {}", AVERAGE_SIZE);
+            AVERAGE_SIZE = 0f64;
+            COUNT = 0f64;
+        };
+        best_move
     }
 
     pub fn legal_moves(&self) -> ThinVec<Move> {
@@ -41,47 +55,49 @@ impl Gamestate {
         let seesterne = self.board.seesterne & self.board.friendly;
         let muscheln = self.board.muscheln & self.board.friendly;
 
-        let mut moves = ThinVec::with_capacity(15);
+        let mut moves = ThinVec::with_capacity(25);
 
         bit_loop(moewen.bits, |moewe| {
             let from = square_of(moewe);
             let legal = moewe_lookup_moves(from) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
+            bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to })
+                moves.push(Move { from, to, piece: PieceType::MOEWE })
             });
         });
 
         bit_loop(robben.bits, |robbe| {
             let from = square_of(robbe);
             let legal = robbe_lookup_moves(from) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
+            bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to })
+                moves.push(Move { from, to, piece: PieceType::ROBBE })
             });
         });
 
         bit_loop(seesterne.bits, |seestern| {
             let from = square_of(seestern);
             let legal = seestern_lookup_moves(from, self.is_maximizing_player) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
+            bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to })
+                moves.push(Move { from, to, piece: PieceType::SEESTERN })
             });
         });
 
         bit_loop(muscheln.bits, |muschel| {
             let from = square_of(muschel);
             let legal = muschel_lookup_moves(from, self.is_maximizing_player) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
+            bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to })
+                moves.push(Move { from, to, piece: PieceType::MUSCHEL })
             });
         });
+
+        unsafe {
+            AVERAGE_SIZE += 1f64/(COUNT+1f64) * (moves.len() as f64- AVERAGE_SIZE);
+            COUNT+=1f64;
+        }
+
         return moves;
     }
 
@@ -98,7 +114,7 @@ impl Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                f(Move { from, to })
+                f(Move { from, to , piece: PieceType::MOEWE })
             });
         });
 
@@ -108,7 +124,7 @@ impl Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                f(Move { from, to })
+                f(Move { from, to, piece: PieceType::ROBBE })
             });
         });
 
@@ -118,7 +134,7 @@ impl Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                f(Move { from, to })
+                f(Move { from, to, piece: PieceType::SEESTERN })
             });
         });
 
@@ -128,7 +144,7 @@ impl Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                f(Move { from, to })
+                f(Move { from, to, piece: PieceType::MUSCHEL })
             });
         });
     }
@@ -261,7 +277,7 @@ impl MinMax for Gamestate {
         self.board.friendly.swap_with(&mut self.board.enemy);
     }
 
-    fn evaluate(&self, _: bool) -> Self::EvalType {
+    fn evaluate(&self) -> Self::EvalType {
         let client_score = self.score.bytes[0];
         let enemy_score = self.score.bytes[1];
 
@@ -288,7 +304,6 @@ impl MinMax for Gamestate {
                 TIE_REWARD
             }
         };
-        //println!("{}", out);
         out
     }
 }

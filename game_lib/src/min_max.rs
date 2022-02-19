@@ -4,9 +4,11 @@ use thincollections::thin_vec::ThinVec;
 
 pub trait IMove /*: Debug + Display*/ {}
 
+pub static mut COUNTER: u64 = 0;
+
 pub trait MinMax: Copy + Display + Debug {
     type MoveType: IMove + Copy + Sized;
-    type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded;
+    type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
 
     /// Get the available, legal moves of the current player
     fn available_moves(&self) -> ThinVec<Self::MoveType>;
@@ -21,34 +23,33 @@ pub trait MinMax: Copy + Display + Debug {
     fn next_player(&mut self);
 
     /// Evaluate the current position
-    fn evaluate(&self, maximizing_player: bool) -> Self::EvalType;
+    fn evaluate(&self) -> Self::EvalType;
 }
 
 pub trait Priv: MinMax {
-    /// Calculate the best legal move of the current player
+
     fn calculate_best_move(&self, search_depth: u8) -> Option<Self::MoveType> {
-        let mut max_eval = Self::EvalType::min_value();
-        let mut best_move = None;
+        unsafe { COUNTER = 0};
+        let mut pairs = vec![];
 
-        let mut alpha = Self::EvalType::min_value();
-        let beta = Self::EvalType::max_value();
+        let legal = self.available_moves();
+        for game_move in &legal {
+            let mut clone = *self;
+            clone.apply_move(game_move);
+            clone.next_player();
 
-        let legal_moves = &self.available_moves();
-        for game_move in legal_moves {
-            let mut next_state = *self;
-            next_state.apply_move(game_move);
-            next_state.next_player();
-            let eval = min_max(next_state, search_depth, alpha, beta, false);
-            if eval > max_eval {
-                max_eval = eval;
-                best_move = Some(*game_move);
-            }
-            alpha = Self::EvalType::max(alpha, eval); //TODO should this be an assign instead?
-            if beta <= alpha {
-                break;
-            }
+            let eval = min_max(clone, search_depth-1, Self::EvalType::min_value(), Self::EvalType::max_value(), false);
+            pairs.push((game_move, eval));
         }
-        best_move
+
+        let max = pairs.iter().max_by_key(|pair|{
+            pair.1
+        });
+
+        let best = max.unwrap().0.clone();
+
+        unsafe { println!("Counted {} moves", COUNTER) };
+        Some(best)
     }
 }
 
@@ -63,38 +64,48 @@ fn min_max<T: MinMax>(
     is_maximizing: bool,
 ) -> T::EvalType {
     let possible_moves = state.available_moves();
-    if depth == 0 || state.game_over() {
-        return state.evaluate(is_maximizing); //TODO maybe add to previous recursion step
-    }
     return if is_maximizing {
-        //Maximizing player (Client player)
-        let mut max_eval = T::EvalType::min_value();
-        for m in &possible_moves {
-            let mut next_state = state.clone();
-            next_state.apply_move(m);
-            next_state.next_player();
-            let eval = min_max(next_state, depth - 1, alpha, beta, false);
-            max_eval = T::EvalType::max(max_eval, eval);
-            alpha = T::EvalType::max(alpha, eval);
-            if beta <= alpha {
-                break;
+        let mut value = T::EvalType::min_value();
+        for game_move in &possible_moves {
+            let mut child = state.clone();
+            child.apply_move(game_move);
+            child.next_player();
+
+            let depth = depth-1;
+            if depth == 0 || child.game_over() {
+                unsafe { COUNTER += 1; }
+                return child.evaluate();
+            }
+
+            value = T::EvalType::max(value, min_max(child, depth, alpha, beta, false));
+            alpha = T::EvalType::max(alpha, value);
+
+            if value >= beta {
+                break; //* β-cutoff *
             }
         }
-        max_eval
+        value
     } else {
-        //Minimizing palyer (Enemy player)
-        let mut min_eval = T::EvalType::max_value();
-        for m in &possible_moves {
-            let mut next_state = state.clone();
-            next_state.apply_move(m);
-            next_state.next_player();
-            let eval = min_max(next_state, depth - 1, alpha, beta, true);
-            min_eval = T::EvalType::min(min_eval, eval);
-            beta = T::EvalType::min(min_eval, eval);
-            if beta <= alpha {
-                break;
+        //Minimizing player (Enemy player)
+        let mut value = T::EvalType::max_value();
+        for game_move in &possible_moves {
+            let mut child = state.clone();
+            child.apply_move(game_move);
+            child.next_player();
+
+            let depth = depth-1;
+            if depth == 0 || child.game_over() {
+                unsafe { COUNTER += 1; }
+                return child.evaluate();
+            }
+
+            value = T::EvalType::min(value, min_max(child, depth, alpha, beta, true));
+            beta = T::EvalType::min(beta, value);
+
+            if value <= alpha {
+                break; //* α-cutoff *
             }
         }
-        min_eval
+        value
     };
 }

@@ -11,3 +11,7 @@ log = "0.4.14"
 env_logger = "0.9.0"
 game_lib = {path = "../game_lib" }
 util = {path = "../util" }
+
+[profile.dev]
+opt-level = 3
+overflow-checks = false

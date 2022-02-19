@@ -87,78 +87,109 @@ impl Board {
     }
 
     pub fn apply(&mut self, game_move: &Move) -> u8 {
-        // clear from position
-        self.robben.clear_bit(game_move.from);
-        self.muscheln.clear_bit(game_move.from);
-        self.seesterne.clear_bit(game_move.from);
-        self.moewen.clear_bit(game_move.from);
+        let old_piece = Bitboard::from(1 << game_move.from);
+        let new_piece = Bitboard::from(1 << game_move.to);
 
-        self.double.clear_bit(game_move.from);
+        //Calculate whether double
+        let double = {
+            let old_was_double = self.double.get_bit(game_move.from);
+            let new_has_piece = self.enemy.get_bit(game_move.to);
+            let new_is_double = self.double.get_bit(game_move.to);
+            (old_was_double ^ new_has_piece) & !new_is_double
+        };
 
-        // check if we move a friendly or enemy piece
-        if self.friendly.get_bit(game_move.from) {
-            self.friendly.clear_bit(game_move.from);
+        //Set double
+        self.double &= !new_piece;
+        self.double |= Bitboard::from(new_piece.bits * double as u64);
 
-            if self.enemy.get_bit(game_move.to) {
-                self.enemy.clear_bit(game_move.to);
-                self.seesterne.clear_bit(game_move.to);
-                self.muscheln.clear_bit(game_move.to);
-                self.moewen.clear_bit(game_move.to);
-                self.robben.clear_bit(game_move.to);
+        let mut points = 0;
+        match game_move.piece {
+            PieceType::ROBBE => {
+                //Clear old piece
+                self.robben &= !old_piece;
+                self.friendly &= !old_piece;
 
-                if self.double.get_bit(game_move.from) || self.double.get_bit(game_move.to) {
-                    self.double.clear_bit(game_move.from);
-                    self.double.clear_bit(game_move.to);
-                    return 1;
-                } else {
-                    self.double.set_bit(game_move.to);
+                //Set new piece
+                self.robben |= new_piece;
+                self.friendly |= new_piece;
+
+                //If enemy overlaps with new piece, clear that enemy piece.
+                if (self.enemy & new_piece).bits != 0 {
+                    self.enemy &= !new_piece;
+                    self.seesterne &= !new_piece;
+                    self.muscheln &= !new_piece;
+                    self.moewen &= !new_piece;
+
+                    self.friendly &= !new_piece | self.double;
+                    self.robben &= !new_piece | self.double;
+                    points = 1;
                 }
             }
+            PieceType::MUSCHEL => {
+                //Clear old piece
+                self.muscheln &= !old_piece;
+                self.friendly &= !old_piece;
 
-            self.friendly.set_bit(game_move.to);
-        } else {
-            self.enemy.clear_bit(game_move.from);
+                //Set new piece
+                self.muscheln |= new_piece;
+                self.friendly |= new_piece;
 
-            if self.friendly.get_bit(game_move.to) {
-                self.friendly.clear_bit(game_move.to);
-                self.seesterne.clear_bit(game_move.to);
-                self.muscheln.clear_bit(game_move.to);
-                self.moewen.clear_bit(game_move.to);
-                self.robben.clear_bit(game_move.to);
+                //If enemy overlaps with new piece, clear that enemy piece.
+                if (self.enemy & new_piece).bits != 0 {
+                    self.enemy &= !new_piece;
+                    self.seesterne &= !new_piece;
+                    self.robben &= !new_piece;
+                    self.moewen &= !new_piece;
 
-                if self.double.get_bit(game_move.to) {
-                    self.double.clear_bit(game_move.from);
-                    self.double.clear_bit(game_move.to);
-                    return 1;
-                } else {
-                    self.double.set_bit(game_move.to);
+                    self.friendly &= !new_piece | self.double;
+                    self.muscheln &= !new_piece | self.double;
+                    points = 1;
                 }
             }
+            PieceType::SEESTERN => {
+                //Clear old piece
+                self.seesterne &= !old_piece;
+                self.friendly &= !old_piece;
 
-            self.enemy.set_bit(game_move.to);
+                //Set new piece
+                self.seesterne |= new_piece;
+                self.friendly |= new_piece;
+
+                //If enemy overlaps with new piece, clear that enemy piece.
+                if (self.enemy & new_piece).bits != 0 {
+                    self.enemy &= !new_piece;
+                    self.muscheln &= !new_piece;
+                    self.robben &= !new_piece;
+                    self.moewen &= !new_piece;
+
+                    self.friendly &= !new_piece | self.double;
+                    self.seesterne &= !new_piece | self.double;
+                    points = 1;
+                }
+            }
+            PieceType::MOEWE => {
+                //Clear old piece
+                self.moewen &= !old_piece;
+                self.friendly &= !old_piece;
+
+                //Set new piece
+                self.moewen |= new_piece;
+                self.friendly |= new_piece;
+
+                //If enemy overlaps with new piece, clear that enemy piece.
+                if (self.enemy & new_piece).bits != 0 {
+                    self.enemy &= !new_piece;
+                    self.muscheln &= !new_piece;
+                    self.robben &= !new_piece;
+                    self.seesterne &= !new_piece;
+
+                    self.friendly &= !new_piece | self.double;
+                    self.moewen &= !new_piece | self.double;
+                    points = 1;
+                }
+            }
         }
-
-        // place the piece
-        self.robben.set_bit(game_move.to);
-        self.muscheln.set_bit(game_move.to);
-        self.seesterne.set_bit(game_move.to);
-        self.moewen.set_bit(game_move.to);
-
-        return 0;
-    }
-
-    pub fn apply_wip(&mut self, game_move: &Move) -> u8 {
-        //Clear old position
-        self.robben.clear_bit(game_move.from);
-        self.muscheln.clear_bit(game_move.from);
-        self.seesterne.clear_bit(game_move.from);
-        self.moewen.clear_bit(game_move.from);
-        self.double.clear_bit(game_move.from);
-
-        if self.friendly.get_bit(game_move.from) {
-
-        }
-        0
+        points
     }
 
     pub fn rotate180(&mut self) {
