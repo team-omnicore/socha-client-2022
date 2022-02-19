@@ -14,16 +14,50 @@ mod game_result;
 mod game;
 mod team;
 
+use clap::Parser;
+
+/// Rust client for the board game "Ostseeschach"
+#[derive(Parser, Debug)]
+#[clap(author, version, about, long_about = None)]
+struct Args {
+    /// host of the game server
+    #[clap(short, long, default_value = "localhost")]
+    host: String,
+
+    /// Port of the game server
+    #[clap(short, long, default_value_t = 13050)]
+    port: u16,
+
+    /// Reservationnumber for a game
+    #[clap(short, long)]
+    reservation: Option<String>,
+}
+
 fn main() {
+
+    let args = Args::parse();
 
     Builder::new()
         .parse_env(&env::var("MY_APP_LOG").unwrap_or_default())
         .filter_level(LevelFilter::Info)
         .init();
 
-    let mut game = Join::ANY
-        .connect("localhost:13050")
-        .expect("Connection failed");
+    let network_address = format!("{}:{}", args.host, args.port);
+
+    let mut game;
+
+    match args.reservation {
+        Some(reservation) => {
+            game = Join::PREPARED(reservation.as_str())
+                .connect(network_address.as_str())
+                .expect("Connection failed");
+        }
+        _=>{
+            game = Join::ANY
+                .connect(network_address.as_str())
+                .expect("Connection failed");
+        }
+    }
 
     let result = game.game_loop();
 

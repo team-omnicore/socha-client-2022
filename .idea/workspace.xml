@@ -11,7 +11,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/client/.cargo/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
