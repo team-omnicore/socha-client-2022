@@ -7,17 +7,25 @@
     <cargoProject FILE="$PROJECT_DIR$/util/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Added workspace.xml">
-      <change afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/src/fen.rs" afterDir="false" />
+    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Added most stuff for game_lib.">
+      <change afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/game_result.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/team.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/xml_node.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_lib/src/game_move.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_lib/src/piece.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_lib/src/score.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/min_max.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ideas.md" beforeDir="false" afterPath="$PROJECT_DIR$/ideas.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/bitboard.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/bitboard.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/fen.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/fen.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +41,20 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
@@ -61,7 +82,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/game_lib/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -74,25 +95,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\client\src" />
+      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\game_lib\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\game_lib\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.build [game_lib]">
-    <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Cargo.run [client]">
     <configuration name="build [game_lib]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --package game_lib --lib" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/game_lib" />
@@ -126,7 +136,7 @@
       </method>
     </configuration>
     <configuration name="run [client]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package client --bin client" />
+      <option name="command" value="run --package client --bin client --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -157,18 +167,25 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Cargo.build [game_lib]" />
+      <item itemvalue="Cargo.build [util]" />
+      <item itemvalue="Cargo.run [client]" />
+      <item itemvalue="Cargo.run [perft]" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.build [game_lib]" />
-        <item itemvalue="Cargo.build [game_lib]" />
-        <item itemvalue="Cargo.build [game_lib]" />
-        <item itemvalue="Cargo.build [game_lib]" />
-        <item itemvalue="Cargo.build [game_lib]" />
+        <item itemvalue="Cargo.run [client]" />
+        <item itemvalue="Cargo.run [client]" />
+        <item itemvalue="Cargo.run [client]" />
+        <item itemvalue="Cargo.run [client]" />
+        <item itemvalue="Cargo.run [client]" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -178,7 +195,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1645201557065</updated>
-      <workItem from="1645201558476" duration="6388000" />
+      <workItem from="1645201558476" duration="7058000" />
+      <workItem from="1645216307934" duration="3351000" />
+      <workItem from="1645266814743" duration="15533000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1645203015261</created>
@@ -194,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645203267865</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added most stuff for game_lib.">
+      <created>1645208363495</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645208363495</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,10 +236,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Added workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added workspace.xml" />
+    <MESSAGE value="Added most stuff for game_lib." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added most stuff for game_lib." />
   </component>
 </project>

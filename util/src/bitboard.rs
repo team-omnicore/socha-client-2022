@@ -35,7 +35,7 @@ impl Bitboard {
         self.bits &= !(1 << pos)
     }
 
-    pub fn flip_bit(&mut self, pos: u8) {
+    pub fn toggle_bit(&mut self, pos: u8) {
         self.bits ^= 1 << pos
     }
 
@@ -102,12 +102,18 @@ impl Bitboard {
         *self
     }
 
+    pub fn swap_with(&mut self, other: &mut Bitboard) {
+        self.bits ^= other.bits;
+        other.bits ^= self.bits;
+        self.bits ^= other.bits;
+    }
+
     pub fn overlaps(&self, rhs: Bitboard) -> Bitboard {
         Bitboard::from(((rhs.bits & self.bits) != 0) as u64 * u64::MAX)
     }
 }
 
-impl From<u64> for Bitboard{
+impl From<u64> for Bitboard {
     fn from(bits: u64) -> Self {
         Bitboard { bits }
     }

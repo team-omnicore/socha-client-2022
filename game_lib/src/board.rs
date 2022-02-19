@@ -1,8 +1,9 @@
-use util::bitboard::Bitboard;
-use std::fmt::{Display, Formatter};
-use rand::Rng;
 use rand::prelude::SliceRandom;
-use crate::gamestate::Move;
+use rand::Rng;
+use std::fmt::{Display, Formatter};
+use util::bitboard::Bitboard;
+use crate::game_move::Move;
+use crate::piece::PieceType;
 
 #[derive(Debug, Copy, Clone)]
 pub struct Board {
@@ -78,76 +79,89 @@ impl Board {
 
         if self.double.get_bit(pos) {
             out.push('*');
-        }else {
+        } else {
             out.push(' ');
         }
 
         return out;
     }
 
-    pub fn apply(&mut self, r#move: &Move) -> u8 {
-
+    pub fn apply(&mut self, game_move: &Move) -> u8 {
         // clear from position
-        self.robben.clear_bit(r#move.from);
-        self.muscheln.clear_bit(r#move.from);
-        self.seesterne.clear_bit(r#move.from);
-        self.moewen.clear_bit(r#move.from);
+        self.robben.clear_bit(game_move.from);
+        self.muscheln.clear_bit(game_move.from);
+        self.seesterne.clear_bit(game_move.from);
+        self.moewen.clear_bit(game_move.from);
 
-        self.double.clear_bit(r#move.from);
+        self.double.clear_bit(game_move.from);
 
         // check if we move a friendly or enemy piece
-        if self.friendly.get_bit(r#move.from) {
-            self.friendly.clear_bit(r#move.from);
+        if self.friendly.get_bit(game_move.from) {
+            self.friendly.clear_bit(game_move.from);
 
-            if self.enemy.get_bit(r#move.to) {
-                self.enemy.clear_bit(r#move.to);
-                self.seesterne.clear_bit(r#move.to);
-                self.muscheln.clear_bit(r#move.to);
-                self.moewen.clear_bit(r#move.to);
-                self.robben.clear_bit(r#move.to);
+            if self.enemy.get_bit(game_move.to) {
+                self.enemy.clear_bit(game_move.to);
+                self.seesterne.clear_bit(game_move.to);
+                self.muscheln.clear_bit(game_move.to);
+                self.moewen.clear_bit(game_move.to);
+                self.robben.clear_bit(game_move.to);
 
-                if self.double.get_bit(r#move.from) || self.double.get_bit(r#move.to) {
-                    self.double.clear_bit(r#move.from);
-                    self.double.clear_bit(r#move.to);
+                if self.double.get_bit(game_move.from) || self.double.get_bit(game_move.to) {
+                    self.double.clear_bit(game_move.from);
+                    self.double.clear_bit(game_move.to);
                     return 1;
                 } else {
-                    self.double.set_bit(r#move.to);
+                    self.double.set_bit(game_move.to);
                 }
             }
 
-            self.friendly.set_bit(r#move.to);
+            self.friendly.set_bit(game_move.to);
         } else {
-            self.enemy.clear_bit(r#move.from);
+            self.enemy.clear_bit(game_move.from);
 
-            if self.friendly.get_bit(r#move.to) {
-                self.friendly.clear_bit(r#move.to);
-                self.seesterne.clear_bit(r#move.to);
-                self.muscheln.clear_bit(r#move.to);
-                self.moewen.clear_bit(r#move.to);
-                self.robben.clear_bit(r#move.to);
+            if self.friendly.get_bit(game_move.to) {
+                self.friendly.clear_bit(game_move.to);
+                self.seesterne.clear_bit(game_move.to);
+                self.muscheln.clear_bit(game_move.to);
+                self.moewen.clear_bit(game_move.to);
+                self.robben.clear_bit(game_move.to);
 
-                if self.double.get_bit(r#move.to) {
-                    self.double.clear_bit(r#move.from);
-                    self.double.clear_bit(r#move.to);
+                if self.double.get_bit(game_move.to) {
+                    self.double.clear_bit(game_move.from);
+                    self.double.clear_bit(game_move.to);
                     return 1;
                 } else {
-                    self.double.set_bit(r#move.to);
+                    self.double.set_bit(game_move.to);
                 }
             }
 
-            self.enemy.set_bit(r#move.to);
+            self.enemy.set_bit(game_move.to);
         }
 
         // place the piece
-        self.robben.set_bit(r#move.to);
-        self.muscheln.set_bit(r#move.to);
-        self.seesterne.set_bit(r#move.to);
-        self.moewen.set_bit(r#move.to);
+        self.robben.set_bit(game_move.to);
+        self.muscheln.set_bit(game_move.to);
+        self.seesterne.set_bit(game_move.to);
+        self.moewen.set_bit(game_move.to);
 
         return 0;
     }
 
-    fn rotate180(&mut self) {
+    pub fn apply_wip(&mut self, game_move: &Move) -> u8 {
+        //Clear old position
+        self.robben.clear_bit(game_move.from);
+        self.muscheln.clear_bit(game_move.from);
+        self.seesterne.clear_bit(game_move.from);
+        self.moewen.clear_bit(game_move.from);
+        self.double.clear_bit(game_move.from);
+
+        if self.friendly.get_bit(game_move.from) {
+
+        }
+        0
+    }
+
+    pub fn rotate180(&mut self) {
         self.enemy.rotate180();
         self.friendly.rotate180();
         self.seesterne.rotate180();
@@ -155,6 +169,25 @@ impl Board {
         self.moewen.rotate180();
         self.robben.rotate180();
         self.double.rotate180();
+    }
+
+    pub fn set_piece(&mut self, pos: u8, piece: PieceType, friendly: bool, is_stacked: bool) {
+        match piece {
+            PieceType::ROBBE => self.robben.set_bit(pos),
+            PieceType::MUSCHEL => self.muscheln.set_bit(pos),
+            PieceType::SEESTERN => self.seesterne.set_bit(pos),
+            PieceType::MOEWE => self.moewen.set_bit(pos),
+        };
+
+        if friendly {
+            self.friendly.set_bit(pos);
+        } else {
+            self.enemy.set_bit(pos);
+        }
+
+        if is_stacked {
+            self.double.set_bit(pos);
+        }
     }
 }
 
