@@ -37,7 +37,7 @@ impl Gamestate {
 
     pub fn best_move(&self) -> Move {
         let start = SystemTime::now();
-        let best_move = self.calculate_best_move(8).unwrap();
+        let best_move = self.calculate_best_move(6).unwrap();
         let duration = SystemTime::now().duration_since(start);
         println!("Calculation took {:?}", duration.unwrap());
         unsafe {
@@ -101,65 +101,6 @@ impl Gamestate {
         return moves;
     }
 
-    pub fn for_each_legal_move<F: FnMut(Move)>(&self, mut f: F) {
-        let unoccupied = !self.board.friendly;
-        let moewen = self.board.moewen & self.board.friendly;
-        let robben = self.board.robben & self.board.friendly;
-        let seesterne = self.board.seesterne & self.board.friendly;
-        let muscheln = self.board.muscheln & self.board.friendly;
-
-        bit_loop(moewen.bits, |moewe| {
-            let from = square_of(moewe);
-            let legal = moewe_lookup_moves(from) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                f(Move { from, to , piece: PieceType::MOEWE })
-            });
-        });
-
-        bit_loop(robben.bits, |robbe| {
-            let from = square_of(robbe);
-            let legal = robbe_lookup_moves(from) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                f(Move { from, to, piece: PieceType::ROBBE })
-            });
-        });
-
-        bit_loop(seesterne.bits, |seestern| {
-            let from = square_of(seestern);
-            let legal = seestern_lookup_moves(from, self.is_maximizing_player) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                f(Move { from, to, piece: PieceType::SEESTERN })
-            });
-        });
-
-        bit_loop(muscheln.bits, |muschel| {
-            let from = square_of(muschel);
-            let legal = muschel_lookup_moves(from, self.is_maximizing_player) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                f(Move { from, to, piece: PieceType::MUSCHEL })
-            });
-        });
-    }
-
-    /// Calculates points received through reaching the end of the board<br>
-    /// Faster version of:
-    /// ```rust
-    /// if is_maximizing_player && piece_pos >= 56 && piece_pos <= 63  {
-    ///     return 1;
-    /// }else if piece_pos >= 0 && piece_pos <= 8  {
-    ///     return 1;
-    /// }else{
-    ///     return 0;
-    /// }
-    /// ```
     fn calculate_points(&self, bitboard: Bitboard) -> u8 {
         ((bitboard.bits & 0xFF00000000000000 & ((self.is_maximizing_player as u64) * u64::MAX)
             | bitboard.bits & 0xFF & ((!self.is_maximizing_player as u64) * u64::MAX))
@@ -242,7 +183,12 @@ impl FenString for Gamestate {
 
 impl Clone for Gamestate {
     fn clone(&self) -> Self {
-        *self
+        Self{
+            board: self.board,
+            round: self.round,
+            is_maximizing_player: self.is_maximizing_player,
+            score: self.score
+        }
     }
 }
 
@@ -258,6 +204,62 @@ impl MinMax for Gamestate {
 
     fn available_moves(&self) -> ThinVec<Self::MoveType> {
         self.legal_moves()
+    }
+
+    fn for_each_legal_move<F: FnMut(Self::MoveType)->bool>(&self, f: &mut F) {
+        let unoccupied = !self.board.friendly;
+        let moewen = self.board.moewen & self.board.friendly;
+        let robben = self.board.robben & self.board.friendly;
+        let seesterne = self.board.seesterne & self.board.friendly;
+        let muscheln = self.board.muscheln & self.board.friendly;
+
+        bit_loop(moewen.bits, |moewe| {
+            let from = square_of(moewe);
+            let legal = moewe_lookup_moves(from) & unoccupied;
+            let mov = legal.bits;
+            bit_loop(mov, |mov_to| {
+                let to = square_of(mov_to);
+                if f(Move { from, to , piece: PieceType::MOEWE }) {
+                    return;
+                }
+            });
+        });
+
+        bit_loop(robben.bits, |robbe| {
+            let from = square_of(robbe);
+            let legal = robbe_lookup_moves(from) & unoccupied;
+            let mov = legal.bits;
+            bit_loop(mov, |mov_to| {
+                let to = square_of(mov_to);
+                if f(Move { from, to , piece: PieceType::ROBBE }) {
+                    return;
+                }
+            });
+        });
+
+        bit_loop(seesterne.bits, |seestern| {
+            let from = square_of(seestern);
+            let legal = seestern_lookup_moves(from, self.is_maximizing_player) & unoccupied;
+            let mov = legal.bits;
+            bit_loop(mov, |mov_to| {
+                let to = square_of(mov_to);
+                if f(Move { from, to , piece: PieceType::SEESTERN }) {
+                    return;
+                }
+            });
+        });
+
+        bit_loop(muscheln.bits, |muschel| {
+            let from = square_of(muschel);
+            let legal = muschel_lookup_moves(from, self.is_maximizing_player) & unoccupied;
+            let mov = legal.bits;
+            bit_loop(mov, |mov_to| {
+                let to = square_of(mov_to);
+                if f(Move { from, to , piece: PieceType::MUSCHEL }) {
+                    return;
+                }
+            });
+        });
     }
 
     fn apply_move(&mut self, game_move: &Self::MoveType) {
@@ -292,17 +294,18 @@ impl MinMax for Gamestate {
         } else if client_score < enemy_score {
             NEGATIV_REWARD
         } else {
-            let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
-            let friendly_l = leicht_figuren & self.board.friendly;
-            let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
-
-            if friendly_l.bits > enemy_l.bits {
-                TIEBREAK_POSITIVE_REWARD
-            } else if friendly_l.bits < enemy_l.bits {
-                TIEBREAK_NEGATIV_REWARD
-            } else {
-                TIE_REWARD
-            }
+            TIE_REWARD
+            //let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
+            //let friendly_l = leicht_figuren & self.board.friendly;
+            //let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
+//
+            //if friendly_l.bits > enemy_l.bits {
+            //    TIEBREAK_POSITIVE_REWARD
+            //} else if friendly_l.bits < enemy_l.bits {
+            //    TIEBREAK_NEGATIV_REWARD
+            //} else {
+            //    TIE_REWARD
+            //}
         };
         out
     }

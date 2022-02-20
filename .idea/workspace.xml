@@ -7,26 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/util/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Added most stuff for game_lib.">
-      <change afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/game_result.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/team.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/xml_node.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/game_move.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/piece.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/score.rs" afterDir="false" />
+    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/min_max.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ideas.md" beforeDir="false" afterPath="$PROJECT_DIR$/ideas.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/bitboard.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/bitboard.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/fen.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/fen.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="add_game_lib" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -198,6 +182,7 @@
       <workItem from="1645201558476" duration="7058000" />
       <workItem from="1645216307934" duration="3351000" />
       <workItem from="1645266814743" duration="15533000" />
+      <workItem from="1645367576083" duration="5892000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1645203015261</created>

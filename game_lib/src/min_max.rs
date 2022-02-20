@@ -6,12 +6,14 @@ pub trait IMove /*: Debug + Display*/ {}
 
 pub static mut COUNTER: u64 = 0;
 
-pub trait MinMax: Copy + Display + Debug {
+pub trait MinMax: Copy + Clone + Display + Debug {
     type MoveType: IMove + Copy + Sized;
     type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
 
     /// Get the available, legal moves of the current player
     fn available_moves(&self) -> ThinVec<Self::MoveType>;
+
+    fn for_each_legal_move<F: FnMut(Self::MoveType)->bool>(&self, f: &mut F);
 
     /// Apply a Move to the the gamestate
     fn apply_move(&mut self, game_move: &Self::MoveType);
@@ -32,21 +34,21 @@ pub trait Priv: MinMax {
         unsafe { COUNTER = 0};
         let mut pairs = vec![];
 
-        let legal = self.available_moves();
-        for game_move in &legal {
-            let mut clone = *self;
-            clone.apply_move(game_move);
-            clone.next_player();
+        self.for_each_legal_move(&mut |mov|{
+            let mut child = self.clone();
+            child.apply_move(&mov);
+            child.next_player();
 
-            let eval = min_max(clone, search_depth-1, Self::EvalType::min_value(), Self::EvalType::max_value(), false);
-            pairs.push((game_move, eval));
-        }
-
-        let max = pairs.iter().max_by_key(|pair|{
-            pair.1
+            let value = min_max(child, search_depth-1, Self::EvalType::min_value(), Self::EvalType::max_value(), false);
+            pairs.push((value, mov));
+            false
         });
 
-        let best = max.unwrap().0.clone();
+        let max = pairs.iter().max_by_key(|pair|{
+            pair.0
+        });
+
+        let best = max.unwrap().1.clone();
 
         unsafe { println!("Counted {} moves", COUNTER) };
         Some(best)
@@ -63,49 +65,47 @@ fn min_max<T: MinMax>(
     mut beta: T::EvalType,
     is_maximizing: bool,
 ) -> T::EvalType {
-    let possible_moves = state.available_moves();
+
+    if depth == 0 || state.game_over() {
+        unsafe { COUNTER += 1; }
+        return state.evaluate();
+    }
+
     return if is_maximizing {
+        //Maximizing player (Client player)
         let mut value = T::EvalType::min_value();
-        for game_move in &possible_moves {
+
+        state.for_each_legal_move(&mut |mov|{
             let mut child = state.clone();
-            child.apply_move(game_move);
+            child.apply_move(&mov);
             child.next_player();
 
-            let depth = depth-1;
-            if depth == 0 || child.game_over() {
-                unsafe { COUNTER += 1; }
-                return child.evaluate();
-            }
-
-            value = T::EvalType::max(value, min_max(child, depth, alpha, beta, false));
+            value = T::EvalType::max(value, min_max(child, depth-1, alpha, beta, false));
             alpha = T::EvalType::max(alpha, value);
 
             if value >= beta {
-                break; //* β-cutoff *
+                return true; //* β-cutoff *
             }
-        }
+            false
+        });
         value
     } else {
         //Minimizing player (Enemy player)
         let mut value = T::EvalType::max_value();
-        for game_move in &possible_moves {
+
+        state.for_each_legal_move(&mut |mov|{
             let mut child = state.clone();
-            child.apply_move(game_move);
+            child.apply_move(&mov);
             child.next_player();
 
-            let depth = depth-1;
-            if depth == 0 || child.game_over() {
-                unsafe { COUNTER += 1; }
-                return child.evaluate();
-            }
-
-            value = T::EvalType::min(value, min_max(child, depth, alpha, beta, true));
-            beta = T::EvalType::min(beta, value);
+            value = T::EvalType::min(value, min_max(child, depth-1, alpha, beta, true));
+            beta = T::EvalType::min(alpha, value);
 
             if value <= alpha {
-                break; //* α-cutoff *
+                return true; //* α-cutoff *
             }
-        }
+            false
+        });
         value
     };
 }
