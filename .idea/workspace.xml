@@ -9,8 +9,15 @@
   <component name="ChangeListManager">
     <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/xml_node.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/xml_node.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/game_move.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/game_move.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/min_max.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/score.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,14 +48,14 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/util/src/fen.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/util/src/bitboard.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/min_max.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/game_lib/src/move_generation.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/min_max.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/game_lib/src/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
@@ -160,9 +167,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.run [client]" />
-        <item itemvalue="Cargo.run [client]" />
-        <item itemvalue="Cargo.run [client]" />
-        <item itemvalue="Cargo.run [client]" />
+        <item itemvalue="Cargo.run [perft]" />
+        <item itemvalue="Cargo.build [util]" />
+        <item itemvalue="Cargo.build [game_lib]" />
         <item itemvalue="Cargo.run [client]" />
       </list>
     </recent_temporary>

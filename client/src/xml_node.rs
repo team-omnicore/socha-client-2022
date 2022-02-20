@@ -1,13 +1,13 @@
+use crate::game::Game;
+use crate::team::Team;
+use game_lib::board::Board;
+use game_lib::gamestate::Gamestate;
+use game_lib::piece::PieceType;
 use std::collections::{HashMap, VecDeque};
 use std::io::BufReader;
 use std::net::TcpStream;
 use xml::reader::XmlEvent;
 use xml::EventReader;
-use game_lib::gamestate::Gamestate;
-use crate::team::Team;
-use crate::game::Game;
-use game_lib::board::Board;
-use game_lib::piece::PieceType;
 
 #[derive(Debug)]
 pub struct XmlNode {
@@ -91,7 +91,7 @@ impl XmlNode {
 
 pub struct XmlState<'a>(pub &'a XmlNode, pub Team);
 
-impl <'a> From<&'a XmlState<'a>> for Gamestate {
+impl<'a> From<&'a XmlState<'a>> for Gamestate {
     fn from(xml_state: &'a XmlState<'a>) -> Self {
         let node = &xml_state.0;
         let client_team = xml_state.1;
@@ -138,7 +138,7 @@ impl <'a> From<&'a XmlState<'a>> for Gamestate {
     }
 }
 
-impl <'a>From<&XmlState<'a>> for Board {
+impl<'a> From<&XmlState<'a>> for Board {
     fn from(xml_state: &XmlState) -> Self {
         let client_team = xml_state.1;
         let node = &xml_state.0;

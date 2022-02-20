@@ -5,10 +5,10 @@ use std::net::TcpStream;
 use xml::EventReader;
 
 use crate::game_result::{Cause, GameResult, Score};
-use crate::xml_node::{XmlNode, XmlState};
-use game_lib::gamestate::Gamestate;
-use game_lib::game_move::Move;
 use crate::team::Team;
+use crate::xml_node::{XmlNode, XmlState};
+use game_lib::game_move::Move;
+use game_lib::gamestate::Gamestate;
 
 #[derive(Debug)]
 pub struct Game {
@@ -89,7 +89,7 @@ impl Game {
             let player_attribs = &entry.child("player").unwrap().attributes;
             let score = entry.child("score").unwrap();
 
-            let _player_name = player_attribs.get("name").unwrap().get(0).unwrap();
+            //let _player_name = player_attribs.get("name").unwrap().get(0).unwrap();
             let player_team = player_attribs
                 .get("team")
                 .unwrap()

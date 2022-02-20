@@ -1,18 +1,18 @@
 use std::fmt::{Display, Formatter};
 
 use crate::board::Board;
+use crate::game_move::Move;
 use crate::min_max::{MinMax, Priv};
 use crate::move_generation::{
     moewe_lookup_moves, muschel_lookup_moves, robbe_lookup_moves, seestern_lookup_moves,
 };
+use crate::piece::PieceType;
+use crate::score::Score;
+use std::time::SystemTime;
 use thincollections::thin_vec::ThinVec;
 use util::bitboard::Bitboard;
 use util::fen::FenString;
 use util::{bit_loop, square_of};
-use crate::score::Score;
-use crate::game_move::Move;
-use std::time::SystemTime;
-use crate::piece::PieceType;
 
 #[derive(Debug, Copy)]
 pub struct Gamestate {
@@ -62,7 +62,11 @@ impl Gamestate {
             let legal = moewe_lookup_moves(from) & unoccupied;
             bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to, piece: PieceType::MOEWE })
+                moves.push(Move {
+                    from,
+                    to,
+                    piece: PieceType::MOEWE,
+                })
             });
         });
 
@@ -71,7 +75,11 @@ impl Gamestate {
             let legal = robbe_lookup_moves(from) & unoccupied;
             bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to, piece: PieceType::ROBBE })
+                moves.push(Move {
+                    from,
+                    to,
+                    piece: PieceType::ROBBE,
+                })
             });
         });
 
@@ -80,7 +88,11 @@ impl Gamestate {
             let legal = seestern_lookup_moves(from, self.is_maximizing_player) & unoccupied;
             bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to, piece: PieceType::SEESTERN })
+                moves.push(Move {
+                    from,
+                    to,
+                    piece: PieceType::SEESTERN,
+                })
             });
         });
 
@@ -89,13 +101,17 @@ impl Gamestate {
             let legal = muschel_lookup_moves(from, self.is_maximizing_player) & unoccupied;
             bit_loop(legal.bits, |mov_to| {
                 let to = square_of(mov_to);
-                moves.push(Move { from, to, piece: PieceType::MUSCHEL })
+                moves.push(Move {
+                    from,
+                    to,
+                    piece: PieceType::MUSCHEL,
+                })
             });
         });
 
         unsafe {
-            AVERAGE_SIZE += 1f64/(COUNT+1f64) * (moves.len() as f64- AVERAGE_SIZE);
-            COUNT+=1f64;
+            AVERAGE_SIZE += 1f64 / (COUNT + 1f64) * (moves.len() as f64 - AVERAGE_SIZE);
+            COUNT += 1f64;
         }
 
         return moves;
@@ -183,11 +199,11 @@ impl FenString for Gamestate {
 
 impl Clone for Gamestate {
     fn clone(&self) -> Self {
-        Self{
+        Self {
             board: self.board,
             round: self.round,
             is_maximizing_player: self.is_maximizing_player,
-            score: self.score
+            score: self.score,
         }
     }
 }
@@ -206,7 +222,7 @@ impl MinMax for Gamestate {
         self.legal_moves()
     }
 
-    fn for_each_legal_move<F: FnMut(Self::MoveType)->bool>(&self, f: &mut F) {
+    fn for_each_legal_move<F: FnMut(Self::MoveType) -> bool>(&self, f: &mut F) {
         let unoccupied = !self.board.friendly;
         let moewen = self.board.moewen & self.board.friendly;
         let robben = self.board.robben & self.board.friendly;
@@ -219,7 +235,11 @@ impl MinMax for Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                if f(Move { from, to , piece: PieceType::MOEWE }) {
+                if f(Move {
+                    from,
+                    to,
+                    piece: PieceType::MOEWE,
+                }) {
                     return;
                 }
             });
@@ -231,7 +251,11 @@ impl MinMax for Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                if f(Move { from, to , piece: PieceType::ROBBE }) {
+                if f(Move {
+                    from,
+                    to,
+                    piece: PieceType::ROBBE,
+                }) {
                     return;
                 }
             });
@@ -243,7 +267,11 @@ impl MinMax for Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                if f(Move { from, to , piece: PieceType::SEESTERN }) {
+                if f(Move {
+                    from,
+                    to,
+                    piece: PieceType::SEESTERN,
+                }) {
                     return;
                 }
             });
@@ -255,7 +283,11 @@ impl MinMax for Gamestate {
             let mov = legal.bits;
             bit_loop(mov, |mov_to| {
                 let to = square_of(mov_to);
-                if f(Move { from, to , piece: PieceType::MUSCHEL }) {
+                if f(Move {
+                    from,
+                    to,
+                    piece: PieceType::MUSCHEL,
+                }) {
                     return;
                 }
             });
@@ -294,18 +326,18 @@ impl MinMax for Gamestate {
         } else if client_score < enemy_score {
             NEGATIV_REWARD
         } else {
-            TIE_REWARD
-            //let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
-            //let friendly_l = leicht_figuren & self.board.friendly;
-            //let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
-//
-            //if friendly_l.bits > enemy_l.bits {
-            //    TIEBREAK_POSITIVE_REWARD
-            //} else if friendly_l.bits < enemy_l.bits {
-            //    TIEBREAK_NEGATIV_REWARD
-            //} else {
-            //    TIE_REWARD
-            //}
+            //TIE_REWARD
+            let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
+            let friendly_l = leicht_figuren & self.board.friendly;
+            let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
+
+            if friendly_l.bits > enemy_l.bits {
+                TIEBREAK_POSITIVE_REWARD
+            } else if friendly_l.bits < enemy_l.bits {
+                TIEBREAK_NEGATIV_REWARD
+            } else {
+                TIE_REWARD
+            }
         };
         out
     }

@@ -1,9 +1,9 @@
+use crate::game_move::Move;
+use crate::piece::PieceType;
 use rand::prelude::SliceRandom;
 use rand::Rng;
 use std::fmt::{Display, Formatter};
 use util::bitboard::Bitboard;
-use crate::game_move::Move;
-use crate::piece::PieceType;
 
 #[derive(Debug, Copy, Clone)]
 pub struct Board {

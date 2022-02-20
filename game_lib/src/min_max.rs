@@ -13,7 +13,7 @@ pub trait MinMax: Copy + Clone + Display + Debug {
     /// Get the available, legal moves of the current player
     fn available_moves(&self) -> ThinVec<Self::MoveType>;
 
-    fn for_each_legal_move<F: FnMut(Self::MoveType)->bool>(&self, f: &mut F);
+    fn for_each_legal_move<F: FnMut(Self::MoveType) -> bool>(&self, f: &mut F);
 
     /// Apply a Move to the the gamestate
     fn apply_move(&mut self, game_move: &Self::MoveType);
@@ -29,24 +29,27 @@ pub trait MinMax: Copy + Clone + Display + Debug {
 }
 
 pub trait Priv: MinMax {
-
     fn calculate_best_move(&self, search_depth: u8) -> Option<Self::MoveType> {
-        unsafe { COUNTER = 0};
+        unsafe { COUNTER = 0 };
         let mut pairs = vec![];
 
-        self.for_each_legal_move(&mut |mov|{
+        self.for_each_legal_move(&mut |mov| {
             let mut child = self.clone();
             child.apply_move(&mov);
             child.next_player();
 
-            let value = min_max(child, search_depth-1, Self::EvalType::min_value(), Self::EvalType::max_value(), false);
+            let value = min_max(
+                child,
+                search_depth - 1,
+                Self::EvalType::min_value(),
+                Self::EvalType::max_value(),
+                false,
+            );
             pairs.push((value, mov));
             false
         });
 
-        let max = pairs.iter().max_by_key(|pair|{
-            pair.0
-        });
+        let max = pairs.iter().max_by_key(|pair| pair.0);
 
         let best = max.unwrap().1.clone();
 
@@ -65,9 +68,10 @@ fn min_max<T: MinMax>(
     mut beta: T::EvalType,
     is_maximizing: bool,
 ) -> T::EvalType {
-
     if depth == 0 || state.game_over() {
-        unsafe { COUNTER += 1; }
+        unsafe {
+            COUNTER += 1;
+        }
         return state.evaluate();
     }
 
@@ -75,12 +79,12 @@ fn min_max<T: MinMax>(
         //Maximizing player (Client player)
         let mut value = T::EvalType::min_value();
 
-        state.for_each_legal_move(&mut |mov|{
+        state.for_each_legal_move(&mut |mov| {
             let mut child = state.clone();
             child.apply_move(&mov);
             child.next_player();
 
-            value = T::EvalType::max(value, min_max(child, depth-1, alpha, beta, false));
+            value = T::EvalType::max(value, min_max(child, depth - 1, alpha, beta, false));
             alpha = T::EvalType::max(alpha, value);
 
             if value >= beta {
@@ -93,12 +97,12 @@ fn min_max<T: MinMax>(
         //Minimizing player (Enemy player)
         let mut value = T::EvalType::max_value();
 
-        state.for_each_legal_move(&mut |mov|{
+        state.for_each_legal_move(&mut |mov| {
             let mut child = state.clone();
             child.apply_move(&mov);
             child.next_player();
 
-            value = T::EvalType::min(value, min_max(child, depth-1, alpha, beta, true));
+            value = T::EvalType::min(value, min_max(child, depth - 1, alpha, beta, true));
             beta = T::EvalType::min(alpha, value);
 
             if value <= alpha {
