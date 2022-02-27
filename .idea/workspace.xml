@@ -7,17 +7,27 @@
     <cargoProject FILE="$PROJECT_DIR$/util/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Working">
+    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Testen">
+      <change afterPath="$PROJECT_DIR$/game_lib/regex.reg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_lib/src/fen.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/team.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/team.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/xml_node.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/xml_node.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/game_move.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/game_move.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/min_max.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/score.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/piece.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/piece.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/perft/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/util/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/util/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/fen.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +58,6 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/util/src/fen.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/util/src/bitboard.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
@@ -71,7 +80,6 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -79,7 +87,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.statistic.project.settings" />
   </component>
   <component name="ReaderModeSettings">
     <option name="enabled" value="false" />
@@ -90,10 +98,29 @@
       <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\game_lib\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/game_lib" />
+      <recent name="$PROJECT_DIR$/util" />
+      <recent name="$PROJECT_DIR$/game_lib/src" />
       <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\game_lib\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.run [client]">
+  <component name="RunManager" selected="Cargo.run [perft]">
+    <configuration name="Run client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package client --bin client" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="build [game_lib]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --package game_lib --lib" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/game_lib" />
@@ -142,7 +169,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run [perft]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <configuration name="run [perft]" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package perft --bin perft" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/perft" />
       <option name="channel" value="DEFAULT" />
@@ -159,22 +186,23 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Cargo.run [perft]" />
       <item itemvalue="Cargo.build [game_lib]" />
       <item itemvalue="Cargo.build [util]" />
       <item itemvalue="Cargo.run [client]" />
-      <item itemvalue="Cargo.run [perft]" />
+      <item itemvalue="Cargo.Run client" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.run [client]" />
-        <item itemvalue="Cargo.run [perft]" />
-        <item itemvalue="Cargo.build [util]" />
+        <item itemvalue="Cargo.Run client" />
         <item itemvalue="Cargo.build [game_lib]" />
-        <item itemvalue="Cargo.run [client]" />
+        <item itemvalue="Cargo.build [util]" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
+    <option name="runExternalLinterOnTheFly" value="true" />
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
@@ -190,6 +218,13 @@
       <workItem from="1645216307934" duration="3351000" />
       <workItem from="1645266814743" duration="15533000" />
       <workItem from="1645367576083" duration="5892000" />
+      <workItem from="1645449225608" duration="555000" />
+      <workItem from="1645450032522" duration="2454000" />
+      <workItem from="1645453580461" duration="24592000" />
+      <workItem from="1645527370394" duration="10316000" />
+      <workItem from="1645633766453" duration="2453000" />
+      <workItem from="1645644585144" duration="2850000" />
+      <workItem from="1645700182260" duration="28000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1645203015261</created>
@@ -212,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645208363495</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Testen">
+      <created>1645381053914</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1645381053915</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,6 +276,11 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Added workspace.xml" />
     <MESSAGE value="Added most stuff for game_lib." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added most stuff for game_lib." />
+    <MESSAGE value="Testen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Testen" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

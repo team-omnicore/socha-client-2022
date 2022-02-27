@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 
+use crate::piece::PieceType::{MOEWE, MUSCHEL, ROBBE, SEESTERN};
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use std::string::ParseError;
@@ -48,20 +49,6 @@ impl PieceType {
     }
 }
 
-impl From<&String> for PieceType {
-    fn from(str: &String) -> Self {
-        return match str.as_str() {
-            "Moewe" => PieceType::MOEWE,
-            "Robbe" => PieceType::ROBBE,
-            "Herzmuschel" => PieceType::MUSCHEL,
-            "Seestern" => PieceType::SEESTERN,
-            piece => {
-                panic!("No piece of type: {}", piece)
-            }
-        };
-    }
-}
-
 impl Display for PieceType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -77,6 +64,12 @@ impl Display for PieceType {
     }
 }
 
+impl From<&String> for PieceType {
+    fn from(str: &String) -> Self {
+        return str.parse().unwrap();
+    }
+}
+
 impl FromStr for PieceType {
     type Err = ParseError;
 
@@ -88,6 +81,20 @@ impl FromStr for PieceType {
             "Seestern" => Ok(PieceType::SEESTERN),
             piece => {
                 panic!("No piece of type: {}", piece)
+            }
+        }
+    }
+}
+
+impl From<char> for PieceType {
+    fn from(c: char) -> Self {
+        match c {
+            'h' => MUSCHEL,
+            'm' => MOEWE,
+            's' => SEESTERN,
+            'r' => ROBBE,
+            _ => {
+                panic!("Invalid character - cannot parse piecetype from {}", c)
             }
         }
     }

@@ -1,13 +1,14 @@
 use crate::game::Game;
-use crate::team::Team;
 use game_lib::board::Board;
 use game_lib::gamestate::Gamestate;
 use game_lib::piece::PieceType;
+use game_lib::team::Team;
 use std::collections::{HashMap, VecDeque};
 use std::io::BufReader;
 use std::net::TcpStream;
 use xml::reader::XmlEvent;
 use xml::EventReader;
+use game_lib::team::Team::{BLUE, RED};
 
 #[derive(Debug)]
 pub struct XmlNode {
@@ -93,10 +94,11 @@ pub struct XmlState<'a>(pub &'a XmlNode, pub Team);
 
 impl<'a> From<&'a XmlState<'a>> for Gamestate {
     fn from(xml_state: &'a XmlState<'a>) -> Self {
-        let node = &xml_state.0;
+        let node = xml_state.0;
         let client_team = xml_state.1;
 
         let mut gamestate = Gamestate::new();
+
         let turn: u8 = node
             .attributes
             .get("turn")
@@ -106,6 +108,12 @@ impl<'a> From<&'a XmlState<'a>> for Gamestate {
             .parse()
             .unwrap();
         gamestate.round = turn;
+
+        if gamestate.round & 0x1 == 0 && client_team == BLUE{ //If round is even and client team is blue
+            gamestate.is_maximizing_player = false;
+        }else if gamestate.round & 0x1 == 1 && client_team == RED {
+            gamestate.is_maximizing_player = false;
+        }
 
         let ambers = node.child("ambers").expect("No amber node available");
         for child in &ambers.children {
@@ -204,7 +212,7 @@ impl<'a> From<&XmlState<'a>> for Board {
             board.set_piece(pos, piece_type, client_team == piece_team, stacked);
         }
 
-        if client_team == Team::ONE {
+        if client_team == Team::RED {
             board.rotate180();
         }
         board

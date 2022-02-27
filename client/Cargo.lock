@@ -101,9 +101,11 @@ dependencies = [
 name = "game_lib"
 version = "0.1.0"
 dependencies = [
+ "lazy_static",
  "num-traits",
  "rand",
  "rand_xoshiro",
+ "regex",
  "thincollections",
  "util",
 ]
@@ -332,12 +334,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "text_io"
-version = "0.1.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "442f2674e6bd8489052b958e0eaebd89c26eefa3be9dc359d1e2ecccdc510f45"
-
-[[package]]
 name = "textwrap"
 version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -359,9 +355,7 @@ checksum = "8ccb82d61f80a663efe1f787a51b16b5a51e3314d6ac365b08639f52387b33f3"
 name = "util"
 version = "0.1.0"
 dependencies = [
- "num-traits",
  "rand",
- "text_io",
  "thincollections",
 ]
 

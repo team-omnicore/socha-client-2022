@@ -3,15 +3,15 @@ use std::string::ParseError;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Team {
-    ONE,
-    TWO,
+    RED,
+    BLUE,
 }
 
 impl Team {
     pub fn next(&self) -> Team {
         match self {
-            Team::ONE => Team::TWO,
-            Team::TWO => Team::ONE,
+            Team::RED => Team::BLUE,
+            Team::BLUE => Team::RED,
         }
     }
 
@@ -31,8 +31,8 @@ impl FromStr for Team {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "ONE" => Ok(Team::ONE),
-            "TWO" => Ok(Team::TWO),
+            "ONE" => Ok(Team::RED),
+            "TWO" => Ok(Team::BLUE),
             s => {
                 panic!("No team with name {}", s)
             }

@@ -5,10 +5,10 @@ use std::net::TcpStream;
 use xml::EventReader;
 
 use crate::game_result::{Cause, GameResult, Score};
-use crate::team::Team;
 use crate::xml_node::{XmlNode, XmlState};
 use game_lib::game_move::Move;
 use game_lib::gamestate::Gamestate;
+use game_lib::team::Team;
 
 #[derive(Debug)]
 pub struct Game {
@@ -20,7 +20,7 @@ pub struct Game {
 
 impl Game {
     fn send_move(&self, mut game_move: Move) {
-        if self.client_team == Team::TWO {
+        if self.client_team == Team::BLUE {
             game_move.from ^= 63;
             game_move.to ^= 63;
         }

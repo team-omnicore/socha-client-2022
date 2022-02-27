@@ -1,5 +1,4 @@
 pub mod bitboard;
-pub mod fen;
 
 pub fn bit_loop<F: FnMut(u64)>(mut x: u64, mut f: F) {
     while x != 0 {

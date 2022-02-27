@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+use std::ops::Index;
 
 use crate::board::Board;
 use crate::game_move::Move;
@@ -8,11 +9,14 @@ use crate::move_generation::{
 };
 use crate::piece::PieceType;
 use crate::score::Score;
+use crate::team::Team;
+use crate::team::Team::{BLUE, RED};
 use std::time::SystemTime;
+use regex::Error;
 use thincollections::thin_vec::ThinVec;
 use util::bitboard::Bitboard;
-use util::fen::FenString;
 use util::{bit_loop, square_of};
+use crate::fen::{FEN_REGEX, FenString};
 
 #[derive(Debug, Copy)]
 pub struct Gamestate {
@@ -117,6 +121,15 @@ impl Gamestate {
         return moves;
     }
 
+    pub fn player_to_move(&self) -> Team {
+        let round_even = self.round & 0x1 == 0;
+        if round_even {
+            Team::RED
+        } else {
+            Team::BLUE
+        }
+    }
+
     fn calculate_points(&self, bitboard: Bitboard) -> u8 {
         ((bitboard.bits & 0xFF00000000000000 & ((self.is_maximizing_player as u64) * u64::MAX)
             | bitboard.bits & 0xFF & ((!self.is_maximizing_player as u64) * u64::MAX))
@@ -126,7 +139,16 @@ impl Gamestate {
 
 impl FenString for Gamestate {
     fn to_fen(&self) -> String {
-        let board = self.board;
+        let mut board = self.board.clone();
+
+        let next_player = self.player_to_move();
+        let mut score = self.score;
+
+        if (next_player == BLUE && !self.is_maximizing_player) || (next_player == RED  && !self.is_maximizing_player){
+            board.rotate180();
+            board.friendly.swap_with(&mut board.enemy);
+            score.bytes.swap(0,1);
+        }
 
         let mut fen = String::new();
 
@@ -171,10 +193,6 @@ impl FenString for Gamestate {
                         append.push('*');
                     }
                 } else {
-                    if board.double.get_bit(pos) {
-                        println!("Double\n{}", board.double);
-                        println!("Thingy\n{}", board);
-                    }
                     counter_without += 1;
                 }
             }
@@ -186,14 +204,77 @@ impl FenString for Gamestate {
         }
         fen.pop().unwrap();
         fen.push_str(&*format!(
-            " {}/{}",
-            self.score.bytes[0], self.score.bytes[1]
+            " {} {}/{}",
+            self.round,
+            score.bytes[0],
+            score.bytes[1],
         ));
         fen
     }
 
-    fn load_fen() -> Self {
-        todo!()
+    fn load_fen(fen: &str, serialize_for:Team) -> Result<Self, regex::Error> {
+        if !FEN_REGEX.is_match(fen) {
+            return Err(Error::Syntax(String::from("Failed to deserialize FEN- string does not match specification")))
+        }
+
+        let captures = FEN_REGEX.captures(fen).unwrap();
+
+        let mut board = Board::new();
+        for i in 2..10 {
+            let cap = captures.index(i);
+            let mut board_index = 8;
+            for j in 0..cap.len() {
+                let c = cap.chars().nth(j).unwrap();
+                if c == '*'{
+                    continue;
+                }
+                if c.is_ascii_digit() {
+                    let digit = c.to_digit(10).unwrap() as i8;
+                    board_index -= digit;
+                    if board_index < 0 {
+                        return Err(Error::Syntax(format!("Failed to deserialize FEN - too many pieces in rank {}", i-1)))
+                    }
+                } else {
+                    board_index -= 1;
+                    if board_index < 0 {
+                        return Err(Error::Syntax(format!("Failed to deserialize FEN - too many pieces in rank {}", i-1)))
+                    }
+                    let piece = PieceType::from(c.to_ascii_lowercase());
+                    let stacked = if let Some(c) = cap.chars().nth(j + 1) {
+                        c == '*'
+                    } else {
+                        false
+                    };
+                    board.set_piece((8i8 * (9-i) as i8 + (8-board_index)-1) as u8, piece, c.is_ascii_uppercase(), stacked)
+                }
+            }
+            if board_index != 0 {
+                return Err(Error::Syntax(format!("Failed to deserialize FEN - mismatched piece count in rank {}", i-1)))
+            }
+        }
+
+        let round = captures.name("round").expect("Failed to deserialize FEN - failed parsing round").as_str().parse::<u8>().unwrap();
+
+        let mut score = Score {
+            bytes: [
+                captures.name("pt_red").unwrap().as_str().parse().unwrap(),
+                captures.name("pt_blu").unwrap().as_str().parse().unwrap(),
+            ]
+        };
+
+        if serialize_for == BLUE {
+            println!("Rotated");
+            board.rotate180();
+            board.friendly.swap_with(&mut board.enemy);
+            score.bytes.swap(0,1);
+        }
+
+        Ok(Self {
+            board,
+            round,
+            is_maximizing_player: true,
+            score,
+        })
     }
 }
 

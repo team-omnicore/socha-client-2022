@@ -15,12 +15,11 @@ use std::{env, fs};
 
 mod game;
 mod game_result;
-mod team;
 mod xml_node;
 
-use clap::Parser;
 use crate::game_result::GameResult;
 use crate::game_result::Score::{DRAW, LOSS, WIN};
+use clap::Parser;
 
 /// Rust client for the board game "Ostseeschach"
 #[derive(Parser, Debug)]
@@ -75,9 +74,9 @@ fn main() {
                 log::info!("{:?}", res);
 
                 match res.score {
-                    DRAW(_) => {draw_count+=1}
-                    WIN(_, _) => {win_count+=1}
-                    LOSS(_, _) => {lose_count+=1}
+                    DRAW(_) => draw_count += 1,
+                    WIN(_, _) => win_count += 1,
+                    LOSS(_, _) => lose_count += 1,
                 }
 
                 let data = format!(
