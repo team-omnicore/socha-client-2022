@@ -1,5 +1,5 @@
-use crate::min_max::IMove;
 use crate::piece::PieceType;
+use game_algorithms::traits::IMove;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Move {

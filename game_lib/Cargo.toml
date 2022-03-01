@@ -9,3 +9,4 @@ rand_xoshiro = "0.6.0"
 thincollections = "0.5.0"
 num-traits = "0.2.14"
 util = {path = "../util" }
+game_algorithms = {path = "../game_algorithms" }

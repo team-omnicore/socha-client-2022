@@ -2,7 +2,6 @@ use std::fmt::{Display, Formatter};
 
 use crate::board::Board;
 use crate::game_move::Move;
-use crate::min_max::{MinMax, Priv};
 use crate::move_generation::{
     moewe_lookup_moves, muschel_lookup_moves, robbe_lookup_moves, seestern_lookup_moves,
 };
@@ -10,6 +9,10 @@ use crate::piece::PieceType;
 use crate::score::Score;
 use std::time::SystemTime;
 use thincollections::thin_vec::ThinVec;
+use game_algorithms::algorithms::Algorithms;
+use game_algorithms::mcts::{MonteCarlo, MonteCarloState};
+use game_algorithms::min_max::{MinMax, MinMaxState};
+use game_algorithms::traits::IGamestate;
 use util::bitboard::Bitboard;
 use util::fen::FenString;
 use util::{bit_loop, square_of};
@@ -35,9 +38,14 @@ impl Gamestate {
         }
     }
 
-    pub fn best_move(&self) -> Move {
+    pub fn best_move(&self, algorithm: Algorithms) -> Move {
         let start = SystemTime::now();
-        let best_move = self.calculate_best_move(6).unwrap();
+
+        let best_move : Move = match algorithm {
+            Algorithms::MinMax(depth) => self.best_min_max_move(depth).unwrap(),
+            Algorithms::MonteCarloTreeSearch(calculation_time) => self.best_mcts_move(calculation_time).unwrap(),
+        };
+
         let duration = SystemTime::now().duration_since(start);
         println!("Calculation took {:?}", duration.unwrap());
         unsafe {
@@ -214,9 +222,16 @@ impl Display for Gamestate {
     }
 }
 
-impl MinMax for Gamestate {
+impl PartialEq for Gamestate {
+    fn eq(&self, other: &Self) -> bool {
+        self.round == other.round
+            && self.board == other.board
+            && self.score == other.score
+    }
+}
+
+impl IGamestate for Gamestate {
     type MoveType = Move;
-    type EvalType = i32;
 
     fn available_moves(&self) -> ThinVec<Self::MoveType> {
         self.legal_moves()
@@ -310,21 +325,39 @@ impl MinMax for Gamestate {
         self.is_maximizing_player = !self.is_maximizing_player;
         self.board.friendly.swap_with(&mut self.board.enemy);
     }
+}
 
-    fn evaluate(&self) -> Self::EvalType {
+impl MinMaxState for Gamestate {
+    type EvalType = i32;
+
+    fn evaluate(&self, is_maximizing : bool) -> Self::EvalType {
         let client_score = self.score.bytes[0];
         let enemy_score = self.score.bytes[1];
 
-        const POSITIV_REWARD: i32 = 10;
-        const NEGATIV_REWARD: i32 = -POSITIV_REWARD;
+        const WIN_REWARD: i32 = 10;
+        const LOSE_REWARD: i32 = -WIN_REWARD;
+
         const TIEBREAK_POSITIVE_REWARD: i32 = 5;
-        const TIEBREAK_NEGATIV_REWARD: i32 = -POSITIV_REWARD;
+        const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
         const TIE_REWARD: i32 = 1;
 
-        let out = if client_score > enemy_score {
-            POSITIV_REWARD
+        const DOUBLE_POSITIVE_REWARD: i32 = 1;
+        const DOUBLE_NEGATIVE_REWARD: i32 = -DOUBLE_POSITIVE_REWARD;
+
+        let mut eval: i32 = 0;
+
+        if is_maximizing{
+            eval += (self.board.friendly & self.board.double).bits.count_ones() as i32;
+            eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32;
+        }else{
+            eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32;
+            eval += (self.board.enemy & self.board.double).bits.count_ones() as i32;
+        }
+
+        eval += if client_score > enemy_score {
+            WIN_REWARD
         } else if client_score < enemy_score {
-            NEGATIV_REWARD
+            LOSE_REWARD
         } else {
             //TIE_REWARD
             let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
@@ -339,6 +372,48 @@ impl MinMax for Gamestate {
                 TIE_REWARD
             }
         };
-        out
+
+        eval
     }
 }
+
+impl MonteCarloState for Gamestate {
+    type EvalType = i32;
+
+    fn evaluate(&self) -> Self::EvalType {
+        let client_score = self.score.bytes[0];
+        let enemy_score = self.score.bytes[1];
+
+        const WIN_REWARD: i32 = 10;
+        const LOSE_REWARD: i32 = -WIN_REWARD;
+
+        const TIEBREAK_POSITIVE_REWARD: i32 = 5;
+        const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
+        const TIE_REWARD: i32 = 1;
+
+        const DOUBLE_POSITIVE_REWARD: i32 = 1;
+        const DOUBLE_NEGATIVE_REWARD: i32 = -DOUBLE_POSITIVE_REWARD;
+
+        let mut eval: i32 = if client_score > enemy_score {
+            WIN_REWARD
+        } else if client_score < enemy_score {
+            LOSE_REWARD
+        } else {
+            //TIE_REWARD
+            let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
+            let friendly_l = leicht_figuren & self.board.friendly;
+            let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
+
+            if friendly_l.bits > enemy_l.bits {
+                TIEBREAK_POSITIVE_REWARD
+            } else if friendly_l.bits < enemy_l.bits {
+                TIEBREAK_NEGATIV_REWARD
+            } else {
+                TIE_REWARD
+            }
+        };
+
+        eval
+    }
+}
+

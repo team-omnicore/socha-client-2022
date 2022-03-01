@@ -3,6 +3,8 @@ use std::io::{BufWriter, Write};
 use std::net::TcpStream;
 
 use xml::EventReader;
+use game_algorithms::algorithms::Algorithms;
+use game_algorithms::mcts::MonteCarlo;
 
 use crate::game_result::{Cause, GameResult, Score};
 use crate::team::Team;
@@ -16,6 +18,7 @@ pub struct Game {
     pub room_id: String,
     pub stream: TcpStream,
     pub client_team: Team,
+    pub algorithm: Algorithms,
 }
 
 impl Game {
@@ -50,7 +53,7 @@ impl Game {
 
     fn on_move_request(&mut self) {
         log::info!("Received MoveRequest");
-        let mv = self.gamestate.best_move();
+        let mv = self.gamestate.best_move(self.algorithm);
         self.send_move(mv);
     }
 
@@ -200,12 +203,14 @@ impl Clone for Game {
         let room_id = self.room_id.clone();
         let stream = self.stream.try_clone().expect("Failed to clone stream");
         let team = self.client_team;
+        let algorithm = self.algorithm;
 
         Self {
             gamestate,
             room_id,
             stream,
             client_team: team,
+            algorithm,
         }
     }
 }
@@ -217,7 +222,7 @@ pub enum Join {
 }
 
 impl Join {
-    pub fn connect(&self, network_address: &str) -> Result<Game> {
+    pub fn connect(&self, network_address: &str, algorithm: Algorithms) -> Result<Game> {
         let stream = TcpStream::connect(network_address)?;
 
         log::info!("Connected to server...");
@@ -268,6 +273,7 @@ impl Join {
                         room_id: room_id.clone(),
                         stream,
                         client_team: my_team,
+                        algorithm,
                     };
 
                     log::info!("Joined {} as Team {:?}", game.room_id, game.client_team);

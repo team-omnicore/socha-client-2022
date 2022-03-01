@@ -5,7 +5,7 @@ use rand::Rng;
 use std::fmt::{Display, Formatter};
 use util::bitboard::Bitboard;
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Board {
     pub enemy: Bitboard,
     pub friendly: Bitboard,

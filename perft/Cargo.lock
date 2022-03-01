@@ -15,9 +15,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "game_algorithms"
+version = "0.1.0"
+dependencies = [
+ "num-traits",
+ "rand",
+ "thincollections",
+]
+
+[[package]]
 name = "game_lib"
 version = "0.1.0"
 dependencies = [
+ "game_algorithms",
  "num-traits",
  "rand",
  "rand_xoshiro",

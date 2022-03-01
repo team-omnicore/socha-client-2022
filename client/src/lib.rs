@@ -5,13 +5,13 @@ use env_logger::Builder;
 use game_lib::board::Board;
 use game_lib::game_move::Move;
 use game_lib::gamestate::Gamestate;
-use game_lib::min_max::{MinMax, Priv};
 use game_lib::piece::PieceType;
 use game_lib::score::Score;
 use log::LevelFilter;
 use rand::rngs::ThreadRng;
 use rand::thread_rng;
 use std::{env, fs};
+use game_algorithms::algorithms::Algorithms;
 
 mod game;
 mod game_result;
@@ -43,7 +43,8 @@ struct Args {
     room: Option<String>,
 }
 
-fn main() {
+
+pub fn run(algorithm: Algorithms) {
     let args = Args::parse();
 
     Builder::new()
@@ -66,7 +67,7 @@ fn main() {
     loop {
         let network_address = format!("{}:{}", args.host, args.port);
         let mut game = join
-            .connect(network_address.as_str())
+            .connect(network_address.as_str(), algorithm)
             .expect("Connection failed");
 
         let result = game.game_loop();
