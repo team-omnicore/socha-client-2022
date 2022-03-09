@@ -1,7 +1,7 @@
 use std::fmt::{Debug, Display};
 use thincollections::thin_vec::ThinVec;
 
-pub trait IGamestate : Copy + Clone + Display + Debug {
+pub trait IGamestate: Copy + Clone + Display + Debug {
     type MoveType: IMove + Copy + Sized;
 
     /// Get the available, legal moves of the current player

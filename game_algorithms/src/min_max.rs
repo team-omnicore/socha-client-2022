@@ -1,13 +1,13 @@
+use crate::traits::IGamestate;
 use num_traits::{Bounded, Num, NumCast};
 use std::fmt::{Debug, Display};
 use thincollections::thin_vec::ThinVec;
-use crate::traits::IGamestate;
 
 pub static mut COUNTER: u64 = 0;
 
 pub trait MinMaxState: IGamestate {
     type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
-    
+
     /// Evaluate the current position
     fn evaluate(&self, is_maximizing: bool) -> Self::EvalType;
 }
@@ -56,7 +56,7 @@ fn min_max<T: MinMax>(
         unsafe {
             COUNTER += 1;
         }
-        return state.evaluate(is_maximizing)
+        return state.evaluate(is_maximizing);
     }
 
     return if is_maximizing {

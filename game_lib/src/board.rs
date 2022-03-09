@@ -1,9 +1,12 @@
-use crate::game_move::Move;
-use crate::piece::PieceType;
+use std::fmt::{Display, Formatter};
+
 use rand::prelude::SliceRandom;
 use rand::Rng;
-use std::fmt::{Display, Formatter};
+
 use util::bitboard::Bitboard;
+
+use crate::game_move::Move;
+use crate::piece::PieceType;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Board {
@@ -17,6 +20,7 @@ pub struct Board {
 }
 
 impl Board {
+    #[inline]
     pub const fn new() -> Self {
         Board {
             enemy: Bitboard::new(),
@@ -29,6 +33,7 @@ impl Board {
         }
     }
 
+    #[inline]
     pub fn new_random<T: Rng>(rng: &mut T) -> Self {
         let enemy = Bitboard::from(0xFF00000000000000u64);
         let friendly = Bitboard::from(0xFFu64);
@@ -86,6 +91,7 @@ impl Board {
         return out;
     }
 
+    #[inline]
     pub fn apply(&mut self, game_move: &Move) -> u8 {
         let old_piece = Bitboard::from(1 << game_move.from);
         let new_piece = Bitboard::from(1 << game_move.to);
@@ -192,6 +198,7 @@ impl Board {
         points
     }
 
+    #[inline]
     pub fn rotate180(&mut self) {
         self.enemy.rotate180();
         self.friendly.rotate180();
@@ -202,6 +209,7 @@ impl Board {
         self.double.rotate180();
     }
 
+    #[inline]
     pub fn set_piece(&mut self, pos: u8, piece: PieceType, friendly: bool, is_stacked: bool) {
         match piece {
             PieceType::ROBBE => self.robben.set_bit(pos),

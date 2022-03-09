@@ -398,6 +398,7 @@ const LOOKUP_MUSCHELN: [u64; 128] = [
     0x0,
 ];
 
+#[inline]
 pub fn robbe_gen_moves(robbe: Bitboard) -> Bitboard {
     let robbe_loc = robbe.bits;
 
@@ -421,10 +422,12 @@ pub fn robbe_gen_moves(robbe: Bitboard) -> Bitboard {
     Bitboard::from(moves)
 }
 
+#[inline]
 pub fn robbe_lookup_moves(pos: u8) -> Bitboard {
     Bitboard::from(LOOKUP_ROBBEN[pos as usize])
 }
 
+#[inline]
 pub fn moewe_gen_moves(moewe: Bitboard) -> Bitboard {
     let moewe_loc = moewe.bits;
 
@@ -441,10 +444,12 @@ pub fn moewe_gen_moves(moewe: Bitboard) -> Bitboard {
     Bitboard::from(moves)
 }
 
+#[inline]
 pub fn moewe_lookup_moves(pos: u8) -> Bitboard {
     Bitboard::from(LOOKUP_MOEWEN[pos as usize])
 }
 
+#[inline]
 pub fn seestern_gen_moves(seestern: Bitboard, player: bool) -> Bitboard {
     let seestern_loc = seestern.bits;
 
@@ -464,10 +469,12 @@ pub fn seestern_gen_moves(seestern: Bitboard, player: bool) -> Bitboard {
     Bitboard::from(moves)
 }
 
+#[inline]
 pub fn seestern_lookup_moves(pos: u8, player: bool) -> Bitboard {
     Bitboard::from(LOOKUP_SEESTERN[(((player as u8) << 6) + pos) as usize])
 }
 
+#[inline]
 pub fn muschel_gen_moves(muschel: Bitboard, player: bool) -> Bitboard {
     let muschel_loc = muschel.bits;
 
@@ -485,6 +492,7 @@ pub fn muschel_gen_moves(muschel: Bitboard, player: bool) -> Bitboard {
     Bitboard::from(moves)
 }
 
+#[inline]
 pub fn muschel_lookup_moves(pos: u8, player: bool) -> Bitboard {
     Bitboard::from(LOOKUP_MUSCHELN[(((player as u8) << 6) + pos) as usize])
 }

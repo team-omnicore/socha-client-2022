@@ -1,12 +1,11 @@
-
-use std::time::{Duration, SystemTime};
 use rand::thread_rng;
+use std::time::{Duration, SystemTime};
 
-use num_traits::{Bounded, Num, NumCast, ToPrimitive};
-use std::fmt::{Debug, Display, Formatter};
-use rand::prelude::SliceRandom;
-use thincollections::thin_vec::ThinVec;
 use crate::traits::IGamestate;
+use num_traits::{Bounded, Num, NumCast, ToPrimitive};
+use rand::prelude::SliceRandom;
+use std::fmt::{Debug, Display, Formatter};
+use thincollections::thin_vec::ThinVec;
 
 pub trait MonteCarloState: IGamestate + PartialEq {
     type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
@@ -16,7 +15,7 @@ pub trait MonteCarloState: IGamestate + PartialEq {
 }
 
 pub trait MonteCarlo: MonteCarloState {
-    fn best_mcts_move(&self, calculation_time : Duration) -> Option<Self::MoveType> {
+    fn best_mcts_move(&self, calculation_time: Duration) -> Option<Self::MoveType> {
         let mut tree = MonteCarloTree::from(*self);
 
         let start_time = SystemTime::now();
@@ -105,23 +104,16 @@ impl<E: MonteCarlo> MonteCarloTree<E> {
 
         let mut score = 0.0;
         if leaf.visits == 0 {
-            score = leaf
-                .rollout()
-                .to_f32()
-                .expect("Failed to cast EvalType");
+            score = leaf.rollout().to_f32().expect("Failed to cast EvalType");
         } else {
             let mutable_leaf = self.follow_path();
             if !mutable_leaf.gamestate.game_over() {
                 mutable_leaf.expand();
                 score = mutable_leaf.children[0].rollout().to_f32().unwrap();
                 self.path.push(0); //Push new index 0
-                //println!("Pushed new leaf - root: {:?}", self.root)
+                                   //println!("Pushed new leaf - root: {:?}", self.root)
             } else {
-                score = mutable_leaf
-                    .gamestate
-                    .evaluate()
-                    .to_f32()
-                    .expect("f"); //TODO change is_client_turn
+                score = mutable_leaf.gamestate.evaluate().to_f32().expect("f"); //TODO change is_client_turn
             }
         }
         self.backprop(score);
@@ -188,8 +180,7 @@ impl<E: MonteCarlo> MctsNode<E> {
 
     fn ucb1(&self, total_visits: u32, exploration_constant: f32) -> f32 {
         self.value as f32
-            + exploration_constant
-            * f32::sqrt(f32::ln(total_visits as f32) / (self.visits as f32))
+            + exploration_constant * f32::sqrt(f32::ln(total_visits as f32) / (self.visits as f32))
     }
 
     fn max_ucb1(&self, exploration_constant: f32) -> (usize, &MctsNode<E>) {

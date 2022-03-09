@@ -7,12 +7,12 @@ use crate::move_generation::{
 };
 use crate::piece::PieceType;
 use crate::score::Score;
-use std::time::SystemTime;
-use thincollections::thin_vec::ThinVec;
 use game_algorithms::algorithms::Algorithms;
 use game_algorithms::mcts::{MonteCarlo, MonteCarloState};
 use game_algorithms::min_max::{MinMax, MinMaxState};
 use game_algorithms::traits::IGamestate;
+use std::time::SystemTime;
+use thincollections::thin_vec::ThinVec;
 use util::bitboard::Bitboard;
 use util::fen::FenString;
 use util::{bit_loop, square_of};
@@ -29,6 +29,7 @@ static mut AVERAGE_SIZE: f64 = 0f64;
 static mut COUNT: f64 = 0f64;
 
 impl Gamestate {
+    #[inline(always)]
     pub const fn new() -> Self {
         Gamestate {
             board: Board::new(),
@@ -38,12 +39,15 @@ impl Gamestate {
         }
     }
 
+    #[inline(always)]
     pub fn best_move(&self, algorithm: Algorithms) -> Move {
         let start = SystemTime::now();
 
-        let best_move : Move = match algorithm {
+        let best_move: Move = match algorithm {
             Algorithms::MinMax(depth) => self.best_min_max_move(depth).unwrap(),
-            Algorithms::MonteCarloTreeSearch(calculation_time) => self.best_mcts_move(calculation_time).unwrap(),
+            Algorithms::MonteCarloTreeSearch(calculation_time) => {
+                self.best_mcts_move(calculation_time).unwrap()
+            }
         };
 
         let duration = SystemTime::now().duration_since(start);
@@ -56,6 +60,7 @@ impl Gamestate {
         best_move
     }
 
+    #[inline(always)]
     pub fn legal_moves(&self) -> ThinVec<Move> {
         let unoccupied = !self.board.friendly;
         let moewen = self.board.moewen & self.board.friendly;
@@ -125,6 +130,7 @@ impl Gamestate {
         return moves;
     }
 
+    #[inline(always)]
     fn calculate_points(&self, bitboard: Bitboard) -> u8 {
         ((bitboard.bits & 0xFF00000000000000 & ((self.is_maximizing_player as u64) * u64::MAX)
             | bitboard.bits & 0xFF & ((!self.is_maximizing_player as u64) * u64::MAX))
@@ -224,19 +230,19 @@ impl Display for Gamestate {
 
 impl PartialEq for Gamestate {
     fn eq(&self, other: &Self) -> bool {
-        self.round == other.round
-            && self.board == other.board
-            && self.score == other.score
+        self.round == other.round && self.board == other.board && self.score == other.score
     }
 }
 
 impl IGamestate for Gamestate {
     type MoveType = Move;
 
+    #[inline(always)]
     fn available_moves(&self) -> ThinVec<Self::MoveType> {
         self.legal_moves()
     }
 
+    #[inline(always)]
     fn for_each_legal_move<F: FnMut(Self::MoveType) -> bool>(&self, f: &mut F) {
         let unoccupied = !self.board.friendly;
         let moewen = self.board.moewen & self.board.friendly;
@@ -309,6 +315,7 @@ impl IGamestate for Gamestate {
         });
     }
 
+    #[inline(always)]
     fn apply_move(&mut self, game_move: &Self::MoveType) {
         let points = self.board.apply(game_move); //Apply the move to the board, return the points gotten by jumping on other pieces
         self.score.bytes[!self.is_maximizing_player as usize] += points;
@@ -317,10 +324,12 @@ impl IGamestate for Gamestate {
             self.calculate_points(Bitboard::from(1 << game_move.to))
     }
 
+    #[inline(always)]
     fn game_over(&self) -> bool {
         self.score.bytes[0] >= 2 || self.score.bytes[1] >= 2 || self.round > 60
     }
 
+    #[inline(always)]
     fn next_player(&mut self) {
         self.is_maximizing_player = !self.is_maximizing_player;
         self.board.friendly.swap_with(&mut self.board.enemy);
@@ -330,7 +339,7 @@ impl IGamestate for Gamestate {
 impl MinMaxState for Gamestate {
     type EvalType = i32;
 
-    fn evaluate(&self, is_maximizing : bool) -> Self::EvalType {
+    fn evaluate(&self, is_maximizing: bool) -> Self::EvalType {
         let client_score = self.score.bytes[0];
         let enemy_score = self.score.bytes[1];
 
@@ -346,10 +355,10 @@ impl MinMaxState for Gamestate {
 
         let mut eval: i32 = 0;
 
-        if is_maximizing{
+        if is_maximizing {
             eval += (self.board.friendly & self.board.double).bits.count_ones() as i32;
             eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32;
-        }else{
+        } else {
             eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32;
             eval += (self.board.enemy & self.board.double).bits.count_ones() as i32;
         }
@@ -416,4 +425,3 @@ impl MonteCarloState for Gamestate {
         eval
     }
 }
-
