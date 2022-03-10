@@ -5,7 +5,6 @@ use crate::traits::IGamestate;
 use num_traits::{Bounded, Num, NumCast, ToPrimitive};
 use rand::prelude::SliceRandom;
 use std::fmt::{Debug, Display, Formatter};
-use thincollections::thin_vec::ThinVec;
 
 pub trait MonteCarloState: IGamestate + PartialEq {
     type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
@@ -102,7 +101,7 @@ impl<E: MonteCarlo> MonteCarloTree<E> {
 
         let leaf = self.traverse();
 
-        let mut score = 0.0;
+        let score;
         if leaf.visits == 0 {
             score = leaf.rollout().to_f32().expect("Failed to cast EvalType");
         } else {
@@ -136,7 +135,7 @@ impl<E: MonteCarlo> From<E> for MonteCarloTree<E> {
 }
 
 impl<E: MonteCarlo> Display for MonteCarloTree<E> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, _f: &mut Formatter<'_>) -> std::fmt::Result {
         self.root.pretty_print(0);
         Ok(())
     }
@@ -168,7 +167,7 @@ impl<E: MonteCarlo> MctsNode<E> {
             let mut new_gamestate = self.gamestate.clone();
             new_gamestate.apply_move(action);
             new_gamestate.next_player();
-            let mut child_node = Self {
+            let child_node = Self {
                 children: vec![],
                 gamestate: new_gamestate,
                 visits: 0,
@@ -200,7 +199,7 @@ impl<E: MonteCarlo> MctsNode<E> {
 
     fn pretty_print(&self, depth: u32) {
         let mut tabs = String::new();
-        for i in 0..depth {
+        for _ in 0..depth {
             tabs.push_str("\t");
         }
         println!("{}{{depth={}:", tabs, depth);

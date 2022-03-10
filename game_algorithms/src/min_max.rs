@@ -1,7 +1,6 @@
 use crate::traits::IGamestate;
 use num_traits::{Bounded, Num, NumCast};
-use std::fmt::{Debug, Display};
-use thincollections::thin_vec::ThinVec;
+use std::fmt::Display;
 
 pub static mut COUNTER: u64 = 0;
 
