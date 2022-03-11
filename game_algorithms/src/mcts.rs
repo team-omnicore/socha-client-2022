@@ -149,7 +149,7 @@ impl<E: MonteCarlo> MctsNode<E> {
     fn rollout(&self) -> E::EvalType {
         let mut rng = thread_rng();
         let mut gamestate = self.gamestate;
-        while !gamestate.game_over() {
+        while !gamestate.game_over() && gamestate.available_moves().len() > 0 {
             let legal = gamestate.available_moves();
             let random_move = legal.choose(&mut rng).expect(&*format!(
                 "Failed to select random move. length is: {}",

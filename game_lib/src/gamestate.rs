@@ -130,6 +130,16 @@ impl Gamestate {
         return moves;
     }
 
+    pub fn legal_moves_count(&self) -> i32 {
+        let mut moves = 0;
+        self.for_each_legal_move(&mut |_| {
+            moves+=1;
+            false
+        });
+
+        moves
+    }
+
     #[inline(always)]
     fn calculate_points(&self, bitboard: Bitboard) -> u8 {
         ((bitboard.bits & 0xFF00000000000000 & ((self.is_maximizing_player as u64) * u64::MAX)
@@ -343,24 +353,25 @@ impl MinMaxState for Gamestate {
         let client_score = self.score.bytes[0];
         let enemy_score = self.score.bytes[1];
 
-        const WIN_REWARD: i32 = 10;
+        const WIN_REWARD: i32 = 1000;
         const LOSE_REWARD: i32 = -WIN_REWARD;
 
-        const TIEBREAK_POSITIVE_REWARD: i32 = 5;
+        const TIEBREAK_POSITIVE_REWARD: i32 = 500;
         const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
-        const TIE_REWARD: i32 = 1;
+        const TIE_REWARD: i32 = 100;
 
-        const DOUBLE_POSITIVE_REWARD: i32 = 1;
-        const DOUBLE_NEGATIVE_REWARD: i32 = -DOUBLE_POSITIVE_REWARD;
+        const DOUBLE_REWARD: i32 = 100;
 
         let mut eval: i32 = 0;
 
         if is_maximizing {
-            eval += (self.board.friendly & self.board.double).bits.count_ones() as i32;
-            eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32;
+            eval += (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            //eval += self.legal_moves().len() as i32;
         } else {
-            eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32;
-            eval += (self.board.enemy & self.board.double).bits.count_ones() as i32;
+            eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            eval += (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            //eval -= self.legal_moves().len() as i32;
         }
 
         eval += if client_score > enemy_score {

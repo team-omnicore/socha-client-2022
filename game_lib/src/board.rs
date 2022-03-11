@@ -96,19 +96,19 @@ impl Board {
         let old_piece = Bitboard::from(1 << game_move.from);
         let new_piece = Bitboard::from(1 << game_move.to);
 
+        let old_is_double = self.double.get_bit(game_move.from);
+        let new_has_piece = self.enemy.get_bit(game_move.to);
+        let new_is_double = self.double.get_bit(game_move.to);
+
         //Calculate whether double
-        let double = {
-            let old_was_double = self.double.get_bit(game_move.from);
-            let new_has_piece = self.enemy.get_bit(game_move.to);
-            let new_is_double = self.double.get_bit(game_move.to);
-            (old_was_double ^ new_has_piece) & !new_is_double
-        };
+        let new_becomes_double = (old_is_double ^ new_has_piece) & !new_is_double;
+
+        let mut points = ((old_is_double | new_is_double ) & new_has_piece) as u8;
 
         //Set double
         self.double &= !new_piece;
-        self.double |= Bitboard::from(new_piece.bits * double as u64);
+        self.double |= Bitboard::from(new_piece.bits * new_becomes_double as u64);
 
-        let mut points = 0;
         match game_move.piece {
             PieceType::ROBBE => {
                 //Clear old piece
@@ -128,7 +128,6 @@ impl Board {
 
                     self.friendly &= !new_piece | self.double;
                     self.robben &= !new_piece | self.double;
-                    points = 1;
                 }
             }
             PieceType::MUSCHEL => {
@@ -149,7 +148,6 @@ impl Board {
 
                     self.friendly &= !new_piece | self.double;
                     self.muscheln &= !new_piece | self.double;
-                    points = 1;
                 }
             }
             PieceType::SEESTERN => {
@@ -170,7 +168,6 @@ impl Board {
 
                     self.friendly &= !new_piece | self.double;
                     self.seesterne &= !new_piece | self.double;
-                    points = 1;
                 }
             }
             PieceType::MOEWE => {
@@ -191,7 +188,6 @@ impl Board {
 
                     self.friendly &= !new_piece | self.double;
                     self.moewen &= !new_piece | self.double;
-                    points = 1;
                 }
             }
         }
