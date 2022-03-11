@@ -14,7 +14,7 @@ pub trait MonteCarloState: IGamestate + PartialEq {
 }
 
 pub trait MonteCarlo: MonteCarloState {
-    fn best_mcts_move(&self, calculation_time: Duration) -> Option<Self::MoveType> {
+    fn best_mcts_move(&self, calculation_time : Duration) -> Option<Self::MoveType> {
         let mut tree = MonteCarloTree::from(*self);
 
         let start_time = SystemTime::now();
@@ -110,7 +110,7 @@ impl<E: MonteCarlo> MonteCarloTree<E> {
                 mutable_leaf.expand();
                 score = mutable_leaf.children[0].rollout().to_f32().unwrap();
                 self.path.push(0); //Push new index 0
-                                   //println!("Pushed new leaf - root: {:?}", self.root)
+                //println!("Pushed new leaf - root: {:?}", self.root)
             } else {
                 score = mutable_leaf.gamestate.evaluate().to_f32().expect("f"); //TODO change is_client_turn
             }
@@ -135,7 +135,7 @@ impl<E: MonteCarlo> From<E> for MonteCarloTree<E> {
 }
 
 impl<E: MonteCarlo> Display for MonteCarloTree<E> {
-    fn fmt(&self, _f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         self.root.pretty_print(0);
         Ok(())
     }

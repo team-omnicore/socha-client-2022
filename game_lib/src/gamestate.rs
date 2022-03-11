@@ -400,9 +400,6 @@ impl MonteCarloState for Gamestate {
         const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
         const TIE_REWARD: i32 = 1;
 
-        const DOUBLE_POSITIVE_REWARD: i32 = 1;
-        const DOUBLE_NEGATIVE_REWARD: i32 = -DOUBLE_POSITIVE_REWARD;
-
         let mut eval: i32 = if client_score > enemy_score {
             WIN_REWARD
         } else if client_score < enemy_score {
