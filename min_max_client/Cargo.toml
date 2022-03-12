@@ -5,12 +5,15 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[profile.dev]
+opt-level = 3
+codegen-units = 1
+overflow-checks = false
+lto = true
+
 [dependencies]
 client = {path = "../client" }
 game_algorithms = {path = "../game_algorithms" }
-
-[profile.dev]
-opt-level = 3
 
 [profile.release]
 opt-level = 3

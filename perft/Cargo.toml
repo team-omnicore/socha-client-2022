@@ -9,6 +9,13 @@ codegen-units = 1
 overflow-checks = false
 lto = true
 
+[profile.release]
+opt-level = 3
+codegen-units = 1
+overflow-checks = false
+lto = true
+
+
 [dependencies]
 util = { path = "../util" }
 game_lib = { path = "../game_lib" }

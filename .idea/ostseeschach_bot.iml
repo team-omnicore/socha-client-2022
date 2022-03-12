@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/game_algorithms/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/mcts_client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/min_max_client/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perft_test_client/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/client/target" />
       <excludeFolder url="file://$MODULE_DIR$/game_lib/target/debug/examples" />
       <excludeFolder url="file://$MODULE_DIR$/perft/target/debug/.fingerprint/perft-3266d5b2b4d43d30" />
@@ -23,6 +24,7 @@
       <excludeFolder url="file://$MODULE_DIR$/game_algorithms/target" />
       <excludeFolder url="file://$MODULE_DIR$/min_max_client/target" />
       <excludeFolder url="file://$MODULE_DIR$/mcts_client/target" />
+      <excludeFolder url="file://$MODULE_DIR$/perft_test_client/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

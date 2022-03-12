@@ -6,13 +6,15 @@
     <cargoProject FILE="$PROJECT_DIR$/mcts_client/Cargo.toml" />
     <cargoProject FILE="$PROJECT_DIR$/min_max_client/Cargo.toml" />
     <cargoProject FILE="$PROJECT_DIR$/perft/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/perft_test_client/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4741639-5ba2-4e15-bf01-caec5f7f3f26" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_algorithms/src/mcts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_algorithms/src/mcts.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_algorithms/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_algorithms/src/min_max.rs" afterDir="false" />
+    <list default="true" id="e4741639-5ba2-4e15-bf01-caec5f7f3f26" name="Changes" comment="Added perft functionality and optimised code by adding inlining many functions across crates">
+      <change beforePath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/min_max_client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/min_max_client/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/perft/.cargo/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,11 +38,35 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/perft_test_client/src" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\perft_test_client\src" />
+      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Cargo.Run perft">
+    <configuration name="Run min_max_client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package min_max_client --bin min_max_client" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/perft_test_client" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run perft" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package perft --bin perft" />
+      <option name="command" value="run --package perft --bin perft --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/perft" />
       <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
@@ -55,29 +81,20 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Cargo.Run perft" />
+      <item itemvalue="Cargo.Run min_max_client" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Run perft" />
+        <item itemvalue="Cargo.Run min_max_client" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -104,5 +121,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
