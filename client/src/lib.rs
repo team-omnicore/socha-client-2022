@@ -59,39 +59,35 @@ pub fn run(algorithm: Algorithms) {
         Join::ANY
     };
 
-    let mut win_count = 0;
-    let mut lose_count = 0;
-    let mut draw_count = 0;
+    let network_address = format!("{}:{}", args.host, args.port);
+    let mut game = join
+        .connect(network_address.as_str(), algorithm)
+        .expect("Connection failed");
 
-    loop {
-        let network_address = format!("{}:{}", args.host, args.port);
-        let mut game = join
-            .connect(network_address.as_str(), algorithm)
-            .expect("Connection failed");
+    let result = game.game_loop();
+    match result {
+        Ok(res) => {
+            log::info!("{:?}", res);
 
-        let result = game.game_loop();
-        match result {
-            Ok(res) => {
-                log::info!("{:?}", res);
-
-                match res.score {
-                    DRAW(_) => draw_count += 1,
-                    WIN(_, _) => win_count += 1,
-                    LOSS(_, _) => lose_count += 1,
-                }
-
-                let data = format!(
-                    "client_2 - classic evaluation\nwins: {}\n losses: {}\n draws: {}\nwinrate: {:.2}%",
-                    win_count,
-                    lose_count,
-                    draw_count,
-                    (win_count as f32) / ((lose_count + draw_count + win_count) as f32) * 100f32
-                );
-                fs::write("client_1.txt", data).expect("Fuk");
+            /*
+            match res.score {
+                DRAW(_) => draw_count += 1,
+                WIN(_, _) => win_count += 1,
+                LOSS(_, _) => lose_count += 1,
             }
-            Err(err) => {
-                log::error!("Network error! {:?}", err);
-            }
+
+            let data = format!(
+                "client_2 - classic evaluation\nwins: {}\n losses: {}\n draws: {}\nwinrate: {:.2}%",
+                win_count,
+                lose_count,
+                draw_count,
+                (win_count as f32) / ((lose_count + draw_count + win_count) as f32) * 100f32
+            );
+            fs::write("client_1.txt", data).expect("Fuk");
+            */
+        }
+        Err(err) => {
+            log::error!("Network error! {:?}", err);
         }
     }
 }

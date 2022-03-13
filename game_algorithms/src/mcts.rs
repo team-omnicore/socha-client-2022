@@ -135,7 +135,7 @@ impl<E: MonteCarlo> From<E> for MonteCarloTree<E> {
 }
 
 impl<E: MonteCarlo> Display for MonteCarloTree<E> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, _f: &mut Formatter<'_>) -> std::fmt::Result {
         self.root.pretty_print(0);
         Ok(())
     }

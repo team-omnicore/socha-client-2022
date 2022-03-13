@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
   <component name="CargoProjects">
     <cargoProject FILE="$PROJECT_DIR$/game_algorithms/Cargo.toml" />
     <cargoProject FILE="$PROJECT_DIR$/game_lib/Cargo.toml" />
@@ -10,19 +13,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e4741639-5ba2-4e15-bf01-caec5f7f3f26" name="Changes" comment="Added perft functionality and optimised code by adding inlining many functions across crates">
-      <change beforePath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_algorithms/src/mcts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_algorithms/src/mcts.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mcts_client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mcts_client/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/min_max_client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/min_max_client/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/min_max_client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/min_max_client/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perft/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/perft/.cargo/config.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perft/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/game_lib/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/util/src/bitboard.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/move_generation.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game_algorithms/src/min_max.rs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
@@ -48,7 +67,28 @@
       <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Run perft">
+  <component name="RunManager" selected="Cargo.Run MinMax">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run MinMax" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/min_max_client" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run min_max_client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package min_max_client --bin min_max_client" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/perft_test_client" />
@@ -82,13 +122,14 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Cargo.Run MinMax" />
       <item itemvalue="Cargo.Run perft" />
       <item itemvalue="Cargo.Run min_max_client" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Run perft" />
         <item itemvalue="Cargo.Run min_max_client" />
+        <item itemvalue="Cargo.Run perft" />
       </list>
     </recent_temporary>
   </component>

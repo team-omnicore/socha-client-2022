@@ -12,10 +12,12 @@ use game_algorithms::mcts::{MonteCarlo, MonteCarloState};
 use game_algorithms::min_max::{MinMax, MinMaxState};
 use game_algorithms::traits::IGamestate;
 use std::time::SystemTime;
+use regex::Error;
 use thincollections::thin_vec::ThinVec;
 use util::bitboard::Bitboard;
-use util::fen::FenString;
 use util::{bit_loop, square_of};
+use crate::fen::FenString;
+use crate::team::Team;
 
 #[derive(Debug, Copy)]
 pub struct Gamestate {
@@ -29,7 +31,7 @@ static mut AVERAGE_SIZE: f64 = 0f64;
 static mut COUNT: f64 = 0f64;
 
 impl Gamestate {
-    #[inline(always)]
+    #[inline]
     pub const fn new() -> Self {
         Gamestate {
             board: Board::new(),
@@ -39,7 +41,7 @@ impl Gamestate {
         }
     }
 
-    #[inline(always)]
+    #[inline]
     pub fn best_move(&self, algorithm: Algorithms) -> Move {
         let start = SystemTime::now();
 
@@ -60,7 +62,7 @@ impl Gamestate {
         best_move
     }
 
-    #[inline(always)]
+    #[inline]
     pub fn legal_moves(&self) -> ThinVec<Move> {
         let unoccupied = !self.board.friendly;
         let moewen = self.board.moewen & self.board.friendly;
@@ -130,17 +132,36 @@ impl Gamestate {
         return moves;
     }
 
-    pub fn legal_moves_count(&self) -> i32 {
+    #[inline]
+    pub fn legal_moves_count(&self, friendly: bool) -> i32 {
         let mut moves = 0;
-        self.for_each_legal_move(&mut |_| {
-            moves+=1;
-            false
+
+        let mut player;
+        if friendly {
+            player = self.board.friendly
+        } else {
+            player = self.board.enemy
+        }
+        let unoccupied = !player;
+
+
+        bit_loop((self.board.moewen & player).bits, |moewe| {
+            moves += (moewe_lookup_moves(square_of(moewe)) & unoccupied).bits.count_ones();
+        });
+        bit_loop((self.board.muscheln & player).bits, |moewe| {
+            moves += (muschel_lookup_moves(square_of(moewe), true) & unoccupied).bits.count_ones();
+        });
+        bit_loop((self.board.seesterne & player).bits, |moewe| {
+            moves += (seestern_lookup_moves(square_of(moewe), true) & unoccupied).bits.count_ones();
+        });
+        bit_loop((self.board.robben & player).bits, |moewe| {
+            moves += (robbe_lookup_moves(square_of(moewe)) & unoccupied).bits.count_ones();
         });
 
-        moves
+        moves as i32
     }
 
-    #[inline(always)]
+    #[inline]
     fn calculate_points(&self, bitboard: Bitboard) -> u8 {
         ((bitboard.bits & 0xFF00000000000000 & ((self.is_maximizing_player as u64) * u64::MAX)
             | bitboard.bits & 0xFF & ((!self.is_maximizing_player as u64) * u64::MAX))
@@ -216,7 +237,7 @@ impl FenString for Gamestate {
         fen
     }
 
-    fn load_fen() -> Self {
+    fn load_fen(_fen: &str, _team: Team) -> Result<Self, Error> {
         todo!()
     }
 }
@@ -247,12 +268,12 @@ impl PartialEq for Gamestate {
 impl IGamestate for Gamestate {
     type MoveType = Move;
 
-    #[inline(always)]
+    #[inline]
     fn available_moves(&self) -> ThinVec<Self::MoveType> {
         self.legal_moves()
     }
 
-    #[inline(always)]
+    #[inline]
     fn for_each_legal_move<F: FnMut(Self::MoveType) -> bool>(&self, f: &mut F) {
         let unoccupied = !self.board.friendly;
         let moewen = self.board.moewen & self.board.friendly;
@@ -325,7 +346,7 @@ impl IGamestate for Gamestate {
         });
     }
 
-    #[inline(always)]
+    #[inline]
     fn apply_move(&mut self, game_move: &Self::MoveType) {
         let points = self.board.apply(game_move); //Apply the move to the board, return the points gotten by jumping on other pieces
         self.score.bytes[!self.is_maximizing_player as usize] += points;
@@ -334,12 +355,12 @@ impl IGamestate for Gamestate {
             self.calculate_points(Bitboard::from(1 << game_move.to))
     }
 
-    #[inline(always)]
+    #[inline]
     fn game_over(&self) -> bool {
         self.score.bytes[0] >= 2 || self.score.bytes[1] >= 2 || self.round > 60
     }
 
-    #[inline(always)]
+    #[inline]
     fn next_player(&mut self) {
         self.is_maximizing_player = !self.is_maximizing_player;
         self.board.friendly.swap_with(&mut self.board.enemy);
@@ -353,25 +374,36 @@ impl MinMaxState for Gamestate {
         let client_score = self.score.bytes[0];
         let enemy_score = self.score.bytes[1];
 
-        const WIN_REWARD: i32 = 1000;
+        const WIN_REWARD: i32 = 100000;
         const LOSE_REWARD: i32 = -WIN_REWARD;
 
-        const TIEBREAK_POSITIVE_REWARD: i32 = 500;
+        const TIEBREAK_POSITIVE_REWARD: i32 = 50000;
         const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
-        const TIE_REWARD: i32 = 100;
+        const TIE_REWARD: i32 = 5000;
 
-        const DOUBLE_REWARD: i32 = 100;
+        const POINTS_REWARD: i32 = 10000;
+        const DOUBLE_PIECE_REWARD: i32 = 1000;
+        const PIECE_REWARD: i32 = 100;
 
         let mut eval: i32 = 0;
 
+        eval += client_score as i32 * POINTS_REWARD;
+        eval -= enemy_score as i32 * POINTS_REWARD;
+
         if is_maximizing {
-            eval += (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
-            eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
-            //eval += self.legal_moves().len() as i32;
+            eval += (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
+            eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
+            eval += self.board.friendly.bits.count_ones() as i32 * PIECE_REWARD;
+            eval -= self.board.enemy.bits.count_ones() as i32 * PIECE_REWARD;
+            eval += self.legal_moves_count(true) as i32;
+            eval -= self.legal_moves_count(false) as i32;
         } else {
-            eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
-            eval += (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
-            //eval -= self.legal_moves().len() as i32;
+            eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
+            eval += (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
+            eval -= self.board.friendly.bits.count_ones() as i32 * PIECE_REWARD;
+            eval += self.board.enemy.bits.count_ones() as i32 * PIECE_REWARD;
+            eval -= self.legal_moves_count(true) as i32;
+            eval += self.legal_moves_count(false) as i32;
         }
 
         eval += if client_score > enemy_score {

@@ -7,9 +7,9 @@ edition = "2021"
 
 [profile.dev]
 opt-level = 3
-codegen-units = 1
+codegen-units = 8
 overflow-checks = false
-lto = true
+lto = false
 
 [dependencies]
 client = {path = "../client" }
