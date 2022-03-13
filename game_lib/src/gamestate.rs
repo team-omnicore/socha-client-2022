@@ -163,9 +163,8 @@ impl Gamestate {
 
     #[inline]
     fn calculate_points(&self, bitboard: Bitboard) -> u8 {
-        ((bitboard.bits & 0xFF00000000000000 & ((self.is_maximizing_player as u64) * u64::MAX)
-            | bitboard.bits & 0xFF & ((!self.is_maximizing_player as u64) * u64::MAX))
-            != 0) as u8
+        let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
+        ((bitboard.bits & 0xFF00000000000000 & leicht_figuren.bits & ((self.is_maximizing_player as u64) * u64::MAX) | bitboard.bits & 0xFF & leicht_figuren.bits & ((!self.is_maximizing_player as u64) * u64::MAX)) != 0) as u8
     }
 }
 
@@ -379,7 +378,7 @@ impl MinMaxState for Gamestate {
 
         const TIEBREAK_POSITIVE_REWARD: i32 = 50000;
         const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
-        const TIE_REWARD: i32 = 5000;
+        const TIE_REWARD: i32 = 1000;
 
         const POINTS_REWARD: i32 = 10000;
         const DOUBLE_PIECE_REWARD: i32 = 1000;
@@ -406,25 +405,26 @@ impl MinMaxState for Gamestate {
             eval += self.legal_moves_count(false) as i32;
         }
 
-        eval += if client_score > enemy_score {
-            WIN_REWARD
-        } else if client_score < enemy_score {
-            LOSE_REWARD
-        } else {
-            //TIE_REWARD
-            let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
-            let friendly_l = leicht_figuren & self.board.friendly;
-            let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
-
-            if friendly_l.bits > enemy_l.bits {
-                TIEBREAK_POSITIVE_REWARD
-            } else if friendly_l.bits < enemy_l.bits {
-                TIEBREAK_NEGATIV_REWARD
+        if self.game_over() {
+            eval += if client_score > enemy_score{
+                WIN_REWARD
+            } else if client_score < enemy_score {
+                LOSE_REWARD
             } else {
-                TIE_REWARD
-            }
-        };
+                //TIE_REWARD
+                let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
+                let friendly_l = leicht_figuren & self.board.friendly;
+                let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
 
+                if friendly_l.bits > enemy_l.bits {
+                    TIEBREAK_POSITIVE_REWARD
+                } else if friendly_l.bits < enemy_l.bits {
+                    TIEBREAK_NEGATIV_REWARD
+                } else {
+                    TIE_REWARD
+                }
+            };
+        }
         eval
     }
 }

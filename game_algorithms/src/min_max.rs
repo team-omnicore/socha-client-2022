@@ -33,7 +33,7 @@ pub trait MinMax: MinMaxState {
         });
 
         let max = pairs.iter().max_by_key(|pair| pair.0);
-
+        println!("Max Eval: {}", max.unwrap().0.clone());
         let best = max.unwrap().1.clone();
 
         unsafe { println!("Counted {} moves", COUNTER) };

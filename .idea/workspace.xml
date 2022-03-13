@@ -12,16 +12,13 @@
     <cargoProject FILE="$PROJECT_DIR$/perft_test_client/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4741639-5ba2-4e15-bf01-caec5f7f3f26" name="Changes" comment="Added perft functionality and optimised code by adding inlining many functions across crates">
+    <list default="true" id="e4741639-5ba2-4e15-bf01-caec5f7f3f26" name="Changes" comment="updated evaluation and dependencies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_algorithms/src/mcts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_algorithms/src/mcts.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_algorithms/src/min_max.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_algorithms/src/min_max.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mcts_client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mcts_client/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/min_max_client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/min_max_client/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/min_max_client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/min_max_client/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mcts_client/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/mcts_client/.cargo/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/min_max_client/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/min_max_client/.cargo/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,9 +71,9 @@
       </method>
     </configuration>
     <configuration name="Run MinMax" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run" />
+      <option name="command" value="run --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/min_max_client" />
-      <option name="channel" value="DEFAULT" />
+      <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
@@ -147,6 +144,14 @@
       <updated>1646845603892</updated>
       <workItem from="1646845605426" duration="3641000" />
     </task>
+    <task id="LOCAL-00001" summary="updated evaluation and dependencies">
+      <created>1647193383765</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1647193383765</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,5 +168,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated evaluation and dependencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated evaluation and dependencies" />
   </component>
 </project>
