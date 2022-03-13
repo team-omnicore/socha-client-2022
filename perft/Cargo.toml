@@ -3,8 +3,23 @@ name = "perft"
 version = "0.1.0"
 edition = "2021"
 
+[profile.dev]
+opt-level = 3
+codegen-units = 1
+overflow-checks = false
+lto = true
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
+overflow-checks = false
+lto = true
+
+
 [dependencies]
-regex = "1.5.4"
-lazy_static = "1.4.0"
-util = {path = "../util" }
-game_lib = {path = "../game_lib" }
+util = { path = "../util" }
+game_lib = { path = "../game_lib" }
+game_algorithms = { path = "../game_algorithms" }
+chrono = "0.4.19"
+rand = "0.8.5"
+separator = "0.3.1"

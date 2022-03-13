@@ -19,46 +19,57 @@ const H2: u64 = 0x3333333333333333;
 const H3: u64 = 0x0F0F0F0F0F0F0F0F;
 
 impl Bitboard {
+    #[inline]
     pub const fn new() -> Self {
         Bitboard { bits: 0 }
     }
 
+    #[inline]
     pub fn get_bit(&self, pos: u8) -> bool {
         (self.bits >> pos & 1u64) != 0
     }
 
+    #[inline]
     pub fn set_bit(&mut self, pos: u8) {
         self.bits |= 1 << pos
     }
 
+    #[inline]
     pub fn clear_bit(&mut self, pos: u8) {
         self.bits &= !(1 << pos)
     }
 
+    #[inline]
     pub fn toggle_bit(&mut self, pos: u8) {
         self.bits ^= 1 << pos
     }
 
+    #[inline]
     pub fn clear_all(&mut self) {
         self.bits = 0
     }
 
+    #[inline]
     pub fn set_all(&mut self) {
         self.bits = u64::MAX
     }
 
+    #[inline]
     pub fn reverse(&mut self) {
         self.bits = self.bits.reverse_bits()
     }
 
+    #[inline]
     pub fn rotate90_clockwise(&mut self) -> Self {
         self.flip_vertical().flip_diagonal_a1_h8()
     }
 
+    #[inline]
     pub fn rotate90_anti_clockwise(&mut self) -> Self {
         self.flip_diagonal_a1_h8().flip_vertical()
     }
 
+    #[inline]
     pub fn flip_vertical(&mut self) -> Self {
         let mut x = self.bits;
         x = ((x >> 8) & K1) | ((x & K1) << 8);
@@ -68,6 +79,7 @@ impl Bitboard {
         *self
     }
 
+    #[inline]
     pub fn flip_horizontal(&mut self) -> Self {
         let mut x = self.bits;
         x = ((x >> 1) & H1) + 2 * (x & H1);
@@ -77,6 +89,7 @@ impl Bitboard {
         *self
     }
 
+    #[inline]
     pub fn flip_diagonal_a1_h8(&mut self) -> Self {
         let mut x = self.bits;
         let mut _t: u64 = 0;
@@ -90,6 +103,7 @@ impl Bitboard {
         *self
     }
 
+    #[inline]
     pub fn rotate180(&mut self) -> Self {
         let mut x = self.bits;
         x = ((x >> 1) & H1) | ((x & H1) << 1);
@@ -102,12 +116,14 @@ impl Bitboard {
         *self
     }
 
+    #[inline]
     pub fn swap_with(&mut self, other: &mut Bitboard) {
         self.bits ^= other.bits;
         other.bits ^= self.bits;
         self.bits ^= other.bits;
     }
 
+    #[inline]
     pub fn overlaps(&self, rhs: Bitboard) -> Bitboard {
         Bitboard::from(((rhs.bits & self.bits) != 0) as u64 * u64::MAX)
     }

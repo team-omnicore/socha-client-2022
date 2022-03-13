@@ -1,35 +1,18 @@
+use crate::traits::IGamestate;
 use num_traits::{Bounded, Num, NumCast};
-use std::fmt::{Debug, Display};
-use thincollections::thin_vec::ThinVec;
-
-pub trait IMove /*: Debug + Display*/ {}
+use std::fmt::Display;
 
 pub static mut COUNTER: u64 = 0;
 
-pub trait MinMax: Copy + Clone + Display + Debug {
-    type MoveType: IMove + Copy + Sized;
+pub trait MinMaxState: IGamestate {
     type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
 
-    /// Get the available, legal moves of the current player
-    fn available_moves(&self) -> ThinVec<Self::MoveType>;
-
-    fn for_each_legal_move<F: FnMut(Self::MoveType) -> bool>(&self, f: &mut F);
-
-    /// Apply a Move to the the gamestate
-    fn apply_move(&mut self, game_move: &Self::MoveType);
-
-    /// Return, whether the game has ended with this gamestate
-    fn game_over(&self) -> bool;
-
-    /// Set the current player to the next player
-    fn next_player(&mut self);
-
     /// Evaluate the current position
-    fn evaluate(&self) -> Self::EvalType;
+    fn evaluate(&self, is_maximizing: bool) -> Self::EvalType;
 }
 
-pub trait Priv: MinMax {
-    fn calculate_best_move(&self, search_depth: u8) -> Option<Self::MoveType> {
+pub trait MinMax: MinMaxState {
+    fn best_min_max_move(&self, search_depth: u8) -> Option<Self::MoveType> {
         unsafe { COUNTER = 0 };
         let mut pairs = vec![];
 
@@ -58,9 +41,9 @@ pub trait Priv: MinMax {
     }
 }
 
-impl<E: MinMax> Priv for E {}
+impl<E: MinMaxState> MinMax for E {}
 
-/// Run min max algorithm, keep function in private scope.
+/// Run min max algorithm, keep function in MinMaxate scope.
 fn min_max<T: MinMax>(
     state: T,
     depth: u8,
@@ -72,7 +55,7 @@ fn min_max<T: MinMax>(
         unsafe {
             COUNTER += 1;
         }
-        return state.evaluate();
+        return state.evaluate(is_maximizing);
     }
 
     return if is_maximizing {

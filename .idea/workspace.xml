@@ -1,113 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CargoProjects">
-    <cargoProject FILE="$PROJECT_DIR$/client/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/game_algorithms/Cargo.toml" />
     <cargoProject FILE="$PROJECT_DIR$/game_lib/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/mcts_client/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/min_max_client/Cargo.toml" />
     <cargoProject FILE="$PROJECT_DIR$/perft/Cargo.toml" />
-    <cargoProject FILE="$PROJECT_DIR$/util/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/perft_test_client/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="Testen">
-      <change afterPath="$PROJECT_DIR$/game_lib/regex.reg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_lib/src/fen.rs" afterDir="false" />
+    <list default="true" id="e4741639-5ba2-4e15-bf01-caec5f7f3f26" name="Changes" comment="Added perft functionality and optimised code by adding inlining many functions across crates">
+      <change beforePath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/team.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/team.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/xml_node.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/xml_node.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_lib/src/piece.rs" beforeDir="false" afterPath="$PROJECT_DIR$/game_lib/src/piece.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perft/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/min_max_client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/min_max_client/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perft/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/perft/.cargo/config.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/perft/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/perft/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perft/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/perft/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/util/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/util/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/fen.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Rust File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="add_game_lib" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/util/src/bitboard.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/board.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/Cargo.toml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/move_generation.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/min_max.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/game_lib/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
   </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="ml4dscwv" />
+    <option name="directoryName" value="bwk8dbfb" />
   </component>
-  <component name="ProjectId" id="25I52wqYhMrYKOTkcRPYJgNnZN2" />
+  <component name="ProjectId" id="269pLwxq7P2KCstNQEo4TXoRBib" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/perft_test_client/src" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.statistic.project.settings" />
-  </component>
-  <component name="ReaderModeSettings">
-    <option name="enabled" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\client\src" />
-      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\game_lib\src" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/game_lib" />
-      <recent name="$PROJECT_DIR$/util" />
-      <recent name="$PROJECT_DIR$/game_lib/src" />
-      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\game_lib\src" />
+      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\perft_test_client\src" />
+      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.run [perft]">
-    <configuration name="Run client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package client --bin client" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
+  <component name="RunManager" selected="Cargo.Run perft">
+    <configuration name="Run min_max_client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package min_max_client --bin min_max_client" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/perft_test_client" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
@@ -121,58 +65,10 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build [game_lib]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="build --package game_lib --lib" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/game_lib" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="build [util]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="build --package util --lib" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/util" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="run [client]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package client --bin client --release" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="run [perft]" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run --package perft --bin perft" />
+    <configuration name="Run perft" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package perft --bin perft --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/perft" />
-      <option name="channel" value="DEFAULT" />
+      <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
@@ -186,75 +82,30 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Cargo.run [perft]" />
-      <item itemvalue="Cargo.build [game_lib]" />
-      <item itemvalue="Cargo.build [util]" />
-      <item itemvalue="Cargo.run [client]" />
-      <item itemvalue="Cargo.Run client" />
+      <item itemvalue="Cargo.Run perft" />
+      <item itemvalue="Cargo.Run min_max_client" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.run [client]" />
-        <item itemvalue="Cargo.Run client" />
-        <item itemvalue="Cargo.build [game_lib]" />
-        <item itemvalue="Cargo.build [util]" />
+        <item itemvalue="Cargo.Run perft" />
+        <item itemvalue="Cargo.Run min_max_client" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="runExternalLinterOnTheFly" value="true" />
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6df55e44-b337-4658-99e3-e4953129c33e" name="Changes" comment="" />
-      <created>1645201557065</created>
+      <changelist id="e4741639-5ba2-4e15-bf01-caec5f7f3f26" name="Changes" comment="" />
+      <created>1646845603892</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1645201557065</updated>
-      <workItem from="1645201558476" duration="7058000" />
-      <workItem from="1645216307934" duration="3351000" />
-      <workItem from="1645266814743" duration="15533000" />
-      <workItem from="1645367576083" duration="5892000" />
-      <workItem from="1645449225608" duration="555000" />
-      <workItem from="1645450032522" duration="2454000" />
-      <workItem from="1645453580461" duration="24592000" />
-      <workItem from="1645527370394" duration="10316000" />
-      <workItem from="1645633766453" duration="2453000" />
-      <workItem from="1645644585144" duration="2850000" />
-      <workItem from="1645700182260" duration="28000" />
+      <updated>1646845603892</updated>
+      <workItem from="1646845605426" duration="3641000" />
     </task>
-    <task id="LOCAL-00001" summary="Initial commit">
-      <created>1645203015261</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1645203015261</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Added workspace.xml">
-      <created>1645203267865</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1645203267865</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Added most stuff for game_lib.">
-      <created>1645208363495</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1645208363495</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Testen">
-      <created>1645381053914</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1645381053915</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,16 +122,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial commit" />
-    <MESSAGE value="Added workspace.xml" />
-    <MESSAGE value="Added most stuff for game_lib." />
-    <MESSAGE value="Testen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testen" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

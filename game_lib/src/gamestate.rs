@@ -1,22 +1,21 @@
 use std::fmt::{Display, Formatter};
-use std::ops::Index;
 
 use crate::board::Board;
 use crate::game_move::Move;
-use crate::min_max::{MinMax, Priv};
 use crate::move_generation::{
     moewe_lookup_moves, muschel_lookup_moves, robbe_lookup_moves, seestern_lookup_moves,
 };
 use crate::piece::PieceType;
 use crate::score::Score;
-use crate::team::Team;
-use crate::team::Team::{BLUE, RED};
+use game_algorithms::algorithms::Algorithms;
+use game_algorithms::mcts::{MonteCarlo, MonteCarloState};
+use game_algorithms::min_max::{MinMax, MinMaxState};
+use game_algorithms::traits::IGamestate;
 use std::time::SystemTime;
-use regex::Error;
 use thincollections::thin_vec::ThinVec;
 use util::bitboard::Bitboard;
+use util::fen::FenString;
 use util::{bit_loop, square_of};
-use crate::fen::{FEN_REGEX, FenString};
 
 #[derive(Debug, Copy)]
 pub struct Gamestate {
@@ -30,6 +29,7 @@ static mut AVERAGE_SIZE: f64 = 0f64;
 static mut COUNT: f64 = 0f64;
 
 impl Gamestate {
+    #[inline(always)]
     pub const fn new() -> Self {
         Gamestate {
             board: Board::new(),
@@ -39,9 +39,17 @@ impl Gamestate {
         }
     }
 
-    pub fn best_move(&self) -> Move {
+    #[inline(always)]
+    pub fn best_move(&self, algorithm: Algorithms) -> Move {
         let start = SystemTime::now();
-        let best_move = self.calculate_best_move(6).unwrap();
+
+        let best_move: Move = match algorithm {
+            Algorithms::MinMax(depth) => self.best_min_max_move(depth).unwrap(),
+            Algorithms::MonteCarloTreeSearch(calculation_time) => {
+                self.best_mcts_move(calculation_time).unwrap()
+            }
+        };
+
         let duration = SystemTime::now().duration_since(start);
         println!("Calculation took {:?}", duration.unwrap());
         unsafe {
@@ -52,6 +60,7 @@ impl Gamestate {
         best_move
     }
 
+    #[inline(always)]
     pub fn legal_moves(&self) -> ThinVec<Move> {
         let unoccupied = !self.board.friendly;
         let moewen = self.board.moewen & self.board.friendly;
@@ -121,15 +130,17 @@ impl Gamestate {
         return moves;
     }
 
-    pub fn player_to_move(&self) -> Team {
-        let round_even = self.round & 0x1 == 0;
-        if round_even {
-            Team::RED
-        } else {
-            Team::BLUE
-        }
+    pub fn legal_moves_count(&self) -> i32 {
+        let mut moves = 0;
+        self.for_each_legal_move(&mut |_| {
+            moves+=1;
+            false
+        });
+
+        moves
     }
 
+    #[inline(always)]
     fn calculate_points(&self, bitboard: Bitboard) -> u8 {
         ((bitboard.bits & 0xFF00000000000000 & ((self.is_maximizing_player as u64) * u64::MAX)
             | bitboard.bits & 0xFF & ((!self.is_maximizing_player as u64) * u64::MAX))
@@ -139,16 +150,7 @@ impl Gamestate {
 
 impl FenString for Gamestate {
     fn to_fen(&self) -> String {
-        let mut board = self.board.clone();
-
-        let next_player = self.player_to_move();
-        let mut score = self.score;
-
-        if (next_player == BLUE && !self.is_maximizing_player) || (next_player == RED  && !self.is_maximizing_player){
-            board.rotate180();
-            board.friendly.swap_with(&mut board.enemy);
-            score.bytes.swap(0,1);
-        }
+        let board = self.board;
 
         let mut fen = String::new();
 
@@ -193,6 +195,10 @@ impl FenString for Gamestate {
                         append.push('*');
                     }
                 } else {
+                    if board.double.get_bit(pos) {
+                        println!("Double\n{}", board.double);
+                        println!("Thingy\n{}", board);
+                    }
                     counter_without += 1;
                 }
             }
@@ -204,77 +210,14 @@ impl FenString for Gamestate {
         }
         fen.pop().unwrap();
         fen.push_str(&*format!(
-            " {} {}/{}",
-            self.round,
-            score.bytes[0],
-            score.bytes[1],
+            " {}/{}",
+            self.score.bytes[0], self.score.bytes[1]
         ));
         fen
     }
 
-    fn load_fen(fen: &str, serialize_for:Team) -> Result<Self, regex::Error> {
-        if !FEN_REGEX.is_match(fen) {
-            return Err(Error::Syntax(String::from("Failed to deserialize FEN- string does not match specification")))
-        }
-
-        let captures = FEN_REGEX.captures(fen).unwrap();
-
-        let mut board = Board::new();
-        for i in 2..10 {
-            let cap = captures.index(i);
-            let mut board_index = 8;
-            for j in 0..cap.len() {
-                let c = cap.chars().nth(j).unwrap();
-                if c == '*'{
-                    continue;
-                }
-                if c.is_ascii_digit() {
-                    let digit = c.to_digit(10).unwrap() as i8;
-                    board_index -= digit;
-                    if board_index < 0 {
-                        return Err(Error::Syntax(format!("Failed to deserialize FEN - too many pieces in rank {}", i-1)))
-                    }
-                } else {
-                    board_index -= 1;
-                    if board_index < 0 {
-                        return Err(Error::Syntax(format!("Failed to deserialize FEN - too many pieces in rank {}", i-1)))
-                    }
-                    let piece = PieceType::from(c.to_ascii_lowercase());
-                    let stacked = if let Some(c) = cap.chars().nth(j + 1) {
-                        c == '*'
-                    } else {
-                        false
-                    };
-                    board.set_piece((8i8 * (9-i) as i8 + (8-board_index)-1) as u8, piece, c.is_ascii_uppercase(), stacked)
-                }
-            }
-            if board_index != 0 {
-                return Err(Error::Syntax(format!("Failed to deserialize FEN - mismatched piece count in rank {}", i-1)))
-            }
-        }
-
-        let round = captures.name("round").expect("Failed to deserialize FEN - failed parsing round").as_str().parse::<u8>().unwrap();
-
-        let mut score = Score {
-            bytes: [
-                captures.name("pt_red").unwrap().as_str().parse().unwrap(),
-                captures.name("pt_blu").unwrap().as_str().parse().unwrap(),
-            ]
-        };
-
-        if serialize_for == BLUE {
-            println!("Rotated");
-            board.rotate180();
-            board.friendly.swap_with(&mut board.enemy);
-            score.bytes.swap(0,1);
-        }
-
-        Ok(Self {
-            board,
-            round,
-            is_maximizing_player: true,
-            score,
-        })
+    fn load_fen() -> Self {
+        todo!()
     }
 }
 
@@ -295,14 +238,21 @@ impl Display for Gamestate {
     }
 }
 
-impl MinMax for Gamestate {
-    type MoveType = Move;
-    type EvalType = i32;
+impl PartialEq for Gamestate {
+    fn eq(&self, other: &Self) -> bool {
+        self.round == other.round && self.board == other.board && self.score == other.score
+    }
+}
 
+impl IGamestate for Gamestate {
+    type MoveType = Move;
+
+    #[inline(always)]
     fn available_moves(&self) -> ThinVec<Self::MoveType> {
         self.legal_moves()
     }
 
+    #[inline(always)]
     fn for_each_legal_move<F: FnMut(Self::MoveType) -> bool>(&self, f: &mut F) {
         let unoccupied = !self.board.friendly;
         let moewen = self.board.moewen & self.board.friendly;
@@ -375,6 +325,7 @@ impl MinMax for Gamestate {
         });
     }
 
+    #[inline(always)]
     fn apply_move(&mut self, game_move: &Self::MoveType) {
         let points = self.board.apply(game_move); //Apply the move to the board, return the points gotten by jumping on other pieces
         self.score.bytes[!self.is_maximizing_player as usize] += points;
@@ -383,29 +334,50 @@ impl MinMax for Gamestate {
             self.calculate_points(Bitboard::from(1 << game_move.to))
     }
 
+    #[inline(always)]
     fn game_over(&self) -> bool {
         self.score.bytes[0] >= 2 || self.score.bytes[1] >= 2 || self.round > 60
     }
 
+    #[inline(always)]
     fn next_player(&mut self) {
         self.is_maximizing_player = !self.is_maximizing_player;
         self.board.friendly.swap_with(&mut self.board.enemy);
     }
+}
 
-    fn evaluate(&self) -> Self::EvalType {
+impl MinMaxState for Gamestate {
+    type EvalType = i32;
+
+    fn evaluate(&self, is_maximizing: bool) -> Self::EvalType {
         let client_score = self.score.bytes[0];
         let enemy_score = self.score.bytes[1];
 
-        const POSITIV_REWARD: i32 = 10;
-        const NEGATIV_REWARD: i32 = -POSITIV_REWARD;
-        const TIEBREAK_POSITIVE_REWARD: i32 = 5;
-        const TIEBREAK_NEGATIV_REWARD: i32 = -POSITIV_REWARD;
-        const TIE_REWARD: i32 = 1;
+        const WIN_REWARD: i32 = 1000;
+        const LOSE_REWARD: i32 = -WIN_REWARD;
 
-        let out = if client_score > enemy_score {
-            POSITIV_REWARD
+        const TIEBREAK_POSITIVE_REWARD: i32 = 500;
+        const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
+        const TIE_REWARD: i32 = 100;
+
+        const DOUBLE_REWARD: i32 = 100;
+
+        let mut eval: i32 = 0;
+
+        if is_maximizing {
+            eval += (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            //eval += self.legal_moves().len() as i32;
+        } else {
+            eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            eval += (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_REWARD;
+            //eval -= self.legal_moves().len() as i32;
+        }
+
+        eval += if client_score > enemy_score {
+            WIN_REWARD
         } else if client_score < enemy_score {
-            NEGATIV_REWARD
+            LOSE_REWARD
         } else {
             //TIE_REWARD
             let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
@@ -420,6 +392,44 @@ impl MinMax for Gamestate {
                 TIE_REWARD
             }
         };
-        out
+
+        eval
+    }
+}
+
+impl MonteCarloState for Gamestate {
+    type EvalType = i32;
+
+    fn evaluate(&self) -> Self::EvalType {
+        let client_score = self.score.bytes[0];
+        let enemy_score = self.score.bytes[1];
+
+        const WIN_REWARD: i32 = 10;
+        const LOSE_REWARD: i32 = -WIN_REWARD;
+
+        const TIEBREAK_POSITIVE_REWARD: i32 = 5;
+        const TIEBREAK_NEGATIV_REWARD: i32 = -TIEBREAK_POSITIVE_REWARD;
+        const TIE_REWARD: i32 = 1;
+
+        let mut eval: i32 = if client_score > enemy_score {
+            WIN_REWARD
+        } else if client_score < enemy_score {
+            LOSE_REWARD
+        } else {
+            //TIE_REWARD
+            let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
+            let friendly_l = leicht_figuren & self.board.friendly;
+            let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
+
+            if friendly_l.bits > enemy_l.bits {
+                TIEBREAK_POSITIVE_REWARD
+            } else if friendly_l.bits < enemy_l.bits {
+                TIEBREAK_NEGATIV_REWARD
+            } else {
+                TIE_REWARD
+            }
+        };
+
+        eval
     }
 }
