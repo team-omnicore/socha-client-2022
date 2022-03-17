@@ -394,22 +394,23 @@ impl MinMaxState for Gamestate {
 
         let mut eval: i32 = 0;
 
-        eval += (client_score-enemy_score) as i32 * POINTS_REWARD;
+        eval += client_score as i32 * POINTS_REWARD;
+        eval -= enemy_score as i32 * POINTS_REWARD;
 
         if is_maximizing {
             eval += (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
             eval -= (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
             eval += self.board.friendly.bits.count_ones() as i32 * PIECE_REWARD;
             eval -= self.board.enemy.bits.count_ones() as i32 * PIECE_REWARD;
-            //eval += self.legal_moves_count(true) as i32;
-            //eval -= self.legal_moves_count(false) as i32;
+            eval += self.legal_moves_count(true) as i32;
+            eval -= self.legal_moves_count(false) as i32;
         } else {
             eval -= (self.board.friendly & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
             eval += (self.board.enemy & self.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
             eval -= self.board.friendly.bits.count_ones() as i32 * PIECE_REWARD;
             eval += self.board.enemy.bits.count_ones() as i32 * PIECE_REWARD;
-            //eval -= self.legal_moves_count(true) as i32;
-            //eval += self.legal_moves_count(false) as i32;
+            eval -= self.legal_moves_count(true) as i32;
+            eval += self.legal_moves_count(false) as i32;
         }
 
         if self.game_over() {
