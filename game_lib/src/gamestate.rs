@@ -19,7 +19,7 @@ use util::{bit_loop, square_of};
 use crate::fen::FenString;
 use crate::team::Team;
 
-#[derive(Debug, Copy)]
+#[derive(Debug, Copy, PartialEq)]
 pub struct Gamestate {
     pub board: Board,
     pub round: u8,
@@ -166,6 +166,20 @@ impl Gamestate {
         let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
         ((bitboard.bits & 0xFF00000000000000 & leicht_figuren.bits & ((self.is_maximizing_player as u64) * u64::MAX) | bitboard.bits & 0xFF & leicht_figuren.bits & ((!self.is_maximizing_player as u64) * u64::MAX)) != 0) as u8
     }
+
+    #[inline]
+    fn draw_winner(a_leicht: Bitboard, b_leicht: Bitboard) -> i32 {
+        let bytes_a = a_leicht.bits.to_be_bytes();
+        let bytes_b = b_leicht.bits.to_be_bytes();
+        for i in 0..8 { //maybe could change index to 7
+            if bytes_a[i].count_ones() > bytes_b[i].count_ones() {
+                return 1;
+            }else if bytes_a[i].count_ones() < bytes_b[i].count_ones(){
+                return -1;
+            }
+        }
+        return 0;
+    }
 }
 
 impl FenString for Gamestate {
@@ -255,12 +269,6 @@ impl Clone for Gamestate {
 impl Display for Gamestate {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.to_fen())
-    }
-}
-
-impl PartialEq for Gamestate {
-    fn eq(&self, other: &Self) -> bool {
-        self.round == other.round && self.board == other.board && self.score == other.score
     }
 }
 
@@ -356,7 +364,7 @@ impl IGamestate for Gamestate {
 
     #[inline]
     fn game_over(&self) -> bool {
-        self.score.bytes[0] >= 2 || self.score.bytes[1] >= 2 || self.round > 60
+        (self.round % 2==0 && (self.score.bytes[0] >= 2 || self.score.bytes[1] >= 2)) || self.round >= 60
     }
 
     #[inline]
@@ -406,7 +414,7 @@ impl MinMaxState for Gamestate {
         }
 
         if self.game_over() {
-            eval += if client_score > enemy_score{
+            eval += if client_score > enemy_score {
                 WIN_REWARD
             } else if client_score < enemy_score {
                 LOSE_REWARD
@@ -416,12 +424,13 @@ impl MinMaxState for Gamestate {
                 let friendly_l = leicht_figuren & self.board.friendly;
                 let enemy_l = (leicht_figuren & self.board.enemy).rotate180();
 
-                if friendly_l.bits > enemy_l.bits {
-                    TIEBREAK_POSITIVE_REWARD
-                } else if friendly_l.bits < enemy_l.bits {
-                    TIEBREAK_NEGATIV_REWARD
-                } else {
-                    TIE_REWARD
+                let wins = Gamestate::draw_winner(friendly_l, enemy_l);
+
+                match wins {
+                    -1 => TIEBREAK_NEGATIV_REWARD,
+                    1 => TIEBREAK_POSITIVE_REWARD,
+                    0 => TIE_REWARD,
+                    _ => {debug_assert!(false); 0}
                 }
             };
         }

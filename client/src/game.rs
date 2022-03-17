@@ -109,6 +109,9 @@ impl Game {
             let bernsteine = score.children.get(1).unwrap().data.parse::<u8>().unwrap();
             let _figur_vorne = &score.children.get(2).unwrap().data;
 
+            println!("Figur vorne: {:?} {}", player_team, _figur_vorne);
+            println!("Siegespunkte: {:?} {}", player_team, _sieg_punkte);
+
             entries.push((player_team, bernsteine, cause));
         }
 
