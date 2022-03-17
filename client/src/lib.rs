@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 use crate::game::Join;
-use env_logger::Builder;
+use env_logger::{Builder, Target};
 use game_lib::board::Board;
 use game_lib::game_move::Move;
 use game_lib::gamestate::Gamestate;
@@ -49,6 +49,7 @@ pub fn run(algorithm: Algorithms) {
     Builder::new()
         .parse_env(&env::var("MY_APP_LOG").unwrap_or_default())
         .filter_level(LevelFilter::Info)
+        .target(Target::Stdout)
         .init();
 
     let join = if let Some(reservation) = args.reservation {
