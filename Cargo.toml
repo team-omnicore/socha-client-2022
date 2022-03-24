@@ -1,0 +1,15 @@
+[workspace]
+
+members=[
+    "client",
+    "socha-client-rust-2022",
+]
+
+[profile.dev]
+overflow-checks = false
+
+[profile.release]
+overflow-checks = true
+codegen-units = 1
+opt-level = 3
+lto = true

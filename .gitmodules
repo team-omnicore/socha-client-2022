@@ -1,0 +1,3 @@
+[submodule "socha-client-rust-2022"]
+	path = socha-client-rust-2022
+	url = git@github.com:team-omnicore/socha-client-rust-2022.git

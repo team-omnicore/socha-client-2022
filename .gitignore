@@ -1,7 +1,2 @@
-target/
-
-# cargo.locks of libs
-client/Cargo.lock
-game_algorithms/Cargo.lock
-game_lib/Cargo.lock
-util/Cargo.lock
+/target
+/socha-client-rust-2022/

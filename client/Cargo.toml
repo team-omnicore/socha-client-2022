@@ -4,16 +4,17 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+socha-client-2022 = {path="../socha-client-rust-2022"}
+clap = { version = "3.1.0", features = ["derive"] }
+rand = "0.8"
+thincollections = "0.5.0"
+num-traits = "0.2.14"
+regex = "1.5.5"
+lazy_static = "1.4.0"
 rand_xoshiro = "0.6.0"
-rand = "0.8.4"
-xml-rs = "0.8"
 log = "0.4.14"
 env_logger = "0.9.0"
-game_lib = {path = "../game_lib" }
-util = {path = "../util" }
-game_algorithms = {path = "../game_algorithms" }
-clap = { version = "3.1.0", features = ["derive"] }
+chrono = "0.4.19"
 
-[profile.dev]
-opt-level = 3
-overflow-checks = false
+[features]
+straight_board = [] #Enabling this uses the move table for a straight board instead. Doesn't work yet.
