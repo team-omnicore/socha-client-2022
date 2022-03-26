@@ -11,7 +11,6 @@ use socha_client_2022::protocol::GameResult;
 
 struct ClientDelegate<E: Algorithm> {
     inner: E,
-    result: Option<GameResult>,
 }
 
 impl<E: Algorithm> SCClientDelegate for ClientDelegate<E> {
@@ -53,10 +52,7 @@ pub struct Client<A: Algorithm> {
 
 impl<A: Algorithm> Client<A> {
     pub fn new(algorithm: A, reservation_code: Option<String>) -> Self {
-        let algorithm_wrapper = ClientDelegate {
-            inner: algorithm,
-            result: None,
-        };
+        let algorithm_wrapper = ClientDelegate { inner: algorithm };
         Self {
             inner: SCClient::new(
                 algorithm_wrapper,

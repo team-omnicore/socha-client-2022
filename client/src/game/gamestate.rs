@@ -14,12 +14,43 @@ pub struct Gamestate {
 
 impl Gamestate {
     #[inline]
-    pub const fn new() -> Self {
+    pub const fn new(board: Board) -> Self {
         Gamestate {
-            board: Board::empty(),
+            board,
             round: 1,
             current_player: Team::ONE,
             ambers: [0, 0],
+        }
+    }
+
+    #[inline]
+    pub fn winner(&self) -> Option<Team> {
+        if !self.game_over() {
+            None
+        } else {
+            let red_score = self.ambers[0];
+            let blue_score = self.ambers[1];
+
+            if red_score > blue_score {
+                Some(Team::ONE)
+            } else if red_score < blue_score {
+                Some(Team::TWO)
+            } else {
+                let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
+                let red_l = *(leicht_figuren & self.board.red).rotate90_anti_clockwise();
+                let blue_l = *(leicht_figuren & self.board.blue).rotate90_clockwise();
+
+                let wins = Gamestate::draw_winner(red_l, blue_l);
+                match wins {
+                    -1 => Some(Team::TWO),
+                    1 => None,
+                    0 => Some(Team::ONE),
+                    _ => {
+                        debug_assert!(false);
+                        0
+                    }
+                }
+            }
         }
     }
 
@@ -77,6 +108,7 @@ impl IGamestate for Gamestate {
     #[inline]
     fn next_player(&mut self) {
         self.current_player = self.current_player.opponent();
+        self.round += 1;
     }
 }
 

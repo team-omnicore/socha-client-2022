@@ -1,27 +1,27 @@
-use crate::algorithms::Algorithm;
+use crate::algorithms::{Algorithm, EvaluationFunction};
 use crate::game::{Gamestate, IGamestate, Move, Team};
 use num_traits::{Bounded, Num, NumCast};
 use std::collections::LinkedList;
 use std::fmt::Display;
 
-pub struct MinMax<E: IGamestate> {
-    history: LinkedList<E::MoveType>,
+pub struct MinMax<E: MinMaxState> {
     max_depth: u8,
     my_team: Team,
+    evaluation: fn(&E, Team) -> E::EvalType,
 }
 
 pub trait MinMaxState: IGamestate {
     type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
 
-    fn evaluate(&self, maximizing_team: Team) -> Self::EvalType;
+    fn default_evaluation(&self, maximizing_team: Team) -> Self::EvalType;
 }
 
 impl<E: MinMaxState> MinMax<E> {
-    pub fn new(search_depth: u8) -> Self {
+    pub fn new(search_depth: u8, evaluation: EvaluationFunction<E, E::EvalType>) -> Self {
         Self {
-            history: Default::default(),
             max_depth: search_depth,
             my_team: Team::ONE, //Gets corrected anyway.
+            evaluation,
         }
     }
 
@@ -49,34 +49,34 @@ impl<E: MinMaxState> MinMax<E> {
         max.unwrap().1.clone()
     }
 
-    fn min_max<T: MinMaxState>(
+    fn min_max(
         &self,
-        state: T,
+        state: E,
         depth: u8,
         team: Team,
-        mut alpha: T::EvalType,
-        mut beta: T::EvalType,
-    ) -> T::EvalType {
+        mut alpha: E::EvalType,
+        mut beta: E::EvalType,
+    ) -> E::EvalType {
         if depth == 0 || state.game_over() {
-            return state.evaluate(self.my_team);
+            return (self.evaluation)(&state, self.my_team);
         }
 
         let is_maximizing = team == self.my_team;
 
         return if is_maximizing {
             //Maximizing player (Client player)
-            let mut value = T::EvalType::min_value();
+            let mut value = E::EvalType::min_value();
 
             state.for_each_move(team, &mut |mov| {
                 let mut child = state.clone();
                 child.apply_move(&mov);
                 child.next_player();
 
-                value = T::EvalType::max(
+                value = E::EvalType::max(
                     value,
                     self.min_max(child, depth - 1, team.opponent(), alpha, beta),
                 );
-                alpha = T::EvalType::max(alpha, value);
+                alpha = E::EvalType::max(alpha, value);
 
                 if value >= beta {
                     return true; //* β-cutoff *
@@ -86,18 +86,18 @@ impl<E: MinMaxState> MinMax<E> {
             value
         } else {
             //Minimizing player (Enemy player)
-            let mut value = T::EvalType::max_value();
+            let mut value = E::EvalType::max_value();
 
             state.for_each_move(team, &mut |mov| {
                 let mut child = state.clone();
                 child.apply_move(&mov);
                 child.next_player();
 
-                value = T::EvalType::min(
+                value = E::EvalType::min(
                     value,
                     self.min_max(child, depth - 1, team.opponent(), alpha, beta),
                 );
-                beta = T::EvalType::min(alpha, value);
+                beta = E::EvalType::min(alpha, value);
 
                 if value <= alpha {
                     return true; //* α-cutoff *
@@ -118,7 +118,7 @@ impl Algorithm for MinMax<Gamestate> {
 impl MinMaxState for Gamestate {
     type EvalType = i32;
 
-    fn evaluate(&self, maximizing_team: Team) -> Self::EvalType {
+    fn default_evaluation(&self, maximizing_team: Team) -> Self::EvalType {
         let red_score = self.ambers[0] as i32;
         let blue_score = self.ambers[1] as i32;
 
