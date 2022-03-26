@@ -20,6 +20,15 @@ impl Team {
         }
     }
 
+    /// The team whose turn it is in the given round
+    pub fn for_turn(turn: u8) -> Team {
+        if turn % 2 == 1 {
+            Team::ONE
+        } else {
+            Team::TWO
+        }
+    }
+
     /// The x-direction of the team on the board.
     pub fn direction(self) -> i32 {
         match self {

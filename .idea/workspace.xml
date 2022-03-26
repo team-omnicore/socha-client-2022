@@ -4,22 +4,52 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gym/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Added EvaluationFunction type in for implementing algorithms. Fixed gamestate not advancing round.">
+      <change afterPath="$PROJECT_DIR$/gym/src/player.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym/src/server.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym/src/test.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/client.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/move.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/move.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece_type.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece_type.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/team.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/team.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/vec2.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/vec2.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/logic.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/logic.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event_payload.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event_payload.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/game_result.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/game_result.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request_payload.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request_payload.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_aggregation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_aggregation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_cause.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_cause.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition_fragment.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition_fragment.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/error.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/macros.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/macros.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/xml.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/xml.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+      <option value="repository" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -38,13 +68,71 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="x0vnrwyt" />
   </component>
+  <component name="ProjectId" id="26vRao4YBNL8CChO5Ucxhvz3oXy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="PropertiesComponent">
-    <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="Cargo.Run gym">
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/test.rs" value="true" />
+  </component>
+  <component name="RunManager" selected="Cargo.Test board::test">
+    <configuration name="Run gym (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package gym --bin gym --release" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="NIGHTLY" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run gym" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package gym --bin gym --release" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test board::test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::board::test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test server::test::test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package gym --bin gym server::test::test -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -75,25 +163,18 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="ostseeschach_bot" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="ostseeschach_bot" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.Run gym" />
+      <item itemvalue="Cargo.Test server::test::test" />
+      <item itemvalue="Cargo.Run gym (1)" />
+      <item itemvalue="Cargo.Test board::test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test board::test" />
+        <item itemvalue="Cargo.Run gym (1)" />
+        <item itemvalue="Cargo.Test server::test::test" />
         <item itemvalue="Cargo.Run gym" />
         <item itemvalue="Cargo.run" />
       </list>
@@ -103,8 +184,36 @@
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="" />
+      <created>1648302141579</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648302141579</updated>
+      <workItem from="1648302144531" duration="13829000" />
+      <workItem from="1648330911709" duration="1734000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added EvaluationFunction type in for implementing algorithms. Fixed gamestate not advancing round.">
+      <created>1648332209721</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1648332209721</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added EvaluationFunction type in for implementing algorithms. Fixed gamestate not advancing round.">
+      <created>1648332368536</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1648332368536</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -117,5 +226,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added EvaluationFunction type in for implementing algorithms. Fixed gamestate not advancing round." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added EvaluationFunction type in for implementing algorithms. Fixed gamestate not advancing round." />
   </component>
 </project>
