@@ -59,7 +59,7 @@ impl IGamestate for Gamestate {
     }
 
     #[inline]
-    fn for_each_move<F: FnMut(Self::MoveType) -> bool>(&self,  team: Team, f: &mut F) {
+    fn for_each_move<F: FnMut(Self::MoveType) -> bool>(&self, team: Team, f: &mut F) {
         self.board.for_each_move(team, f)
     }
 
@@ -244,7 +244,7 @@ mod tests {
     }
 
     #[test]
-    fn test_points_system(){
+    fn test_points_system() {
         let mut rng = Xoshiro128Plus::seed_from_u64(2);
         let board = Board::new_random(&mut rng);
         let mut gamestate = Gamestate {
@@ -254,20 +254,20 @@ mod tests {
             ambers: [0, 0],
         };
 
-        let m = Move{
+        let m = Move {
             from: 0,
             to: 6,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
         gamestate.board.double.set_bit(0);
         gamestate.apply_move(&m);
         //println!("{}", gamestate.board);
         //println!("{:?}", gamestate.ambers);
 
-        let m = Move{
+        let m = Move {
             from: 6,
             to: 7,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
         gamestate.apply_move(&m);
         //println!("{}", gamestate.board);
@@ -275,23 +275,22 @@ mod tests {
 
         gamestate.next_player();
 
-        let m = Move{
+        let m = Move {
             from: 63,
             to: 17,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
         gamestate.apply_move(&m);
         //println!("{}", gamestate.board);
         //println!("{:?}", gamestate.ambers);
 
-        let m = Move{
+        let m = Move {
             from: 17,
             to: 16,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
         gamestate.apply_move(&m);
         //println!("{}", gamestate.board);
         //println!("{:?}", gamestate.ambers);
-
     }
 }

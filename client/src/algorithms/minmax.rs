@@ -28,24 +28,21 @@ impl<E: MinMaxState> MinMax<E> {
     fn recommend_move(&mut self, state: E, my_team: Team) -> E::MoveType {
         let mut move_value_pairs = vec![];
         self.my_team = my_team;
-        state.for_each_move(
-            self.my_team,
-            &mut |mov| {
-                let mut child = state.clone();
-                child.apply_move(&mov);
-                child.next_player();
+        state.for_each_move(self.my_team, &mut |mov| {
+            let mut child = state.clone();
+            child.apply_move(&mov);
+            child.next_player();
 
-                let value = self.min_max(
-                    child,
-                    self.max_depth - 1,
-                    self.my_team.opponent(),
-                    E::EvalType::min_value(),
-                    E::EvalType::max_value(),
-                );
-                move_value_pairs.push((value, mov));
-                false
-            }
-        );
+            let value = self.min_max(
+                child,
+                self.max_depth - 1,
+                self.my_team.opponent(),
+                E::EvalType::min_value(),
+                E::EvalType::max_value(),
+            );
+            move_value_pairs.push((value, mov));
+            false
+        });
         let max = move_value_pairs.iter().max_by_key(|pair| pair.0);
         println!("Value: {}", max.unwrap().0);
 
@@ -70,45 +67,43 @@ impl<E: MinMaxState> MinMax<E> {
             //Maximizing player (Client player)
             let mut value = T::EvalType::min_value();
 
-            state.for_each_move(
-                team,
-                &mut |mov| {
-                    let mut child = state.clone();
-                    child.apply_move(&mov);
-                    child.next_player();
+            state.for_each_move(team, &mut |mov| {
+                let mut child = state.clone();
+                child.apply_move(&mov);
+                child.next_player();
 
-                    value =
-                        T::EvalType::max(value, self.min_max(child, depth - 1, team.opponent(), alpha, beta));
-                    alpha = T::EvalType::max(alpha, value);
+                value = T::EvalType::max(
+                    value,
+                    self.min_max(child, depth - 1, team.opponent(), alpha, beta),
+                );
+                alpha = T::EvalType::max(alpha, value);
 
-                    if value >= beta {
-                        return true; //* β-cutoff *
-                    }
-                    false
+                if value >= beta {
+                    return true; //* β-cutoff *
                 }
-            );
+                false
+            });
             value
         } else {
             //Minimizing player (Enemy player)
             let mut value = T::EvalType::max_value();
 
-            state.for_each_move(
-                team,
-                &mut |mov| {
-                    let mut child = state.clone();
-                    child.apply_move(&mov);
-                    child.next_player();
+            state.for_each_move(team, &mut |mov| {
+                let mut child = state.clone();
+                child.apply_move(&mov);
+                child.next_player();
 
-                    value =
-                        T::EvalType::min(value, self.min_max(child, depth - 1, team.opponent(), alpha, beta));
-                    beta = T::EvalType::min(alpha, value);
+                value = T::EvalType::min(
+                    value,
+                    self.min_max(child, depth - 1, team.opponent(), alpha, beta),
+                );
+                beta = T::EvalType::min(alpha, value);
 
-                    if value <= alpha {
-                        return true; //* α-cutoff *
-                    }
-                    false
-                },
-            );
+                if value <= alpha {
+                    return true; //* α-cutoff *
+                }
+                false
+            });
             value
         };
     }

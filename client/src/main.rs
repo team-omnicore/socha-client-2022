@@ -1,19 +1,20 @@
 #![allow(dead_code)]
 
-mod algorithms;
-mod bridge;
-mod client;
-mod game;
-mod utils;
+pub mod algorithms;
+pub mod bridge;
+pub mod client;
+pub mod game;
+pub mod utils;
 
-use crate::algorithms::{MinMax};
+use crate::algorithms::MinMax;
 use crate::client::Client;
+use crate::game::Team;
+use chrono::Local;
 use clap::Parser;
-use std::io::Write;
 use env_logger::{Builder, Target};
 use log::LevelFilter;
 use std::env;
-use chrono::Local;
+use std::io::Write;
 
 /// Rust client for the board game "Ostseeschach"
 #[derive(Parser, Debug)]
@@ -42,11 +43,12 @@ fn main() {
     Builder::new()
         .parse_env(&env::var("MY_APP_LOG").unwrap_or_default())
         .format(|buf, record| {
-            writeln!(buf,
-                     "{} [{}] - {}",
-                     Local::now().format("%Y-%m-%dT%H:%M:%S"),
-                     record.level(),
-                     record.args()
+            writeln!(
+                buf,
+                "{} [{}] - {}",
+                Local::now().format("%Y-%m-%dT%H:%M:%S"),
+                record.level(),
+                record.args()
             )
         })
         .filter_level(LevelFilter::Info)
@@ -54,7 +56,9 @@ fn main() {
         .init();
 
     let minmax = MinMax::new(5);
-    Client::new(minmax, None)
+    let mut client = Client::new(minmax, None);
+
+    let result = client
         .connect(&args.host, args.port)
         .expect("Failed to connect to Server");
 }

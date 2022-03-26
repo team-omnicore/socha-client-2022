@@ -69,7 +69,15 @@ impl<A: Algorithm> Client<A> {
         }
     }
 
-    pub fn connect(self, host: &str, port: u16) -> SCResult<GameResult> {
+    pub fn connect(&mut self, host: &str, port: u16) -> SCResult<GameResult> {
         self.inner.connect(host, port)
+    }
+
+    pub fn team(&self) -> Option<Team> {
+        if let Some(team) = self.inner.team() {
+            Some(Team::from(team))
+        } else {
+            None
+        }
     }
 }

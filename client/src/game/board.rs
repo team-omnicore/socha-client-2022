@@ -105,7 +105,7 @@ impl Board {
     /// Calculates the points through reaching the end of the board with
     /// light game piece (Moewe, Seestern, Muschel).
     #[inline]
-    fn on_finish_line(leichtfigur: Bitboard, piece_team: Team) ->bool{
+    fn on_finish_line(leichtfigur: Bitboard, piece_team: Team) -> bool {
         match piece_team {
             Team::ONE => (leichtfigur.bits & 0x8080808080808080) != 0,
             Team::TWO => (leichtfigur.bits & 0x101010101010101) != 0,
@@ -191,7 +191,6 @@ impl Board {
                     self.robben &= !new_piece;
                     points += 1;
                 }
-
             }
             PieceType::Seestern => {
                 //Clear old piece
@@ -311,7 +310,7 @@ impl Board {
     }
 
     #[inline]
-    pub fn for_each_move<F: FnMut(Move) -> bool>(&self,team: Team, f: &mut F) {
+    pub fn for_each_move<F: FnMut(Move) -> bool>(&self, team: Team, f: &mut F) {
         let player_pieces = match team {
             Team::ONE => self.red,
             Team::TWO => self.blue,
@@ -480,23 +479,24 @@ impl Display for Board {
     }
 }
 
-
 #[cfg(test)]
 mod test {
-    use crate::game::{Board, Move, PieceType, Team, Piece, Bitboard};
     use crate::bitboard;
+    use crate::game::{Bitboard, Board, Move, Piece, PieceType, Team};
     use rand::SeedableRng;
     use rand_xoshiro::Xoshiro128Plus;
 
     #[test]
-    fn test_on_finish_line(){
+    fn test_on_finish_line() {
         let mut board = Board::empty();
-        board.set_piece(7, Piece {
-            piece_type: PieceType::Herzmuschel,
-            team: Team::ONE,
-            stacked: false
-        });
-
+        board.set_piece(
+            7,
+            Piece {
+                piece_type: PieceType::Herzmuschel,
+                team: Team::ONE,
+                stacked: false,
+            },
+        );
     }
 
     #[test]
@@ -504,102 +504,92 @@ mod test {
         let mut rng = Xoshiro128Plus::seed_from_u64(2);
         let mut board = Board::new_random(&mut rng);
 
-        let m = Move{
+        let m = Move {
             from: 0,
             to: 14,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
 
         assert_eq!(board.apply_move(&m, Team::ONE), 0);
 
-        let m = Move{
+        let m = Move {
             from: 14,
             to: 7,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
 
         assert_eq!(board.apply_move(&m, Team::ONE), 1);
 
-        let m = Move{
+        let m = Move {
             from: 63,
             to: 57,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
 
         assert_eq!(board.apply_move(&m, Team::TWO), 0);
 
-        let m = Move{
+        let m = Move {
             from: 57,
             to: 56,
-            piece: PieceType::Herzmuschel
+            piece: PieceType::Herzmuschel,
         };
         board.double.set_bit(57);
         assert_eq!(board.apply_move(&m, Team::TWO), 2);
     }
 
     #[test]
-    fn test_double_board(){
+    fn test_double_board() {
         let mut board = Board::empty();
-        board.set_piece(34, Piece{
-            piece_type: PieceType::Robbe,
-            team: Team::ONE,
-            stacked: true
-        });
+        board.set_piece(
+            34,
+            Piece {
+                piece_type: PieceType::Robbe,
+                team: Team::ONE,
+                stacked: true,
+            },
+        );
 
-        assert_eq!(board.double, bitboard!(1<<34));
+        assert_eq!(board.double, bitboard!(1 << 34));
 
-        let m = Move{
+        let m = Move {
             from: 34,
             to: 44,
-            piece: PieceType::Robbe
+            piece: PieceType::Robbe,
         };
 
         assert_eq!(board.apply_move(&m, Team::ONE), 0);
-        assert_eq!(board.double, bitboard!(1<<44))
+        assert_eq!(board.double, bitboard!(1 << 44))
     }
 
     #[test]
-    fn test_board_piece_interactions(){
+    fn test_board_piece_interactions() {
         let mut board = Board::empty();
-        board.set_piece(34, Piece{
-            piece_type: PieceType::Robbe,
-            team: Team::ONE,
-            stacked: true
-        });
+        board.set_piece(
+            34,
+            Piece {
+                piece_type: PieceType::Robbe,
+                team: Team::ONE,
+                stacked: true,
+            },
+        );
 
-        board.set_piece(24, Piece{
-            piece_type: PieceType::Moewe,
-            team: Team::TWO,
-            stacked: true
-        });
+        board.set_piece(
+            24,
+            Piece {
+                piece_type: PieceType::Moewe,
+                team: Team::TWO,
+                stacked: true,
+            },
+        );
         println!("{}", board);
 
-        let m = Move{
+        let m = Move {
             from: 24,
             to: 34,
-            piece: PieceType::Moewe
+            piece: PieceType::Moewe,
         };
 
         assert_eq!(board.apply_move(&m, Team::TWO), 1);
         println!("{}", board);
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
