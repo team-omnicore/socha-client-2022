@@ -24,8 +24,8 @@ pub static EVAL_2603_1: EvaluationFunction<Gamestate, i32> = |state, team|->i32{
     eval -= (state.board.blue & state.board.double).bits.count_ones() as i32 * DOUBLE_PIECE_REWARD;
     eval += state.board.red.bits.count_ones() as i32 * PIECE_REWARD;
     eval -= state.board.blue.bits.count_ones() as i32 * PIECE_REWARD;
-    eval += state.count_moves(Team::ONE);
-    eval -= state.count_moves(Team::TWO);
+    eval += state.count_moves(Team::ONE) as i32;
+    eval -= state.count_moves(Team::TWO) as i32;
 
     if team == Team::TWO{
         eval *= -1;
@@ -39,9 +39,9 @@ pub static EVAL_2603_1: EvaluationFunction<Gamestate, i32> = |state, team|->i32{
                 LOSE_REWARD
             } else {
                 let leicht_figuren = state.board.moewen | state.board.seesterne | state.board.muscheln;
-                let red_l = (leicht_figuren & state.board.red).rotate90_anti_clockwise();
-                let blue_l = (leicht_figuren & state.board.blue).rotate90_clockwise();
-                let wins = Gamestate::draw_winner(*red_l, *blue_l);
+                let mut red_l = leicht_figuren & state.board.red;
+                let mut blue_l = leicht_figuren & state.board.blue;
+                let wins = Gamestate::draw_winner(*red_l.rotate90_anti_clockwise(), *blue_l.rotate90_clockwise());
                 match wins {
                     1 => TIEBREAK_POSITIVE_REWARD,
                     0 => TIE_REWARD,
@@ -57,9 +57,9 @@ pub static EVAL_2603_1: EvaluationFunction<Gamestate, i32> = |state, team|->i32{
                 LOSE_REWARD
             } else {
                 let leicht_figuren = state.board.moewen | state.board.seesterne | state.board.muscheln;
-                let red_l = (leicht_figuren & state.board.red).rotate90_anti_clockwise();
-                let blue_l = (leicht_figuren & state.board.blue).rotate90_clockwise();
-                let wins = Gamestate::draw_winner(*blue_l, *blue_l);
+                let mut red_l = leicht_figuren & state.board.red;
+                let mut blue_l = leicht_figuren & state.board.blue;
+                let wins = Gamestate::draw_winner(*blue_l.rotate90_clockwise(), *red_l.rotate90_anti_clockwise());
                 match wins {
                     1 => TIEBREAK_POSITIVE_REWARD,
                     0 => TIE_REWARD,

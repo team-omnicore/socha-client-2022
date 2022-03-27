@@ -1,4 +1,4 @@
-#![allow(dead_code)]
+#![allow(unused)]
 use client::algorithms::{MinMax, Algorithm, RandomPick};
 use client::client::Client;
 use client::game::{Team, Gamestate};
@@ -7,6 +7,7 @@ use std::fs::File;
 use std::path::Path;
 use std::thread::sleep;
 use std::time::Duration;
+use client::algorithms::heuristics::EVAL_2603_1;
 
 fn main() {
     sim()
@@ -35,7 +36,7 @@ fn sim(){
             File::create(Path::new("gym/.gym_files/result.txt")).expect("Failed to create file");
         }
 
-        let minmax = MinMax::new(5);
+        let minmax = MinMax::new(5, EVAL_2603_1);
         let mut client = Client::new(minmax, None);
 
         let result = client
