@@ -4,18 +4,15 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Added EvaluationFunction type in for implementing algorithms. Fixed gamestate not advancing round.">
+      <change afterPath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/algorithms/heuristics/mod.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/gym/src/player.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/gym/src/server.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/gym/src/test.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/algorithm.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/algorithm.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/client.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/team.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/team.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gym/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/socha-client-rust-2022" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" afterDir="false" />
@@ -69,6 +66,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/client/src/game/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
   </component>
@@ -88,7 +88,7 @@
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/test.rs" value="true" />
   </component>
-  <component name="RunManager" selected="Cargo.Run gym (1)">
+  <component name="RunManager" selected="Cargo.Test board::test">
     <configuration name="Run gym (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package gym --bin gym --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -107,6 +107,22 @@
     </configuration>
     <configuration name="Run gym" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package gym --bin gym --release" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test board::test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::board::test" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -158,9 +174,11 @@
       <item itemvalue="Cargo.Run gym" />
       <item itemvalue="Cargo.Test server::test::test" />
       <item itemvalue="Cargo.Run gym (1)" />
+      <item itemvalue="Cargo.Test board::test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test board::test" />
         <item itemvalue="Cargo.Run gym (1)" />
         <item itemvalue="Cargo.Test server::test::test" />
         <item itemvalue="Cargo.Run gym" />
@@ -182,6 +200,7 @@
       <updated>1648302141579</updated>
       <workItem from="1648302144531" duration="13829000" />
       <workItem from="1648330911709" duration="1264000" />
+      <workItem from="1648333112201" duration="2495000" />
     </task>
     <servers />
   </component>

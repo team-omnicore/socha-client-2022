@@ -47,7 +47,7 @@ impl Gamestate {
                     0 => Some(Team::ONE),
                     _ => {
                         debug_assert!(false);
-                        0
+                        None
                     }
                 }
             }
