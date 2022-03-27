@@ -6,6 +6,7 @@ pub mod client;
 pub mod game;
 pub mod utils;
 
+use crate::algorithms::heuristics::EVAL_2603_1;
 use crate::algorithms::MinMax;
 use crate::client::Client;
 use crate::game::Team;
@@ -55,7 +56,7 @@ fn main() {
         .target(Target::Stdout)
         .init();
 
-    let minmax = MinMax::new(5);
+    let minmax = MinMax::new(5, EVAL_2603_1);
     let mut client = Client::new(minmax, None);
 
     let result = client

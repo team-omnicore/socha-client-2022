@@ -260,6 +260,36 @@ impl Board {
     }
 
     #[inline]
+    pub fn leichtfigur_fortschritt(&self, team: Team) -> u8 {
+        let leicht_figuren = self.moewen | self.seesterne | self.muscheln;
+        match team {
+            Team::ONE => {
+                let player = self.red & leicht_figuren;
+                let mut opp_side = bitboard!(0x8080808080808080);
+                for i in (0..8).rev() {
+                    if (player & opp_side).bits != 0 {
+                        return i;
+                    } else {
+                        opp_side.bits >>= 1;
+                    }
+                }
+            }
+            Team::TWO => {
+                let player = self.blue & leicht_figuren;
+                let mut opp_side = bitboard!(0x101010101010101);
+                for i in (0..8).rev() {
+                    if (player & opp_side).bits != 0 {
+                        return i;
+                    } else {
+                        opp_side.bits <<= 1;
+                    }
+                }
+            }
+        }
+        0
+    }
+
+    #[inline]
     pub fn set_piece(&mut self, pos: u8, piece: Piece) {
         match piece.piece_type {
             PieceType::Robbe => self.robben.set_bit(pos),
@@ -485,6 +515,31 @@ mod test {
     use crate::game::{Bitboard, Board, Move, Piece, PieceType, Team};
     use rand::SeedableRng;
     use rand_xoshiro::Xoshiro128Plus;
+
+    #[test]
+    fn test_frontmost_piece() {
+        let mut board = Board::empty();
+
+        board.set_piece(
+            45,
+            Piece {
+                piece_type: PieceType::Herzmuschel,
+                team: Team::ONE,
+                stacked: false,
+            },
+        );
+        assert_eq!(board.leichtfigur_fortschritt(Team::ONE), 5);
+
+        board.set_piece(
+            61,
+            Piece {
+                piece_type: PieceType::Seestern,
+                team: Team::TWO,
+                stacked: false,
+            },
+        );
+        assert_eq!(board.leichtfigur_fortschritt(Team::TWO), 2);
+    }
 
     #[test]
     fn test_on_finish_line() {

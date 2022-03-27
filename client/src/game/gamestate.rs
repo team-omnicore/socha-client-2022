@@ -42,9 +42,9 @@ impl Gamestate {
 
                 let wins = Gamestate::draw_winner(red_l, blue_l);
                 match wins {
+                    1 => Some(Team::ONE),
                     -1 => Some(Team::TWO),
-                    1 => None,
-                    0 => Some(Team::ONE),
+                    0 => None,
                     _ => {
                         debug_assert!(false);
                         None

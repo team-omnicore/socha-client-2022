@@ -1,7 +1,7 @@
 mod algorithm;
+pub mod heuristics;
 mod minmax;
 mod random_pick;
-pub mod heuristics;
 
 pub use algorithm::*;
 pub use minmax::*;

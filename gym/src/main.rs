@@ -1,74 +1,62 @@
+#![feature(thread_is_running)]
 #![allow(unused)]
-use client::algorithms::{MinMax, Algorithm, RandomPick};
-use client::client::Client;
-use client::game::{Team, Gamestate};
-use std::fs;
-use std::fs::File;
-use std::path::Path;
-use std::thread::sleep;
-use std::time::Duration;
-use client::algorithms::heuristics::EVAL_2603_1;
+use crate::player::Player;
+use crate::server::Server;
+use client::algorithms::heuristics::*;
+use client::algorithms::{Algorithm, MinMax, MinMaxState, RandomPick};
+use client::game::{Gamestate, Team};
+use std::thread;
+
+mod player;
+mod server;
 
 fn main() {
-    sim()
-}
+    let mut handles = vec![];
+    for i in 0..1 {
+        let t = thread::spawn(move || {
+            let mut server = Server::new("gym/.gym_files/gym.log".to_string());
 
-fn sim(){
-    let mut i = 0;
-    loop {
-        if i%2==0 {
-            sleep(Duration::from_millis(1100));
-        }
+            let p1 = Player::new(
+                "Minmax_depth_5_EVAL_2603_1".to_string(),
+                MinMax::new(5, EVAL_2603_1),
+            );
 
-        let mut wins = 0;
-        let mut losses = 0;
-        let mut draws = 0;
+            let p2 = Player::new(
+                "Minmax_depth_5_EVAL_2703_1".to_string(),
+                MinMax::new(5, EVAL_2703_1),
+            );
 
-        let data = fs::read_to_string("gym/.gym_files/result.txt");
-        if data.is_ok() {
-            let data = data.unwrap();
-            let vec:Vec<_> = data.split('\n').collect();
-            wins = vec[0].split(": ").nth(1).unwrap().parse().unwrap();
-            losses = vec[1].split(": ").nth(1).unwrap().parse().unwrap();
-            draws = vec[2].split(": ").nth(1).unwrap().parse().unwrap();
-        }else {
-            fs::create_dir_all("gym/.gym_files/").expect("Failed to create dirs");
-            File::create(Path::new("gym/.gym_files/result.txt")).expect("Failed to create file");
-        }
+            let p3 = Player::new(
+                "Minmax_depth_5_EVAL_2703_2".to_string(),
+                MinMax::new(5, EVAL_2703_2),
+            );
 
-        let minmax = MinMax::new(5, EVAL_2603_1);
-        let mut client = Client::new(minmax, None);
+            let p4 = Player::new(
+                "Minmax_depth_5_DEFAULT_EVALUATION".to_string(),
+                MinMax::new(5, Gamestate::default_evaluation),
+            );
 
-        let result = client
-            .connect("localhost", 13050)
-            .expect("Failed to connect to Server");
+            let p5 = Player::new(
+                "Minmax_depth_5_EVAL_2703_3".to_string(),
+                MinMax::new(5, EVAL_2703_3),
+            );
 
-        if let Some(winner) = result.winner().as_ref() {
-            if Team::from(winner.team()) == client.team().unwrap() {
-                wins += 1;
-            } else {
-                losses += 1;
+            server.add_player(p1);
+            server.add_player(p2);
+            server.add_player(p3);
+            server.add_player(p4);
+            server.add_player(p5);
+
+            server.init();
+
+            loop {
+                println!("Playing on thread {}", i);
+                server.play_match();
             }
-        } else {
-            draws += 1;
-        }
-
-        let res = format!(
-            "Wins: {}\nLosses: {}\nDraws: {}\nWinrate -> {:.1}%\nWinratio -> {:.1}",
-            wins,
-            losses,
-            draws,
-            wins as f32 / (wins + losses + draws) as f32 * 100f32,
-            wins as f32 / losses as f32
-        );
-        fs::write("gym/.gym_files/result.txt", res).expect("Unable to write file");
-        i+=1;
+        });
+        handles.push(t);
+    }
+    for x in handles {
+        x.join();
     }
 }
-
-
-
-/*enum Player<A: Algorithm>{
-    Internal(Client<A>),
-    External(Path)
-}*/

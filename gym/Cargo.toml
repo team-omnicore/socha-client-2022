@@ -6,7 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde_json = "1.0"
 rand = "0.8.5"
 socha-client-2022 = {path="../socha-client-rust-2022"}
 client = {path="../client"}

@@ -1,9 +1,9 @@
 use crate::algorithms::{Algorithm, EvaluationFunction};
 use crate::game::{Gamestate, IGamestate, Move, Team};
 use num_traits::{Bounded, Num, NumCast};
-use std::collections::LinkedList;
 use std::fmt::Display;
 
+#[derive(Clone)]
 pub struct MinMax<E: MinMaxState> {
     max_depth: u8,
     my_team: Team,
@@ -44,7 +44,7 @@ impl<E: MinMaxState> MinMax<E> {
             false
         });
         let max = move_value_pairs.iter().max_by_key(|pair| pair.0);
-        println!("Value: {}", max.unwrap().0);
+        //println!("Value: {}", max.unwrap().0);
 
         max.unwrap().1.clone()
     }
