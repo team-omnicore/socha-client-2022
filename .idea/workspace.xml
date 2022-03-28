@@ -4,51 +4,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Added new Evaluation Function">
-      <change afterPath="$PROJECT_DIR$/gym/src/player.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gym/src/server.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/algorithm.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/algorithm.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/heuristics/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/heuristics/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/utils.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utils.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gym/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Formatted code with rustfmt">
       <change beforePath="$PROJECT_DIR$/socha-client-rust-2022" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/move.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/move.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece_type.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/piece_type.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/team.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/team.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/game/vec2.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/game/vec2.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/logic.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/logic.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event_payload.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/event_payload.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/game_result.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/game_result.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request_payload.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/request_payload.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_aggregation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_aggregation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_cause.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_cause.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition_fragment.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/protocol/score_definition_fragment.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/error.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/macros.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/macros.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/util/xml.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/util/xml.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,11 +27,15 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/socha-client-rust-2022" />
+    <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/events/mod.rs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/client/src/game/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/writer.rs" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.rustup/toolchains/nightly-x86_64-pc-windows-msvc/lib/rustlib/src/rust/library/core/src/convert/mod.rs" root0="SKIP_INSPECTION" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
