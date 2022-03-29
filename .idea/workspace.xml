@@ -4,11 +4,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Announce leaving a room to the server">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Add team to ClientDelegate::on_game_end() so debug messages can be clearer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/client.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022/src/client.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +200,7 @@
       <workItem from="1648375896984" duration="270000" />
       <workItem from="1648376184435" duration="20454000" />
       <workItem from="1648568512365" duration="6446000" />
-      <workItem from="1648585485048" duration="5655000" />
+      <workItem from="1648585485048" duration="6791000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -225,7 +223,21 @@
       <option name="project" value="LOCAL" />
       <updated>1648493717568</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Pass reservation to Client">
+      <created>1648592564309</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1648592564309</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add team to ClientDelegate::on_game_end() so debug messages can be clearer">
+      <created>1648592627777</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1648592627777</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +259,8 @@
     <MESSAGE value="Added new Evaluation Function" />
     <MESSAGE value="Don't log xml-nodes to info! anymore" />
     <MESSAGE value="Announce leaving a room to the server" />
-    <option name="LAST_COMMIT_MESSAGE" value="Announce leaving a room to the server" />
+    <MESSAGE value="Pass reservation to Client" />
+    <MESSAGE value="Add team to ClientDelegate::on_game_end() so debug messages can be clearer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add team to ClientDelegate::on_game_end() so debug messages can be clearer" />
   </component>
 </project>
