@@ -1,13 +1,16 @@
+use std::time::SystemTime;
+
+use log::info;
+
 use socha_client_2022::client::{DebugMode, SCClient, SCClientDelegate};
 use socha_client_2022::game::Move as SCMove;
 use socha_client_2022::game::State as SCState;
 use socha_client_2022::game::Team as SCTeam;
+use socha_client_2022::protocol::GameResult;
 use socha_client_2022::util::SCResult;
-use std::time::SystemTime;
 
 use crate::algorithms::Algorithm;
 use crate::game::{Fen, Gamestate, Team};
-use socha_client_2022::protocol::GameResult;
 
 struct ClientDelegate<E: Algorithm> {
     inner: E,
@@ -20,27 +23,75 @@ impl<E: Algorithm> SCClientDelegate for ClientDelegate<E> {
         println!("{}", gamestate.board);
     }
 
-    fn on_game_end(&mut self, result: &GameResult) {
-        log::info!("{:?}", result);
+    fn on_game_end(&mut self, result: &GameResult, my_team: SCTeam) {
+        let red_score = result
+            .scores()
+            .iter()
+            .find_map(|(player, score)| {
+                if player.team() == SCTeam::One {
+                    Some(score)
+                } else {
+                    None
+                }
+            })
+            .unwrap();
+        let blue_score = result
+            .scores()
+            .iter()
+            .find_map(|(player, score)| {
+                if player.team() == SCTeam::Two {
+                    Some(score)
+                } else {
+                    None
+                }
+            })
+            .unwrap();
+        let my_score = match my_team {
+            SCTeam::One => red_score,
+            SCTeam::Two => blue_score,
+        };
+        if let Some(winner) = result.winner() {
+            if my_team == winner.team() {
+                info!(
+                    "WON({} : {}) -> Points({} : {})    [{:?}]",
+                    red_score.parts().get(1).unwrap(),
+                    blue_score.parts().get(1).unwrap(),
+                    red_score.parts().get(0).unwrap(),
+                    blue_score.parts().get(0).unwrap(),
+                    my_score.cause()
+                );
+            } else {
+                info!(
+                    "LOST({} : {}) -> Points({} : {})    [{:?}]",
+                    red_score.parts().get(1).unwrap(),
+                    blue_score.parts().get(1).unwrap(),
+                    red_score.parts().get(0).unwrap(),
+                    blue_score.parts().get(0).unwrap(),
+                    my_score.cause()
+                );
+            }
+        } else {
+            info!("DRAW({}) [{:?}]", red_score.parts().get(0).unwrap(), my_score.cause());
+        }
     }
 
     fn on_welcome(&mut self, team: SCTeam) {
         let team: Team = team.into();
-        log::info!("Joined as Team {}", team);
+        info!("Joined as Team {}", team);
     }
 
     fn request_move(&mut self, sc_state: &SCState, my_team: SCTeam) -> SCMove {
-        log::info!("Beginning move calculation");
+        info!("Beginning move calculation");
         let start = SystemTime::now();
 
         let best = self
             .inner
             .best_move(sc_state.clone().into(), my_team.into());
         let stop = SystemTime::now().duration_since(start).unwrap();
-        println!("Finished calculation {:?}", stop);
+        info!("Finished calculation {:?}", stop);
         let piece = best.piece;
         let mov = best.into();
-        println!("Sending move: {} {}", piece, mov);
+        info!("Sending move: {} {}", piece, mov);
         mov
     }
 }
