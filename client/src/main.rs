@@ -63,4 +63,6 @@ fn main() {
     let _result = client
         .connect(&args.host, args.port)
         .expect("Failed to connect to Server");
+
+    println!("{:#?}", result);
 }
