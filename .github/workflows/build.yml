@@ -17,6 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: RUSTFLAGS="-C target-cpu=broadwell -C overflow-checks=no -C lto=fat -C embed-bitcode=y" cargo build --target=x86_64-unknown-linux-musl --release
+      run: RUSTFLAGS="-C target-cpu=broadwell -C overflow-checks=no -C lto=fat -C embed-bitcode=y" cargo build --target=x86_64-unknown-linux-musl --workspace --release
     - name: Run tests
       run: cargo test --verbose
