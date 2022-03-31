@@ -147,25 +147,3 @@ impl<A: Algorithm> Match<A> {
         self.current_state.winner()
     }
 }
-
-#[cfg(test)]
-mod test {
-    #[test]
-    fn test() {
-        let k = 32f32;
-
-        let bonus = 0f32;
-
-        let r1 = 1400f32;
-        let r2 = 1100f32;
-
-        let e1 = 10f32.powf(r1 / 400f32);
-        let e2 = 10f32.powf(r2 / 400f32);
-
-        let r1_ = r1 + k * (bonus - (e1 / (e1 + e2)));
-        let r2_ = r2 + k * ((1f32 - bonus) - (e2 / (e1 + e2)));
-
-        println!("{}", r1_);
-        println!("{}", r2_);
-    }
-}
