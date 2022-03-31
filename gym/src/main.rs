@@ -1,4 +1,3 @@
-#![feature(thread_is_running)]
 #![allow(unused)]
 use crate::player::Player;
 use crate::server::Server;
