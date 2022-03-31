@@ -2,7 +2,6 @@
 
 members=[
     "client",
-    "socha-client-rust-2022",
     "gym"
 ]
 

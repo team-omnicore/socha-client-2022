@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Add team to ClientDelegate::on_game_end() so debug messages can be clearer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022" beforeDir="false" afterPath="$PROJECT_DIR$/socha-client-rust-2022" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gym/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +30,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
@@ -201,6 +209,7 @@
       <workItem from="1648376184435" duration="20454000" />
       <workItem from="1648568512365" duration="6446000" />
       <workItem from="1648585485048" duration="6791000" />
+      <workItem from="1648759782225" duration="383000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>

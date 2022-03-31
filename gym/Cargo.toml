@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 rand = "0.8.5"
-socha-client-2022 = {path="../socha-client-rust-2022"}
+socha-client-2022 = { git = "https://github.com/team-omnicore/socha-client-rust-2022.git", branch = "main" }
 client = {path="../client"}
