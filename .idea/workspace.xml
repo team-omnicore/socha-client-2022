@@ -4,12 +4,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Add team to ClientDelegate::on_game_end() so debug messages can be clearer">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Retrieve socha-client-rust-2022 from git over cargo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gym/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socha-client-rust-2022" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym/src/server.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/server.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +75,7 @@
       <command value="cargo build --release -- -C target-cpu=native" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Build Native">
+  <component name="RunManager" selected="Cargo.test">
     <configuration name="Build Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc -C target-cpu=native -C opt-level=3 --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -107,24 +108,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Run gym" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package gym --bin gym --release" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test board::test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package client --lib game::board::test" />
+    <configuration name="Run gym (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package gym --bin gym" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -171,21 +156,37 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Cargo.Build Native" />
-      <item itemvalue="Cargo.Test board::test" />
       <item itemvalue="Cargo.build" />
-      <item itemvalue="Cargo.Run gym" />
       <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
       <item itemvalue="Cargo.Run client" />
+      <item itemvalue="Cargo.Run gym (1)" />
+      <item itemvalue="Cargo.test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.test" />
+        <item itemvalue="Cargo.Run gym (1)" />
         <item itemvalue="Cargo.build" />
         <item itemvalue="Cargo.build" />
         <item itemvalue="Cargo.Run client" />
-        <item itemvalue="Cargo.Run gym" />
-        <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
       </list>
     </recent_temporary>
   </component>
@@ -209,7 +210,7 @@
       <workItem from="1648376184435" duration="20454000" />
       <workItem from="1648568512365" duration="6446000" />
       <workItem from="1648585485048" duration="6791000" />
-      <workItem from="1648759782225" duration="383000" />
+      <workItem from="1648759782225" duration="1834000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -246,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648592627777</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Retrieve socha-client-rust-2022 from git over cargo">
+      <created>1648760235631</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1648760235631</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +278,7 @@
     <MESSAGE value="Announce leaving a room to the server" />
     <MESSAGE value="Pass reservation to Client" />
     <MESSAGE value="Add team to ClientDelegate::on_game_end() so debug messages can be clearer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add team to ClientDelegate::on_game_end() so debug messages can be clearer" />
+    <MESSAGE value="Retrieve socha-client-rust-2022 from git over cargo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Retrieve socha-client-rust-2022 from git over cargo" />
   </component>
 </project>
