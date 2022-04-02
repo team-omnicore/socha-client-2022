@@ -4,8 +4,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="squash! Update main.rs">
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove remaining module">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +264,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648762743467</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Remove remaining module">
+      <created>1648939194086</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1648939194086</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,6 +328,7 @@
     <MESSAGE value="Retrieve socha-client-rust-2022 from git over cargo" />
     <MESSAGE value="Delete failing tests for the time being and cleaned up workspace cargo.toml" />
     <MESSAGE value="Remove feature that requires nightly" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete failing tests for the time being and cleaned up workspace cargo.toml" />
+    <MESSAGE value="Remove remaining module" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove remaining module" />
   </component>
 </project>
