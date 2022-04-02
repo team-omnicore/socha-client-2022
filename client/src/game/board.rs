@@ -636,7 +636,6 @@ mod test {
                 stacked: true,
             },
         );
-        println!("{}", board);
 
         let m = Move {
             from: 24,
@@ -645,6 +644,5 @@ mod test {
         };
 
         assert_eq!(board.apply_move(&m, Team::TWO), 1);
-        println!("{}", board);
     }
 }

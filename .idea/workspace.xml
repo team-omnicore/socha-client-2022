@@ -4,17 +4,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove println">
-      <change afterPath="$PROJECT_DIR$/gym/.gym_files/Minmax_client_old.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gym/.gym_files/Minmax_depth_5_EVAL_2703_3.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gym/.gym_files/player2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gym/src/old/main.rs" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="squash! Update main.rs">
       <change beforePath="$PROJECT_DIR$/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.cargo/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gym/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/src/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/old/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/src/server.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/old/server.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +29,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
@@ -61,31 +60,22 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/gym/.gym_files" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/player.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/server.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/test.rs" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\gym\.gym_files" />
-      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot" />
-      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\gym\.scserver" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Louis\Programming\softwarechallenge\ostseeschach_bot\gym\src\old" />
-    </key>
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="cargo build --release" />
       <command value="cargo build --release -- -C target-cpu=native" />
+      <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Run gym (1)">
+  <component name="RunManager" selected="Cargo.Run client">
     <configuration name="Build Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc -C target-cpu=native -C opt-level=3 --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -105,7 +95,7 @@
     <configuration name="Run client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package client --bin client --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
+      <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
@@ -120,22 +110,6 @@
     </configuration>
     <configuration name="Run gym (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package gym --bin gym" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run gym" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package gym --bin gym --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -182,21 +156,37 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.build" />
-      <item itemvalue="Cargo.Run gym" />
       <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
       <item itemvalue="Cargo.Run client" />
       <item itemvalue="Cargo.Run gym (1)" />
+      <item itemvalue="Cargo.test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Run client" />
+        <item itemvalue="Cargo.test" />
         <item itemvalue="Cargo.Run gym (1)" />
         <item itemvalue="Cargo.build" />
         <item itemvalue="Cargo.build" />
-        <item itemvalue="Cargo.Run client" />
-        <item itemvalue="Cargo.Run gym" />
       </list>
     </recent_temporary>
   </component>
@@ -220,13 +210,11 @@
       <workItem from="1648376184435" duration="20454000" />
       <workItem from="1648568512365" duration="6446000" />
       <workItem from="1648585485048" duration="6791000" />
-      <workItem from="1648595608011" duration="1112000" />
-      <workItem from="1648651302501" duration="12425000" />
-      <workItem from="1648736756194" duration="2512000" />
-      <workItem from="1648749535882" duration="594000" />
-      <workItem from="1648758666818" duration="1724000" />
-      <workItem from="1648918832895" duration="87000" />
-      <workItem from="1648925992559" duration="2338000" />
+      <workItem from="1648759782225" duration="2627000" />
+      <workItem from="1648826726128" duration="3213000" />
+      <workItem from="1648833823221" duration="1390000" />
+      <workItem from="1648844955156" duration="2515000" />
+      <workItem from="1648937745930" duration="448000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -263,14 +251,21 @@
       <option name="project" value="LOCAL" />
       <updated>1648592627777</updated>
     </task>
-    <task id="LOCAL-00006" summary="Remove println">
-      <created>1648595851671</created>
+    <task id="LOCAL-00006" summary="Retrieve socha-client-rust-2022 from git over cargo">
+      <created>1648760235631</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1648595851671</updated>
+      <updated>1648760235631</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Delete failing tests for the time being and cleaned up workspace cargo.toml">
+      <created>1648762743467</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1648762743467</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,11 +274,41 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="288c4a3c-6153-4492-9be7-1d419d0ab863">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
           </value>
         </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="288c4a3c-6153-4492-9be7-1d419d0ab863" value="TOOL_WINDOW" />
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
@@ -294,7 +319,9 @@
     <MESSAGE value="Announce leaving a room to the server" />
     <MESSAGE value="Pass reservation to Client" />
     <MESSAGE value="Add team to ClientDelegate::on_game_end() so debug messages can be clearer" />
-    <MESSAGE value="Remove println" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove println" />
+    <MESSAGE value="Retrieve socha-client-rust-2022 from git over cargo" />
+    <MESSAGE value="Delete failing tests for the time being and cleaned up workspace cargo.toml" />
+    <MESSAGE value="Remove feature that requires nightly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete failing tests for the time being and cleaned up workspace cargo.toml" />
   </component>
 </project>

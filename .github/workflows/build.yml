@@ -1,29 +1,30 @@
+name: Rust
+
 on:
-  release:
-    types: [created]
+  push:
+    branches: '**'
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
 
 jobs:
-  release:
-    name: release ${{ matrix.target }}
+  build:
+
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - target: x86_64-pc-windows-gnu
-            archive: zip
-          - target: x86_64-unknown-linux-musl
-            archive: zip
-          - target: x86_64-apple-darwin
-            archive: zip
+
     steps:
-      - uses: actions/checkout@master
-      - name: Compile and release
-        uses: rust-build/rust-build.action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUSTTARGET: ${{ matrix.target }}
-          EXTRA_FILES: "README.md"
-          ARCHIVE_TYPES: ${{ matrix.archive }}
-          SRC_DIR: "client"
-          TOOLCHAIN_VERSION: "nightly"
+    - uses: actions/checkout@v3
+    
+    - name: Rustup
+      run: rustup default nightly
+    
+    - name: Add targets
+      run: rustup target add x86_64-unknown-linux-musl
+    
+    - name: Build
+      run: RUSTFLAGS="-C target-cpu=broadwell -C overflow-checks=no -C lto=fat -C embed-bitcode=y" cargo build -Z unstable-options --target=x86_64-unknown-linux-musl --workspace --release --out-dir=./target
+    
+    - name: Run tests
+      run: cargo test --verbose
