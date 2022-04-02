@@ -1,28 +1,29 @@
-name: Rust
-
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-env:
-  CARGO_TERM_COLOR: always
+  release:
+    types: [created]
 
 jobs:
-  build:
-
+  release:
+    name: release ${{ matrix.target }}
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-gnu
+            archive: zip
+          - target: x86_64-unknown-linux-musl
+            archive: zip
+          - target: x86_64-apple-darwin
+            archive: zip
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Checkout submodules
-      run: git submodule update --init --recursive
-
-    - name: Build
-      run: RUSTFLAGS="-C target-cpu=broadwell -C overflow-checks=no -C lto=fat -C embed-bitcode=y" cargo build --target=x86_64-unknown-linux-musl --workspace --release
-    
-    - name: Run tests
-      run: cargo test --verbose
+      - uses: actions/checkout@master
+      - name: Compile and release
+        uses: rust-build/rust-build.action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUSTTARGET: ${{ matrix.target }}
+          EXTRA_FILES: "README.md"
+          ARCHIVE_TYPES: ${{ matrix.archive }}
+          SRC_DIR: "client"
+          TOOLCHAIN_VERSION: "nightly"
