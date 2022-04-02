@@ -16,15 +16,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Rustup
       run: rustup default nightly
-    
+
     - name: Add targets
       run: rustup target add x86_64-unknown-linux-musl
-    
+
     - name: Build
       run: RUSTFLAGS="-C target-cpu=broadwell -C overflow-checks=no -C lto=fat -C embed-bitcode=y" cargo build -Z unstable-options --target=x86_64-unknown-linux-musl --workspace --release --out-dir=./target
-    
+
     - name: Run tests
       run: cargo test --verbose
