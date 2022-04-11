@@ -2,4 +2,4 @@
 linker = "rust-lld"
 
 [build]
-rustflags ="-C target-cpu=native -C embed-bitcode=yes -C lto=fat"
+rustflags ="-C target-cpu=native"

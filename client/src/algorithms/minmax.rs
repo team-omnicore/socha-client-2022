@@ -2,6 +2,7 @@ use crate::algorithms::{Algorithm, EvaluationFunction};
 use crate::game::{Gamestate, IGamestate, Move, Team};
 use num_traits::{Bounded, Num, NumCast};
 use std::fmt::Display;
+use crate::for_each_move;
 
 #[derive(Clone)]
 pub struct MinMax<E: MinMaxState> {

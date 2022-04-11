@@ -4,9 +4,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove remaining module">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Here goes nothing">
+      <change afterPath="$PROJECT_DIR$/client/src/tables/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/tables/move_map.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.cargo/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="fix-workflow" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -74,11 +81,27 @@
       <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Run client">
+  <component name="RunManager" selected="Cargo.Run gym (1)">
     <configuration name="Build Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc -C target-cpu=native -C opt-level=3 --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="NIGHTLY" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Expand client::game::board" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="expand --lib --color=always --theme=GitHub --tests game::board" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
+      <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
@@ -109,22 +132,6 @@
     </configuration>
     <configuration name="Run gym (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package gym --bin gym" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test game::board::test::test_frontmost_piece" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package client --lib game::board::test::test_frontmost_piece -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -174,17 +181,17 @@
     <list>
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.build" />
-      <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
       <item itemvalue="Cargo.Run client" />
       <item itemvalue="Cargo.Run gym (1)" />
       <item itemvalue="Cargo.test" />
+      <item itemvalue="Cargo.Expand client::game::board" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Run gym (1)" />
+        <item itemvalue="Cargo.Expand client::game::board" />
         <item itemvalue="Cargo.Run client" />
         <item itemvalue="Cargo.test" />
-        <item itemvalue="Cargo.Run gym (1)" />
-        <item itemvalue="Cargo.build" />
         <item itemvalue="Cargo.build" />
       </list>
     </recent_temporary>
@@ -214,6 +221,9 @@
       <workItem from="1648833823221" duration="1390000" />
       <workItem from="1648844955156" duration="2515000" />
       <workItem from="1648937745930" duration="448000" />
+      <workItem from="1649522950242" duration="593000" />
+      <workItem from="1649628552375" duration="3147000" />
+      <workItem from="1649693317275" duration="3938000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -320,6 +330,9 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/socha-client-rust-2022" />
+    </ignored-roots>
     <MESSAGE value="Added new Evaluation Function" />
     <MESSAGE value="Don't log xml-nodes to info! anymore" />
     <MESSAGE value="Announce leaving a room to the server" />

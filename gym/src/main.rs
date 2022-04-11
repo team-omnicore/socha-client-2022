@@ -9,12 +9,21 @@ use std::io::{BufReader, BufWriter};
 use rand::thread_rng;
 use rand::prelude::{SliceRandom, IteratorRandom};
 use std::process::{Command, Stdio};
+use client::game::{Gamestate, Board, Team};
 
 fn main() {
-    let mut m = MatchMaker::new(PathBuf::from(Path::new("gym/.gym_files/")), 1);
-    loop {
-        m.run_match();
-    }
+
+    let m = Board::new_random(&mut thread_rng());
+
+    println!("{}", m);
+    let mut available = m.available_moves(Team::ONE);
+    available.sort_unstable_by_key(|x| x.from);
+    println!("{:?}",available );
+
+    //let mut m = MatchMaker::new(PathBuf::from(Path::new("gym/.gym_files/")), 1);
+    //loop {
+    //    m.run_match();
+    //}
 }
 
 struct MatchMaker{
