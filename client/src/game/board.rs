@@ -25,6 +25,10 @@ macro_rules! bit_loop {
 #[macro_export]
 macro_rules! for_each_move {
     ($board:expr, $team:expr, $name:ident, $f:block) => {
+        use crate::bit_loop;
+        use crate::game::*;
+        use crate::utils::square_of;
+
         let player_pieces = match $team {
             Team::ONE => $board.red,
             Team::TWO => $board.blue,
@@ -41,7 +45,7 @@ macro_rules! for_each_move {
             let legal = moewe_lookup_moves(from) & unoccupied;
             bit_loop!(legal.bits, mov_to, {
                 let to = square_of(mov_to);
-                let $name = Move{
+                let $name = Move {
                     from,
                     to,
                     piece: PieceType::Moewe,
@@ -55,7 +59,7 @@ macro_rules! for_each_move {
             let legal = robbe_lookup_moves(from) & unoccupied;
             bit_loop!(legal.bits, mov_to, {
                 let to = square_of(mov_to);
-                let $name = Move{
+                let $name = Move {
                     from,
                     to,
                     piece: PieceType::Robbe,
@@ -69,7 +73,7 @@ macro_rules! for_each_move {
             let legal = seestern_lookup_moves(from, $team) & unoccupied;
             bit_loop!(legal.bits, mov_to, {
                 let to = square_of(mov_to);
-                let $name = Move{
+                let $name = Move {
                     from,
                     to,
                     piece: PieceType::Seestern,
@@ -81,9 +85,9 @@ macro_rules! for_each_move {
         bit_loop!(muscheln.bits, muschel, {
             let from = square_of(muschel);
             let legal = muschel_lookup_moves(from, $team) & unoccupied;
-            bit_loop!(legal.bits, mov_to,{
+            bit_loop!(legal.bits, mov_to, {
                 let to = square_of(mov_to);
-                let $name = Move{
+                let $name = Move {
                     from,
                     to,
                     piece: PieceType::Herzmuschel,
@@ -91,7 +95,7 @@ macro_rules! for_each_move {
                 $f
             });
         });
-    }
+    };
 }
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -423,86 +427,16 @@ impl Board {
     }
 
     #[inline]
-    pub fn for_each_move<F: FnMut(Move) -> bool>(&self, team: Team, f: &mut F) {
-        let player_pieces = match team {
-            Team::ONE => self.red,
-            Team::TWO => self.blue,
-        };
-        let unoccupied = !player_pieces;
-        let moewen = self.moewen & player_pieces;
-        let robben = self.robben & player_pieces;
-        let seesterne = self.seesterne & player_pieces;
-        let muscheln = self.muscheln & player_pieces;
-
-        bit_loop(moewen.bits, |moewe| {
-            let from = square_of(moewe);
-            let legal = moewe_lookup_moves(from) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                if f(Move {
-                    from,
-                    to,
-                    piece: PieceType::Moewe,
-                }) {
-                    return;
-                }
-            });
-        });
-
-        bit_loop(robben.bits, |robbe| {
-            let from = square_of(robbe);
-            let legal = robbe_lookup_moves(from) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                if f(Move {
-                    from,
-                    to,
-                    piece: PieceType::Robbe,
-                }) {
-                    return;
-                }
-            });
-        });
-
-        bit_loop(seesterne.bits, |seestern| {
-            let from = square_of(seestern);
-            let legal = seestern_lookup_moves(from, team) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                if f(Move {
-                    from,
-                    to,
-                    piece: PieceType::Seestern,
-                }) {
-                    return;
-                }
-            });
-        });
-
-        bit_loop(muscheln.bits, |muschel| {
-            let from = square_of(muschel);
-            let legal = muschel_lookup_moves(from, team) & unoccupied;
-            let mov = legal.bits;
-            bit_loop(mov, |mov_to| {
-                let to = square_of(mov_to);
-                if f(Move {
-                    from,
-                    to,
-                    piece: PieceType::Herzmuschel,
-                }) {
-                    return;
-                }
-            });
+    pub fn for_each_move<F: FnMut(Move)>(&self, team: Team, f: &mut F) {
+        for_each_move!(self, team, mov, {
+            f(mov);
         });
     }
 
     #[inline]
     pub fn available_moves(&self, team: Team) -> ThinVec<Move> {
         let mut moves = ThinVec::with_capacity(25);
-        for_each_move!(self, team, mov,{
+        self.for_each_move(team, &mut |mov| {
             moves.push(mov);
         });
         moves

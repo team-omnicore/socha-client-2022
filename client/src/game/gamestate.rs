@@ -90,7 +90,7 @@ impl IGamestate for Gamestate {
     }
 
     #[inline]
-    fn for_each_move<F: FnMut(Self::MoveType) -> bool>(&self, team: Team, f: &mut F) {
+    fn for_each_move<F: FnMut(Self::MoveType)>(&self, team: Team, f: &mut F) {
         self.board.for_each_move(team, f)
     }
 

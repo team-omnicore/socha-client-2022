@@ -1,56 +1,77 @@
-use crate::algorithms::{Algorithm, EvaluationFunction};
+use crate::algorithms::{Algorithm, EvaluationFunction, MinMaxState};
 use crate::for_each_move;
 use crate::game::{Gamestate, IGamestate, Move, Team};
-use num_traits::{Bounded, Num, NumCast};
-use std::fmt::Display;
+use std::thread;
+use std::sync::{Arc, Mutex};
 
-#[derive(Clone)]
-pub struct MinMax<E: MinMaxState + IGamestate> {
+#[derive(Clone, Copy)]
+pub struct ParallelMinmax<E: MinMaxState + IGamestate> {
     max_depth: u8,
     my_team: Team,
     evaluation: fn(&E, Team) -> E::EvalType,
+    worker_count: usize,
 }
 
-pub trait MinMaxState {
-    type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
-}
-
-impl MinMax<Gamestate> {
+impl ParallelMinmax<Gamestate> {
     pub fn new(
         search_depth: u8,
         evaluation: EvaluationFunction<Gamestate, <Gamestate as MinMaxState>::EvalType>,
+        worker_count: usize,
     ) -> Self {
         Self {
             max_depth: search_depth,
             my_team: Team::ONE, //Gets corrected anyway.
             evaluation,
+            worker_count,
         }
     }
 
     fn recommend_move(
-        &mut self,
+        &self,
         state: Gamestate,
-        my_team: Team,
     ) -> <Gamestate as IGamestate>::MoveType {
-        let mut move_value_pairs = vec![];
-        self.my_team = my_team;
-        state.for_each_move(self.my_team, &mut |mov| {
-            let mut child = state.clone();
-            child.apply_move(&mov);
-            child.next_player();
 
-            let value = self.min_max(
-                child,
-                self.max_depth - 1,
-                self.my_team.opponent(),
-                <Gamestate as MinMaxState>::EvalType::min_value(),
-                <Gamestate as MinMaxState>::EvalType::max_value(),
-            );
-            move_value_pairs.push((value, mov));
-        });
-        let max = move_value_pairs.iter().max_by_key(|pair| pair.0);
-        println!("Value: {}", max.unwrap().0);
-        max.unwrap().1.clone()
+        println!("Using {} threads", self.worker_count);
+
+        let algo = self.clone();
+        let moves = state.available_moves(algo.my_team);
+        let mut handles = Vec::new();
+        let move_value = Arc::new(Mutex::new(Vec::new()));
+
+        let mut chunks = vec![];
+        for chunk in moves.chunks((moves.len() / algo.worker_count).max(1)) {
+            chunks.push(chunk.to_owned());
+        }
+
+        for chunk in chunks {
+            let values = Arc::clone(&move_value);
+            let handle = thread::spawn(move ||{
+                for mov in chunk {
+                    let mut child = state.clone();
+                    child.apply_move(&mov);
+                    child.next_player();
+
+                    let value = algo.min_max(
+                        child,
+                        algo.max_depth - 1,
+                        algo.my_team.opponent(),
+                        <Gamestate as MinMaxState>::EvalType::min_value(),
+                        <Gamestate as MinMaxState>::EvalType::max_value(),
+                    );
+                    values.lock().unwrap().push((mov, value));
+                }
+            });
+            handles.push(handle);
+        }
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+
+        let max = Arc::try_unwrap(move_value).unwrap().into_inner().unwrap();
+        let max = max.iter().max_by_key(|pair| pair.1).unwrap();
+        println!("Value: {:?}", max.1);
+        return max.0.clone();
     }
 
     fn min_max(
@@ -105,12 +126,9 @@ impl MinMax<Gamestate> {
     }
 }
 
-impl Algorithm for MinMax<Gamestate> {
+impl Algorithm for ParallelMinmax<Gamestate> {
     fn best_move(&mut self, state: Gamestate, my_team: Team) -> Move {
-        self.recommend_move(state, my_team)
+        self.my_team = my_team;
+        self.recommend_move(state)
     }
-}
-
-impl MinMaxState for Gamestate {
-    type EvalType = i32;
 }

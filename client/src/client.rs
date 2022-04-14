@@ -71,7 +71,11 @@ impl<E: Algorithm> SCClientDelegate for ClientDelegate<E> {
                 );
             }
         } else {
-            info!("DRAW({}) [{:?}]", red_score.parts().get(0).unwrap(), my_score.cause());
+            info!(
+                "DRAW({}) [{:?}]",
+                red_score.parts().get(0).unwrap(),
+                my_score.cause()
+            );
         }
     }
 

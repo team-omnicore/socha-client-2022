@@ -7,7 +7,7 @@ pub mod game;
 pub mod utils;
 
 use crate::algorithms::heuristics::*;
-use crate::algorithms::MinMax;
+use crate::algorithms::*;
 use crate::client::Client;
 use chrono::Local;
 use clap::Parser;
@@ -55,7 +55,7 @@ fn main() {
         .target(Target::Stdout)
         .init();
 
-    let algorithm = MinMax::new(5, EVAL_2603_1);
+    let algorithm = ParallelMinmax::new(6, EVAL_2603_1, 2);
     let mut client = Client::new(algorithm, args.reservation.clone());
 
     log::info!("Reservation: {:?}", args.reservation.clone());

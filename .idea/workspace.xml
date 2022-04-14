@@ -5,14 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Here goes nothing">
-      <change afterPath="$PROJECT_DIR$/client/src/tables/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/tables/move_map.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/algorithms/parallel_minmax.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/.cargo/config.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/client.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/traits.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/traits.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/tables/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/tables/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/tables/move_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/tables/move_map.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,6 +60,9 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="x0vnrwyt" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
+  </component>
   <component name="ProjectId" id="26vRao4YBNL8CChO5Ucxhvz3oXy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -79,12 +86,13 @@
       <command value="cargo build --release" />
       <command value="cargo build --release -- -C target-cpu=native" />
       <command value="cargo test" />
+      <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Run gym (1)">
+  <component name="RunManager" selected="Cargo.Build Native">
     <configuration name="Build Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="rustc -C target-cpu=native -C opt-level=3 --release" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="command" value="rustc --bin client --release -- -Ctarget-cpu=native -Copt-level=3 -Ztune-cpu=native" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
       <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
@@ -146,8 +154,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="build --release" />
+    <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="check" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -180,19 +188,19 @@
     </configuration>
     <list>
       <item itemvalue="Cargo.Build Native" />
-      <item itemvalue="Cargo.build" />
       <item itemvalue="Cargo.Run client" />
       <item itemvalue="Cargo.Run gym (1)" />
       <item itemvalue="Cargo.test" />
       <item itemvalue="Cargo.Expand client::game::board" />
+      <item itemvalue="Cargo.check" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.check" />
+        <item itemvalue="Cargo.check" />
         <item itemvalue="Cargo.Run gym (1)" />
         <item itemvalue="Cargo.Expand client::game::board" />
         <item itemvalue="Cargo.Run client" />
-        <item itemvalue="Cargo.test" />
-        <item itemvalue="Cargo.build" />
       </list>
     </recent_temporary>
   </component>
@@ -224,6 +232,9 @@
       <workItem from="1649522950242" duration="593000" />
       <workItem from="1649628552375" duration="3147000" />
       <workItem from="1649693317275" duration="3938000" />
+      <workItem from="1649775134170" duration="7747000" />
+      <workItem from="1649790693615" duration="1193000" />
+      <workItem from="1649963495042" duration="11633000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>

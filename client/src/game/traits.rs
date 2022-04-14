@@ -12,7 +12,7 @@ pub trait IGamestate: Copy + Clone {
     fn count_moves(&self, team: Team) -> u8;
 
     ///Iterate over each legal move, without allocating memory to store them
-    fn for_each_move<F: FnMut(Self::MoveType) -> bool>(&self, team: Team, f: &mut F);
+    fn for_each_move<F: FnMut(Self::MoveType)>(&self, team: Team, f: &mut F);
 
     /// Apply a Move to the the gamestate
     fn apply_move(&mut self, game_move: &Self::MoveType);
