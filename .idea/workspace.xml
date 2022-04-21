@@ -4,20 +4,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Here goes nothing">
-      <change afterPath="$PROJECT_DIR$/client/src/algorithms/parallel_minmax.rs" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Fixed minmax algorithm and alpha-beta">
+      <change beforePath="$PROJECT_DIR$/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.cargo/config.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/client.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/traits.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/traits.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/tables/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/tables/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/tables/move_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/tables/move_map.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/gym/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +82,22 @@
   <component name="RunManager" selected="Cargo.Build Native">
     <configuration name="Build Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Ctarget-cpu=native -Copt-level=3 -Ztune-cpu=native" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
+      <option name="channel" value="NIGHTLY" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Build Socha" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="rustc --bin client --target=x86_64-unknown-linux-musl --release -- -Ctarget-cpu=broadwell -Copt-level=3 -Ztune-cpu=broadwell -Clto=fat -Cembed-bitcode=y" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
       <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
@@ -188,6 +194,7 @@
     </configuration>
     <list>
       <item itemvalue="Cargo.Build Native" />
+      <item itemvalue="Cargo.Build Socha" />
       <item itemvalue="Cargo.Run client" />
       <item itemvalue="Cargo.Run gym (1)" />
       <item itemvalue="Cargo.test" />
@@ -234,7 +241,10 @@
       <workItem from="1649693317275" duration="3938000" />
       <workItem from="1649775134170" duration="7747000" />
       <workItem from="1649790693615" duration="1193000" />
-      <workItem from="1649963495042" duration="11633000" />
+      <workItem from="1649963495042" duration="13891000" />
+      <workItem from="1650052275172" duration="132000" />
+      <workItem from="1650476017533" duration="3708000" />
+      <workItem from="1650554756733" duration="1291000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -292,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648939194086</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fixed minmax algorithm and alpha-beta">
+      <created>1649980427031</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1649980427031</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,6 +370,7 @@
     <MESSAGE value="Delete failing tests for the time being and cleaned up workspace cargo.toml" />
     <MESSAGE value="Remove feature that requires nightly" />
     <MESSAGE value="Remove remaining module" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove remaining module" />
+    <MESSAGE value="Fixed minmax algorithm and alpha-beta" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed minmax algorithm and alpha-beta" />
   </component>
 </project>

@@ -55,7 +55,7 @@ fn main() {
         .target(Target::Stdout)
         .init();
 
-    let algorithm = ParallelMinmax::new(6, EVAL_2603_1, 2);
+    let algorithm = MinMax::new(6, EVAL_2603_1);
     let mut client = Client::new(algorithm, args.reservation.clone());
 
     log::info!("Reservation: {:?}", args.reservation.clone());
