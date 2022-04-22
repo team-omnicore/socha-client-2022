@@ -2,7 +2,8 @@
 
 members=[
     "client",
-    "gym"
+    "gym",
+    "testing"
 ]
 
 [profile.dev]

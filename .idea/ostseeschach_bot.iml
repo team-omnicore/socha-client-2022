@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/socha-client-rust-2022/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gym/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/testing/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

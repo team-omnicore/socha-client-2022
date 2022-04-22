@@ -12,7 +12,7 @@ macro_rules! bitboard {
     };
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Eq, Hash)]
 pub struct Bitboard {
     pub bits: u64,
 }

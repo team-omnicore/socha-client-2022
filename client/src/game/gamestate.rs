@@ -4,7 +4,7 @@ use socha_client_2022::util::{SCError, SCResult};
 use std::fmt::{Display, Formatter};
 use thincollections::thin_vec::ThinVec;
 
-#[derive(Debug, Copy, PartialEq, Clone)]
+#[derive(Debug, Copy, PartialEq, Eq, Hash, Clone)]
 pub struct Gamestate {
     pub board: Board,
     pub round: u8,
@@ -163,11 +163,13 @@ impl Fen for Gamestate {
         for i in 2..10 {
             let row = captures.get(i).unwrap().as_str();
             let mut pos_x = 0;
-            for j in 0..row.len() {
+            let mut j = 0;
+            while j < row.len() {
                 let piece = row.chars().nth(j).unwrap();
 
                 if piece.is_digit(10) {
                     pos_x += piece.to_digit(10).unwrap();
+                    j += 1;
                     continue;
                 }
 
@@ -175,6 +177,9 @@ impl Fen for Gamestate {
 
                 let next = row.chars().nth(j + 1);
                 let double = next.is_some() && next.unwrap() == '*';
+                if double {
+                    j += 1;
+                }
 
                 let piece = Piece {
                     piece_type,
@@ -188,6 +193,7 @@ impl Fen for Gamestate {
 
                 board.set_piece(((7 - (i as u8 - 2u8)) * 8u8) + pos_x as u8, piece);
                 pos_x += 1;
+                j += 1;
             }
         }
 
@@ -308,5 +314,17 @@ mod tests {
         gamestate.apply_move(&m);
         //println!("{}", gamestate.board);
         //println!("{:?}", gamestate.ambers);
+    }
+
+    #[test]
+    fn test_game_over(){
+        let mut state = Gamestate::load_fen("H7/5m2/S7/3R*4/2R5/8/4r3/M6h 42 1/2").unwrap();
+        state.next_player();
+
+        println!("{:?}", state.winner());
+
+        println!("{}", state);
+        println!("{}", state.board);
+        println!("{:?}", state.game_over());
     }
 }
