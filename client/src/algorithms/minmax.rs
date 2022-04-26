@@ -3,6 +3,7 @@ use crate::for_each_move;
 use crate::game::{Gamestate, IGamestate, Move, Team};
 use num_traits::{Bounded, Num, NumCast};
 use std::fmt::Display;
+use std::time::{Duration, Instant};
 
 #[derive(Clone)]
 pub struct MinMax<E: MinMaxState + IGamestate> {
@@ -34,18 +35,50 @@ impl MinMax<Gamestate> {
     ) -> <Gamestate as IGamestate>::MoveType {
         let mut move_value_pairs = vec![];
         self.my_team = my_team;
+
+        let mut move_index: u8 = 0;
+        let move_count = state.count_moves(my_team);
+        let mut dynamic_depth : u8 = self.max_depth; // actually start_depth
+        let max_search_duration = Duration::from_millis(1800);
+        let mut average_search_duration = Duration::from_millis(0);
+        let mut last_duration = Duration::from_millis(0);
+
+        println!("Move count: {}", move_count);
         state.for_each_move(self.my_team, &mut |mov| {
+            let start_timer = Instant::now();
+            move_index += 1;
+
+            if move_index > 2 {
+                let end_average_millis = average_search_duration.as_millis() * move_count as u128;
+                let end_last_millis = last_duration.as_millis() * move_count as u128;
+                println!("Estimated AVERAGE end duration: {} ms", end_average_millis);
+                println!("Estimated LAST end duration: {} ms", end_last_millis);
+
+                if end_average_millis >= max_search_duration.as_millis() || end_last_millis > max_search_duration.as_millis() {
+                    dynamic_depth -= 1;
+                } else if (end_average_millis * move_count as u128) < max_search_duration.as_millis() && (end_last_millis * move_count as u128) < max_search_duration.as_millis() {
+                    dynamic_depth += 1;
+                }
+            }
+
+
+            println!("Average search duration: {} ms", average_search_duration.as_millis());
+            println!("Dynamic depth: {}", dynamic_depth);
+
             let mut child = state.clone();
             child.apply_move(&mov);
             child.next_player();
 
             let value = self.min_max(
                 child,
-                self.max_depth - 1,
+                dynamic_depth - 1,
                 self.my_team.opponent(),
                 <Gamestate as MinMaxState>::EvalType::min_value(),
                 <Gamestate as MinMaxState>::EvalType::max_value(),
             );
+
+            last_duration = start_timer.elapsed();
+            average_search_duration = Duration::from_millis(((average_search_duration.as_millis() * (move_index - 1) as u128 + last_duration.as_millis()) / move_index as u128) as u64);
             move_value_pairs.push((value, mov));
         });
         let max = move_value_pairs.iter().max_by_key(|pair| pair.0);
