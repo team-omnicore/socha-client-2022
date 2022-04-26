@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Fixed minmax algorithm and alpha-beta">
-      <change beforePath="$PROJECT_DIR$/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.cargo/config.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,9 +63,6 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/player.rs" value="true" />
-    <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/server.rs" value="true" />
-    <property name="org.rust.disableDetachedFileInspectionD:/Louis/Programming/softwarechallenge/ostseeschach_bot/gym/src/test.rs" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
@@ -79,7 +74,23 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Build Native">
+  <component name="RunManager" selected="Shell Script.Run native">
+    <configuration name="Build CPU-Unkown" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="rustc --bin client --release -- -Copt-level=3" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="NIGHTLY" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Build Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Ctarget-cpu=native -Copt-level=3 -Ztune-cpu=native" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
@@ -112,104 +123,29 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Expand client::game::board" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="expand --lib --color=always --theme=GitHub --tests game::board" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
+    <configuration name="Run native" type="ShConfigurationType" singleton="false">
+      <option name="SCRIPT_TEXT" value="./target/release/client" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="false" />
       <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
       <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package client --bin client --release" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="NIGHTLY" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run gym (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package gym --bin gym" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="check" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+        <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build Native" run_configuration_type="CargoCommandRunConfiguration" />
       </method>
     </configuration>
     <list>
+      <item itemvalue="Cargo.Build CPU-Unkown" />
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.Build Socha" />
-      <item itemvalue="Cargo.Run client" />
-      <item itemvalue="Cargo.Run gym (1)" />
-      <item itemvalue="Cargo.test" />
-      <item itemvalue="Cargo.Expand client::game::board" />
-      <item itemvalue="Cargo.check" />
+      <item itemvalue="Shell Script.Run native" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Cargo.check" />
-        <item itemvalue="Cargo.check" />
-        <item itemvalue="Cargo.Run gym (1)" />
-        <item itemvalue="Cargo.Expand client::game::board" />
-        <item itemvalue="Cargo.Run client" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
@@ -245,6 +181,11 @@
       <workItem from="1650052275172" duration="132000" />
       <workItem from="1650476017533" duration="3708000" />
       <workItem from="1650554756733" duration="1291000" />
+      <workItem from="1650708567690" duration="1259000" />
+      <workItem from="1650800492265" duration="2516000" />
+      <workItem from="1650812210743" duration="539000" />
+      <workItem from="1650987169767" duration="31000" />
+      <workItem from="1651001990156" duration="1741000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -371,6 +312,7 @@
     <MESSAGE value="Remove feature that requires nightly" />
     <MESSAGE value="Remove remaining module" />
     <MESSAGE value="Fixed minmax algorithm and alpha-beta" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed minmax algorithm and alpha-beta" />
+    <MESSAGE value="Savestate 22/04/2022 20:48" />
+    <option name="LAST_COMMIT_MESSAGE" value="Savestate 22/04/2022 20:48" />
   </component>
 </project>
