@@ -15,6 +15,7 @@ use env_logger::{Builder, Target};
 use log::LevelFilter;
 use std::env;
 use std::io::Write;
+use std::time::Duration;
 
 /// Rust client for the board game "Ostseeschach"
 #[derive(Parser, Debug)]
@@ -55,7 +56,8 @@ fn main() {
         .target(Target::Stdout)
         .init();
 
-    let algorithm = MinMax::new(6, EVAL_2603_1);
+    //let algorithm = MinMax::new(6, EVAL_2603_1);
+    let algorithm = MonteCarloTreeSearch::new(2000000.0, Duration::from_millis(1800));
     let mut client = Client::new(algorithm, args.reservation.clone());
 
     log::info!("Reservation: {:?}", args.reservation.clone());

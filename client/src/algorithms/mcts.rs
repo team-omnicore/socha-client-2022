@@ -1,44 +1,96 @@
 use rand::thread_rng;
-use std::time::{Duration, SystemTime};
+use std::time::{Duration, Instant};
 
 use num_traits::{Bounded, Num, NumCast, ToPrimitive};
 use rand::prelude::SliceRandom;
-use std::fmt::{Debug, Display, Formatter};
-use crate::game::{Gamestate, IGamestate, Team};
+use std::fmt::{Display, Formatter};
+use crate::algorithms::{Algorithm};
+use crate::algorithms::heuristics::{EVAL_END};
+use crate::game::{Gamestate, IGamestate, IMove, Move, Team};
 
 
 
-pub trait MonteCarloState: IGamestate + PartialEq {
+pub trait MctsMove: IMove {}
+
+pub trait MctsGameState: IGamestate + PartialEq {
     type EvalType: Num + Sized + Copy + NumCast + PartialOrd + Ord + Bounded + Display;
+
+    fn evaluate(&self) -> Self::EvalType;
 }
 
 #[derive(Clone)]
-pub struct MonteCarlo<E: MonteCarloState + IGamestate> {
-    my_team: Team,
-    evaluation: fn(&E, Team) -> E::EvalType,
+pub struct MonteCarloTreeSearch {
+    exploration_constant: f32,
+    search_duration: Duration,
 }
 
-#[derive(Clone, Debug)]
-struct MctsNode<E: Copy + Debug> {
-    children: Vec<MctsNode<E>>,
-    gamestate: E,
-    visits: u32,
-    value: f32,
+impl MonteCarloTreeSearch {
+
+    pub fn new(
+        exploration_constant: f32,
+        search_duration: Duration,
+    ) -> Self {
+        Self {
+            exploration_constant,
+            search_duration
+        }
+    }
+
+    fn recommend_move<E: MctsGameState>(&mut self, state: E, _: Team) -> E::MoveType {
+        let mut tree = MonteCarloTree::from(state);
+
+        let start = Instant::now();
+        loop {
+            tree.iterate(self.exploration_constant);
+
+            let elapsed_time = start.elapsed();
+            if elapsed_time.as_millis() >= self.search_duration.as_millis() {
+                break;
+            }
+        }
+        let best_index = tree.best_node_index();
+        println!("Best index: {}", best_index);
+
+        tree.root.pretty_print(0);
+
+        state.available_moves_current_player()[best_index]
+    }
 }
 
-impl <E>MctsNode<E> {
-    fn traverse(&mut self) -> &MctsNode<E> {
+
+#[derive(Clone)]
+struct MonteCarloTree<E: MctsGameState> {
+    root: MctsNode<E>,
+    path: Vec<usize>,
+}
+
+impl<E: MctsGameState> MonteCarloTree<E> {
+
+    fn from(state: E) -> Self {
+        Self {
+            root: MctsNode {
+                children: vec![],
+                gamestate: state,
+                visits: 0,
+                value: 0.0,
+            },
+            path: vec![],
+        }
+    }
+
+    fn traverse(&mut self, exploration_constant: f32) -> &MctsNode<E> {
         self.path.clear();
         let mut current = &self.root;
         while !current.is_leaf() {
-            let (index, node) = current.max_ucb1(self.exploration_constant);
+            let (index, node) = current.max_ucb1(exploration_constant);
             self.path.push(index);
             current = node;
         }
         current
     }
 
-    fn backprop(&mut self, value: f32) {
+    fn backprop(&mut self, score: E::EvalType) {
+        let value = score.to_f32().unwrap();
         let mut current = &mut self.root;
         current.value += value;
         current.visits += 1;
@@ -57,74 +109,58 @@ impl <E>MctsNode<E> {
         current
     }
 
-    pub fn iterate(&mut self) {
+    pub fn iterate(&mut self, exploration_constant : f32) {
         //println!("Iterating!");
 
-        let leaf = self.traverse();
+        let leaf = self.traverse(exploration_constant);
 
-        let score;
+        let score: E::EvalType;
         if leaf.visits == 0 {
-            score = leaf.rollout().to_f32().expect("Failed to cast EvalType");
+            score = leaf.rollout();
         } else {
             let mutable_leaf = self.follow_path();
             if !mutable_leaf.gamestate.game_over() {
                 mutable_leaf.expand();
-                score = mutable_leaf.children[0].rollout().to_f32().unwrap();
+                score = mutable_leaf.children[0].rollout();
                 self.path.push(0); //Push new index 0
                 //println!("Pushed new leaf - root: {:?}", self.root)
             } else {
-                score = mutable_leaf.gamestate.evaluate().to_f32().expect("f"); //TODO change is_client_turn
+                score = mutable_leaf.gamestate.evaluate();
             }
         }
         self.backprop(score);
     }
-}
 
-
-
-struct MonteCarloTree<E: MonteCarlo> {
-    root: MctsNode<E>,
-    path: Vec<usize>,
-    exploration_constant: f32,
-}
-
-impl<E: MonteCarlo> MonteCarloTree<E> {
-
-}
-
-impl Algorithm for MonteCarlo<Gamestate> {
-    fn best_move(&mut self, state: Gamestate, my_team: Team) -> Move {
-        self.recommend_move(state, my_team)
-    }
-}
-
-impl MinMaxState for Gamestate {
-    type EvalType = i32;
-}
-
-impl<E: MonteCarlo> From<E> for MonteCarloTree<E> {
-    fn from(state: E) -> Self {
-        Self {
-            root: MctsNode {
-                children: vec![],
-                gamestate: state,
-                visits: 0,
-                value: 0.0,
-            },
-            path: vec![],
-            exploration_constant: 20000 as f32,
+    pub fn best_node_index(&self) -> usize {
+        let best_node = self.root.children.get(0);
+        let mut best_index: usize = 0;
+        for (index, node) in self.root.children.iter().enumerate() {
+            if node.value > best_node.unwrap().value {
+                best_index = index;
+            }
         }
+        best_index
     }
 }
 
-impl<E: MonteCarlo> Display for MonteCarloTree<E> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+
+impl<E: MctsGameState> Display for MonteCarloTree<E> {
+    fn fmt(&self, _: &mut Formatter<'_>) -> std::fmt::Result {
         self.root.pretty_print(0);
         Ok(())
     }
 }
 
-impl<E: MonteCarlo> MctsNode<E> {
+/** Node **/
+#[derive(Clone)]
+struct MctsNode<E: MctsGameState> {
+    children: Vec<MctsNode<E>>,
+    gamestate: E,
+    visits: u32,
+    value: f32,
+}
+
+impl<E: MctsGameState> MctsNode<E> {
     fn is_leaf(&self) -> bool {
         self.children.is_empty()
     }
@@ -132,8 +168,8 @@ impl<E: MonteCarlo> MctsNode<E> {
     fn rollout(&self) -> E::EvalType {
         let mut rng = thread_rng();
         let mut gamestate = self.gamestate;
-        while !gamestate.game_over() && gamestate.available_moves().len() > 0 {
-            let legal = gamestate.available_moves();
+        while !gamestate.game_over() && gamestate.count_moves_current_player() > 0 {
+            let legal = gamestate.available_moves_current_player();
             let random_move = legal.choose(&mut rng).expect(&*format!(
                 "Failed to select random move. length is: {}",
                 legal.len()
@@ -145,7 +181,7 @@ impl<E: MonteCarlo> MctsNode<E> {
     }
 
     fn expand(&mut self) {
-        let legal = self.gamestate.available_moves();
+        let legal = self.gamestate.available_moves(self.gamestate.current_player());
         for action in &legal {
             let mut new_gamestate = self.gamestate.clone();
             new_gamestate.apply_move(action);
@@ -196,5 +232,21 @@ impl<E: MonteCarlo> MctsNode<E> {
                 child.pretty_print(depth + 1);
             }
         }
+    }
+}
+
+
+/** Implementation for our GamesState **/
+impl MctsGameState for Gamestate {
+    type EvalType = i32;
+
+    fn evaluate(&self) -> Self::EvalType {
+        EVAL_END(&self, self.current_player)
+    }
+}
+
+impl Algorithm for MonteCarloTreeSearch {
+    fn best_move(&mut self, state: Gamestate, my_team: Team) -> Move {
+        self.recommend_move(state, my_team)
     }
 }

@@ -85,8 +85,18 @@ impl IGamestate for Gamestate {
     }
 
     #[inline]
+    fn available_moves_current_player(&self) -> ThinVec<Self::MoveType> {
+        self.available_moves(self.current_player)
+    }
+
+    #[inline]
     fn count_moves(&self, team: Team) -> u8 {
         self.board.count_moves(team)
+    }
+
+    #[inline]
+    fn count_moves_current_player(&self) -> u8 {
+        self.board.count_moves(self.current_player)
     }
 
     #[inline]
@@ -109,6 +119,10 @@ impl IGamestate for Gamestate {
     fn next_player(&mut self) {
         self.current_player = self.current_player.opponent();
         self.round += 1;
+    }
+
+    fn current_player(&self) -> Team {
+        return self.current_player;
     }
 }
 
