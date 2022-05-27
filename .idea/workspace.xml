@@ -4,10 +4,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Fixed minmax algorithm and alpha-beta">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +82,7 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Run Debug">
+  <component name="RunManager" selected="Shell Script.Run native">
     <configuration name="Build CPU-Unkown" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Copt-level=3" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -283,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649980427031</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="iterative deepening not well-thought-out">
+      <created>1653653504825</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1653653504825</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -345,6 +351,8 @@
     <MESSAGE value="Remove remaining module" />
     <MESSAGE value="Fixed minmax algorithm and alpha-beta" />
     <MESSAGE value="Savestate 22/04/2022 20:48" />
-    <option name="LAST_COMMIT_MESSAGE" value="Savestate 22/04/2022 20:48" />
+    <MESSAGE value="iterative deeping not well thought out" />
+    <MESSAGE value="iterative deepening not well-thought-out" />
+    <option name="LAST_COMMIT_MESSAGE" value="iterative deepening not well-thought-out" />
   </component>
 </project>
