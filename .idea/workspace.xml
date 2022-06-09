@@ -4,8 +4,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Add and document helpful functions for wrapping bitboard operations in board.rs">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Add useful helper function for constructing a random starting gamestate">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +50,7 @@
     <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/events/mod.rs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/client/src/game/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/writer.rs" root0="SKIP_INSPECTION" />
+    <setting file="cidr-memory-view://0" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/.rustup/toolchains/nightly-x86_64-pc-windows-msvc/lib/rustlib/src/rust/library/core/src/convert/mod.rs" root0="SKIP_INSPECTION" />
   </component>
   <component name="KotlinMultiplatform">
@@ -387,7 +390,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654769165446</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Add a warning to documentation of on_finish_line()">
+      <created>1654769381705</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1654769381705</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add useful helper function for constructing a random starting gamestate">
+      <created>1654769459163</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1654769459163</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -453,14 +470,16 @@
     <MESSAGE value="Reverted horizontal boards to vertical boards, like in chess." />
     <MESSAGE value="Run Cargo fmt" />
     <MESSAGE value="Add and document helpful functions for wrapping bitboard operations in board.rs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add and document helpful functions for wrapping bitboard operations in board.rs" />
+    <MESSAGE value="Add a warning to documentation of on_finish_line()" />
+    <MESSAGE value="Add useful helper function for constructing a random starting gamestate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add useful helper function for constructing a random starting gamestate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/client/src/game/board.rs</url>
-          <line>222</line>
+          <line>221</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>

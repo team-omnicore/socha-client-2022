@@ -379,10 +379,9 @@ impl Board {
     /// Returns: the distance of the furthest leichtfigur from the baseline
     #[inline]
     pub fn leichtfigur_fortschritt(&self, team: Team) -> u8 {
-        let leicht_figuren = self.moewen | self.seesterne | self.muscheln;
         match team {
             Team::ONE => {
-                let player = self.red & leicht_figuren;
+                let player = self.leichtfiguren_for(Team::ONE);
                 let mut opp_side = bitboard!(0xFF00000000000000);
                 for i in (0..8).rev() {
                     if (player & opp_side).bits != 0 {
@@ -393,7 +392,7 @@ impl Board {
                 }
             }
             Team::TWO => {
-                let player = self.blue & leicht_figuren;
+                let player = self.leichtfiguren_for(Team::TWO);
                 let mut opp_side = bitboard!(0xFF);
                 for i in (0..8).rev() {
                     if (player & opp_side).bits != 0 {
@@ -430,11 +429,7 @@ impl Board {
     /// Faster than getting the size of the available_moves() vector.
     #[inline]
     pub fn count_moves(&self, team: Team) -> u8 {
-        let player = match team {
-            Team::ONE => self.red,
-            Team::TWO => self.blue,
-        };
-
+        let player = self.player_pieces(team);
         let unoccupied = !player;
 
         let mut count = 0;

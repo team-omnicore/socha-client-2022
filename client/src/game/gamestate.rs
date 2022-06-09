@@ -1,9 +1,9 @@
 use crate::game::fen::FEN_REGEX;
 use crate::game::{Board, Fen, IGamestate, Move, Piece, PieceType, ShortForm, Team};
+use rand::Rng;
 use socha_client_2022::util::{SCError, SCResult};
 use std::fmt::{Display, Formatter};
 use thincollections::thin_vec::ThinVec;
-use rand::Rng;
 
 #[derive(Debug, Copy, PartialEq, Clone)]
 pub struct Gamestate {
