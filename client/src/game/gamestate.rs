@@ -3,6 +3,7 @@ use crate::game::{Board, Fen, IGamestate, Move, Piece, PieceType, ShortForm, Tea
 use socha_client_2022::util::{SCError, SCResult};
 use std::fmt::{Display, Formatter};
 use thincollections::thin_vec::ThinVec;
+use rand::Rng;
 
 #[derive(Debug, Copy, PartialEq, Clone)]
 pub struct Gamestate {
@@ -22,6 +23,13 @@ impl Gamestate {
             current_player: Team::ONE,
             ambers: [0, 0],
         }
+    }
+
+    /// Constructs a new gamestate with a random starting board
+    #[inline]
+    pub fn new_random<T: Rng>(rng: &mut T) -> Self {
+        let board = Board::new_random(rng);
+        Self::new(board)
     }
 
     /// Calculates the winner of the match. <br>
