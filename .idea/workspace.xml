@@ -78,8 +78,8 @@
     <option name="myCommands">
       <command value="cargo build --release" />
       <command value="cargo build --release -- -C target-cpu=native" />
-      <command value="cargo test" />
       <command value="cargo check" />
+      <command value="cargo test" />
     </option>
   </component>
   <component name="RunManager" selected="Shell Script.Run native">

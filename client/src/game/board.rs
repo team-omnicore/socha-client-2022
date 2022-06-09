@@ -124,15 +124,6 @@ impl Board {
         }
     }
 
-    /// Returns: the pieces for a specific team encoded in a bitboard
-    #[inline]
-    pub const fn player_pieces(&self, team: Team) -> Bitboard {
-        match team {
-            Team::ONE => self.red,
-            Team::TWO => self.blue,
-        }
-    }
-
     /// Constructs a board with a random starting position determined
     /// by the given rng.
     #[inline]
@@ -191,6 +182,42 @@ impl Board {
             team,
             stacked,
         })
+    }
+
+
+    /// Returns: the pieces for a specific team encoded in a bitboard
+    #[inline]
+    pub const fn player_pieces(&self, team: Team) -> Bitboard {
+        match team {
+            Team::ONE => self.red,
+            Team::TWO => self.blue,
+        }
+    }
+
+    /// Returns: the positions of all the leichtfiguren on the board encoded in
+    /// a bitboard.
+    #[inline]
+    pub const fn leichtfiguren(&self) -> Bitboard{
+        self.moewen | self.seesterne | self.muscheln
+    }
+
+    /// Returns: the positions of the leichtfiguren for a specific team
+    #[inline]
+    pub const fn leichtfiguren_for(&self, team: Team)-> Bitboard{
+        self.player_pieces(team) & self.leichtfiguren()
+    }
+
+    /// Returns: the positions of all the Schwerfiguren on the board encoded in
+    /// a bitboard.
+    #[inline]
+    pub const fn schwerfiguren(&self) -> Bitboard{
+        self.robben
+    }
+
+    /// Returns: the positions of the schwerfiguren for a specific team
+    #[inline]
+    pub const fn schwerfiguren_for(&self, team: Team) -> Bitboard{
+        self.player_pieces(team) & self.schwerfiguren()
     }
 
     /// Returns: whether a point should be given for reaching the opposite side of ones
