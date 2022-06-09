@@ -4,7 +4,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Reverted horizontal boards to vertical boards, like in chess.">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Add and document helpful functions for wrapping bitboard operations in board.rs">
       <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -373,7 +373,21 @@
       <option name="project" value="LOCAL" />
       <updated>1649980427031</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Run Cargo fmt">
+      <created>1654769025578</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1654769025578</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add and document helpful functions for wrapping bitboard operations in board.rs">
+      <created>1654769165446</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1654769165446</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,15 +451,17 @@
     <MESSAGE value="Fixed minmax algorithm and alpha-beta" />
     <MESSAGE value="Savestate 22/04/2022 20:48" />
     <MESSAGE value="Reverted horizontal boards to vertical boards, like in chess." />
-    <option name="LAST_COMMIT_MESSAGE" value="Reverted horizontal boards to vertical boards, like in chess." />
+    <MESSAGE value="Run Cargo fmt" />
+    <MESSAGE value="Add and document helpful functions for wrapping bitboard operations in board.rs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add and document helpful functions for wrapping bitboard operations in board.rs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/client/src/game/board.rs</url>
-          <line>352</line>
-          <option name="timeStamp" value="5" />
+          <line>222</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

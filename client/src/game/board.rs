@@ -221,7 +221,9 @@ impl Board {
     }
 
     /// Returns: whether a point should be given for reaching the opposite side of ones
-    /// baseline with a leichtfigur
+    /// baseline with a leichtfigur.
+    /// CAUTION: Does NOT filter out pieces with a different team! Pass only the player's
+    /// leichtfiguren.
     #[inline]
     fn on_finish_line(leichtfigur: Bitboard, piece_team: Team) -> bool {
         match piece_team {
