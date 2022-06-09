@@ -526,49 +526,66 @@ mod test {
         let mut rng = Xoshiro128Plus::seed_from_u64(2);
         let mut board = Board::new_random(&mut rng);
 
-        let mut points = board.apply_move(&Move{
-            from: 6,
-            to: 52,
-            piece: PieceType::Robbe
-        }, Team::ONE);
+        let mut points = board.apply_move(
+            &Move {
+                from: 6,
+                to: 52,
+                piece: PieceType::Robbe,
+            },
+            Team::ONE,
+        );
         assert_eq!(points, 0);
 
-        points = board.apply_move(&Move{
-            from: 60,
-            to: 52,
-            piece: PieceType::Seestern
-        }, Team::TWO);
+        points = board.apply_move(
+            &Move {
+                from: 60,
+                to: 52,
+                piece: PieceType::Seestern,
+            },
+            Team::TWO,
+        );
         assert_eq!(points, 0);
 
-        points = board.apply_move(&Move {
-            from: 1,
-            to: 52,
-            piece: PieceType::Moewe
-        }, Team::ONE);
+        points = board.apply_move(
+            &Move {
+                from: 1,
+                to: 52,
+                piece: PieceType::Moewe,
+            },
+            Team::ONE,
+        );
         assert_eq!(points, 1);
 
-       points = board.apply_move(&Move {
-            from: 0,
-            to: 62,
-            piece: PieceType::Herzmuschel
-        }, Team::ONE);
+        points = board.apply_move(
+            &Move {
+                from: 0,
+                to: 62,
+                piece: PieceType::Herzmuschel,
+            },
+            Team::ONE,
+        );
         assert_eq!(points, 1);
 
-        points = board.apply_move(&Move {
-            from: 56,
-            to: 11,
-            piece: PieceType::Herzmuschel
-        }, Team::TWO);
+        points = board.apply_move(
+            &Move {
+                from: 56,
+                to: 11,
+                piece: PieceType::Herzmuschel,
+            },
+            Team::TWO,
+        );
         assert_eq!(points, 0);
 
         board.double.set_bit(11);
-        points = board.apply_move(&Move {
-            from: 11,
-            to: 2,
-            piece: PieceType::Herzmuschel
-        }, Team::TWO);
+        points = board.apply_move(
+            &Move {
+                from: 11,
+                to: 2,
+                piece: PieceType::Herzmuschel,
+            },
+            Team::TWO,
+        );
         assert_eq!(points, 2);
-
     }
 
     #[test]

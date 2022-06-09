@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Reverted horizontal boards to vertical boards, like in chess.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/parallel_minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/parallel_minmax.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/bridge.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/bridge.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/move_generation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/move_generation.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +82,7 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Test game::board::test::test_board_points">
+  <component name="RunManager" selected="Shell Script.Run native">
     <configuration name="Build CPU-Unkown" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Copt-level=3" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -261,8 +253,8 @@
       <item itemvalue="Cargo.Test board::test" />
       <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
       <item itemvalue="Cargo.Run client" />
-      <item itemvalue="Shell Script.Run native" />
       <item itemvalue="Cargo.Test game::board::test::test_board_points" />
+      <item itemvalue="Shell Script.Run native" />
     </list>
     <recent_temporary>
       <list>
