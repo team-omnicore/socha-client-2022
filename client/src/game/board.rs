@@ -196,26 +196,26 @@ impl Board {
     /// Returns: the positions of all the leichtfiguren on the board encoded in
     /// a bitboard.
     #[inline]
-    pub const fn leichtfiguren(&self) -> Bitboard {
+    pub fn leichtfiguren(&self) -> Bitboard {
         self.moewen | self.seesterne | self.muscheln
     }
 
     /// Returns: the positions of the leichtfiguren for a specific team
     #[inline]
-    pub const fn leichtfiguren_for(&self, team: Team) -> Bitboard {
+    pub fn leichtfiguren_for(&self, team: Team) -> Bitboard {
         self.player_pieces(team) & self.leichtfiguren()
     }
 
     /// Returns: the positions of all the Schwerfiguren on the board encoded in
     /// a bitboard.
     #[inline]
-    pub const fn schwerfiguren(&self) -> Bitboard {
+    pub fn schwerfiguren(&self) -> Bitboard {
         self.robben
     }
 
     /// Returns: the positions of the schwerfiguren for a specific team
     #[inline]
-    pub const fn schwerfiguren_for(&self, team: Team) -> Bitboard {
+    pub fn schwerfiguren_for(&self, team: Team) -> Bitboard {
         self.player_pieces(team) & self.schwerfiguren()
     }
 

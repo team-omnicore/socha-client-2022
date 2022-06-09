@@ -4,10 +4,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Add useful helper function for constructing a random starting gamestate">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Use wrapper functions in board">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +84,7 @@
       <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Shell Script.Run native">
+  <component name="RunManager" selected="Cargo.test">
     <configuration name="Build CPU-Unkown" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Copt-level=3" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -214,8 +213,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test game::gamestate::tests::test_draw" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package client --lib game::gamestate::tests::test_draw -- --exact" />
+    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -252,20 +251,20 @@
       <item itemvalue="Cargo.Build CPU-Unkown" />
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.Build Socha" />
-      <item itemvalue="Cargo.Test game::gamestate::tests::test_draw" />
       <item itemvalue="Cargo.Test board::test" />
       <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
       <item itemvalue="Cargo.Run client" />
       <item itemvalue="Cargo.Test game::board::test::test_board_points" />
       <item itemvalue="Shell Script.Run native" />
+      <item itemvalue="Cargo.test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.test" />
         <item itemvalue="Cargo.Test game::board::test::test_board_points" />
         <item itemvalue="Cargo.Run client" />
         <item itemvalue="Cargo.Test board::test" />
         <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
-        <item itemvalue="Cargo.Test game::gamestate::tests::test_draw" />
       </list>
     </recent_temporary>
   </component>
@@ -404,7 +403,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654769459163</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Use wrapper functions in board">
+      <created>1654770187902</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1654770187902</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +478,8 @@
     <MESSAGE value="Add and document helpful functions for wrapping bitboard operations in board.rs" />
     <MESSAGE value="Add a warning to documentation of on_finish_line()" />
     <MESSAGE value="Add useful helper function for constructing a random starting gamestate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add useful helper function for constructing a random starting gamestate" />
+    <MESSAGE value="Use wrapper functions in board" />
+    <option name="LAST_COMMIT_MESSAGE" value="Use wrapper functions in board" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
