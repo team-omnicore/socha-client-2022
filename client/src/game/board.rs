@@ -29,10 +29,7 @@ macro_rules! for_each_move {
         use crate::game::*;
         use crate::utils::square_of;
 
-        let player_pieces = match $team {
-            Team::ONE => $board.red,
-            Team::TWO => $board.blue,
-        };
+        let player_pieces = $board.player_pieces($team);
 
         let unoccupied = !player_pieces;
         let moewen = $board.moewen & player_pieces;

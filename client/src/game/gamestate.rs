@@ -231,34 +231,6 @@ mod tests {
     use rand_xoshiro::Xoshiro128Plus;
 
     #[test]
-    fn test_draw() {
-        let mut g = Gamestate::new(Board::new_random(&mut thread_rng()));
-
-        println!("{}", g.board.red);
-        g.board
-            .set_piece(24, Piece::new(PieceType::Robbe, Team::TWO, false));
-
-        let bytes_b = g.board.blue.bits.to_le_bytes();
-        let bytes_r = g.board.red.bits.to_be_bytes();
-
-        for i in 0..8 {
-            let ones_r = bytes_r[i].count_ones();
-            let ones_b = bytes_b[i].count_ones();
-
-            println!("{}", ones_r - ones_b);
-
-            if ones_r > ones_b {
-                println!("RED!");
-                break;
-            } else if ones_r < ones_b {
-                println!("BLUE!");
-                break;
-            }
-        }
-        println!("DRAW")
-    }
-
-    #[test]
     fn test_write_fen() {
         let mut rng = Xoshiro128Plus::seed_from_u64(2);
         let board = Board::new_random(&mut rng);
