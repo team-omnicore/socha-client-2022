@@ -38,7 +38,7 @@ impl MinMax<Gamestate> {
 
         let mut move_index: u8 = 0;
         let move_count = state.count_moves(my_team);
-        let mut dynamic_depth : u8 = self.max_depth; // actually start_depth
+        let mut dynamic_depth: u8 = self.max_depth; // actually start_depth
         let max_search_duration = Duration::from_millis(1800);
         let mut average_search_duration = Duration::from_millis(0);
         let mut last_duration = Duration::from_millis(0);
@@ -54,15 +54,22 @@ impl MinMax<Gamestate> {
                 println!("Estimated AVERAGE end duration: {} ms", end_average_millis);
                 println!("Estimated LAST end duration: {} ms", end_last_millis);
 
-                if end_average_millis >= max_search_duration.as_millis() || end_last_millis > max_search_duration.as_millis() {
+                if end_average_millis >= max_search_duration.as_millis()
+                    || end_last_millis > max_search_duration.as_millis()
+                {
                     dynamic_depth -= 1;
-                } else if (end_average_millis * move_count as u128) < max_search_duration.as_millis() && (end_last_millis * move_count as u128) < max_search_duration.as_millis() {
+                } else if (end_average_millis * move_count as u128)
+                    < max_search_duration.as_millis()
+                    && (end_last_millis * move_count as u128) < max_search_duration.as_millis()
+                {
                     dynamic_depth += 1;
                 }
             }
 
-
-            println!("Average search duration: {} ms", average_search_duration.as_millis());
+            println!(
+                "Average search duration: {} ms",
+                average_search_duration.as_millis()
+            );
             println!("Dynamic depth: {}", dynamic_depth);
 
             let mut child = state.clone();
@@ -78,7 +85,11 @@ impl MinMax<Gamestate> {
             );
 
             last_duration = start_timer.elapsed();
-            average_search_duration = Duration::from_millis(((average_search_duration.as_millis() * (move_index - 1) as u128 + last_duration.as_millis()) / move_index as u128) as u64);
+            average_search_duration = Duration::from_millis(
+                ((average_search_duration.as_millis() * (move_index - 1) as u128
+                    + last_duration.as_millis())
+                    / move_index as u128) as u64,
+            );
             move_value_pairs.push((value, mov));
         });
         let max = move_value_pairs.iter().max_by_key(|pair| pair.0);
@@ -113,7 +124,7 @@ impl MinMax<Gamestate> {
                 alpha = <Gamestate as MinMaxState>::EvalType::max(alpha, eval);
 
                 if beta <= alpha {
-                    return max_eval;//* β-cutoff *
+                    return max_eval; //* β-cutoff *
                 }
             });
             return max_eval;
@@ -130,7 +141,7 @@ impl MinMax<Gamestate> {
                 beta = <Gamestate as MinMaxState>::EvalType::min(beta, eval);
 
                 if beta <= alpha {
-                    return min_eval;//* α-cutoff *
+                    return min_eval; //* α-cutoff *
                 }
             });
             return min_eval;

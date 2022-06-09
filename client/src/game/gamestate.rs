@@ -1,5 +1,5 @@
 use crate::game::fen::FEN_REGEX;
-use crate::game::{Bitboard, Board, Fen, IGamestate, Move, Piece, PieceType, ShortForm, Team};
+use crate::game::{Board, Fen, IGamestate, Move, Piece, PieceType, ShortForm, Team};
 use socha_client_2022::util::{SCError, SCResult};
 use std::fmt::{Display, Formatter};
 use thincollections::thin_vec::ThinVec;
@@ -13,6 +13,7 @@ pub struct Gamestate {
 }
 
 impl Gamestate {
+    /// Constructs a new gamestate with default starting settings
     #[inline]
     pub const fn new(board: Board) -> Self {
         Gamestate {
@@ -23,6 +24,8 @@ impl Gamestate {
         }
     }
 
+    /// Calculates the winner of the match. <br>
+    /// Returns: None, if the game isn't over or is a true tie
     #[inline]
     pub fn winner(&self) -> Option<Team> {
         if !self.game_over() {
@@ -36,43 +39,29 @@ impl Gamestate {
             } else if red_score < blue_score {
                 Some(Team::TWO)
             } else {
-                let leicht_figuren = self.board.moewen | self.board.seesterne | self.board.muscheln;
-                let red_l = *(leicht_figuren & self.board.red).rotate90_anti_clockwise();
-                let blue_l = *(leicht_figuren & self.board.blue).rotate90_clockwise();
-
-                let wins = Gamestate::draw_winner(red_l, blue_l);
-                match wins {
-                    1 => Some(Team::ONE),
-                    -1 => Some(Team::TWO),
-                    0 => None,
-                    _ => {
-                        debug_assert!(false);
-                        None
-                    }
-                }
+                self.wins_draw()
             }
         }
     }
 
-    /// Calculates the winner in case of an amber draw. <br>
-    ///
-    /// **Returns:**
-    /// - 1 if player a wins
-    /// - 0 if absolute draw
-    /// - -1 if player b wins
+    /// Calculates the winner of an amber draw
     #[inline]
-    pub fn draw_winner(a_leicht: Bitboard, b_leicht: Bitboard) -> i32 {
-        let bytes_a = a_leicht.bits.to_be_bytes();
-        let bytes_b = b_leicht.bits.to_be_bytes();
+    pub fn wins_draw(&self) -> Option<Team> {
+        let lf = self.board.moewen | self.board.seesterne | self.board.muscheln;
+        let bytes_r = (lf & self.board.red).bits.to_be_bytes();
+        let bytes_b = (lf & self.board.blue).bits.to_le_bytes();
+
         for i in 0..8 {
-            //maybe could change index to 7
-            if bytes_a[i].count_ones() > bytes_b[i].count_ones() {
-                return 1;
-            } else if bytes_a[i].count_ones() < bytes_b[i].count_ones() {
-                return -1;
+            let ones_r = bytes_r[i].count_ones();
+            let ones_b = bytes_b[i].count_ones();
+
+            if ones_r > ones_b {
+                return Some(Team::ONE);
+            } else if ones_r < ones_b {
+                return Some(Team::TWO);
             }
         }
-        return 0;
+        None
     }
 }
 
@@ -230,8 +219,36 @@ impl Display for Gamestate {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rand::SeedableRng;
+    use rand::{thread_rng, SeedableRng};
     use rand_xoshiro::Xoshiro128Plus;
+
+    #[test]
+    fn test_draw() {
+        let mut g = Gamestate::new(Board::new_random(&mut thread_rng()));
+
+        println!("{}", g.board.red);
+        g.board
+            .set_piece(24, Piece::new(PieceType::Robbe, Team::TWO, false));
+
+        let bytes_b = g.board.blue.bits.to_le_bytes();
+        let bytes_r = g.board.red.bits.to_be_bytes();
+
+        for i in 0..8 {
+            let ones_r = bytes_r[i].count_ones();
+            let ones_b = bytes_b[i].count_ones();
+
+            println!("{}", ones_r - ones_b);
+
+            if ones_r > ones_b {
+                println!("RED!");
+                break;
+            } else if ones_r < ones_b {
+                println!("BLUE!");
+                break;
+            }
+        }
+        println!("DRAW")
+    }
 
     #[test]
     fn test_write_fen() {

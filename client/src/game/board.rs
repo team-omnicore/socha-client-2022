@@ -110,6 +110,7 @@ pub struct Board {
 }
 
 impl Board {
+    /// Constructs an empty board, with no pieces on it.
     #[inline]
     pub const fn empty() -> Self {
         Board {
@@ -123,22 +124,24 @@ impl Board {
         }
     }
 
+    /// Returns: the pieces for a specific team encoded in a bitboard
+    #[inline]
+    pub const fn player_pieces(&self, team: Team) -> Bitboard {
+        match team {
+            Team::ONE => self.red,
+            Team::TWO => self.blue,
+        }
+    }
+
+    /// Constructs a board with a random starting position determined
+    /// by the given rng.
     #[inline]
     pub fn new_random<T: Rng>(rng: &mut T) -> Self {
-        let blue = bitboard!(0x8080808080808080);
-        let red = bitboard!(0x101010101010101);
+        let blue = bitboard!(0xFF00000000000000);
+        let red = bitboard!(0xFF);
         let double = bitboard!();
 
-        let mut start_positions = vec![
-            0x100000000000000,
-            0x1000000000000,
-            0x10000000000,
-            0x100000000,
-            0x1000000,
-            0x10000,
-            0x100,
-            0x1,
-        ];
+        let mut start_positions = vec![0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80];
         start_positions.shuffle(rng);
 
         let muscheln = bitboard!(start_positions[0] | start_positions[1])
@@ -161,6 +164,7 @@ impl Board {
         }
     }
 
+    /// Returns: the piece at a specific position, or None if there is no piece
     #[inline]
     pub fn piece_at(&self, pos: u8) -> Option<Piece> {
         let piece_type = if self.robben.get_bit(pos) {
@@ -189,20 +193,18 @@ impl Board {
         })
     }
 
-    /// Calculates the points through reaching the end of the board with
-    /// light game piece (Moewe, Seestern, Muschel).
+    /// Returns: whether a point should be given for reaching the opposite side of ones
+    /// baseline with a leichtfigur
     #[inline]
     fn on_finish_line(leichtfigur: Bitboard, piece_team: Team) -> bool {
         match piece_team {
-            Team::ONE => (leichtfigur.bits & 0x8080808080808080) != 0,
-            Team::TWO => (leichtfigur.bits & 0x101010101010101) != 0,
+            Team::ONE => (leichtfigur.bits & 0xFF00000000000000) != 0,
+            Team::TWO => (leichtfigur.bits & 0xFF) != 0,
         }
     }
 
-    //noinspection DuplicatedCode
     /// Applies the given move to the board, for the specific team. Does
     /// NOT check, whether the move is legal.
-    ///
     /// Returns: the amount of points to add for the given move
     #[inline]
     pub fn apply_move(&mut self, game_move: &Move, team: Team) -> u8 {
@@ -346,29 +348,30 @@ impl Board {
         points
     }
 
+    /// Returns: the distance of the furthest leichtfigur from the baseline
     #[inline]
     pub fn leichtfigur_fortschritt(&self, team: Team) -> u8 {
         let leicht_figuren = self.moewen | self.seesterne | self.muscheln;
         match team {
             Team::ONE => {
                 let player = self.red & leicht_figuren;
-                let mut opp_side = bitboard!(0x8080808080808080);
+                let mut opp_side = bitboard!(0xFF00000000000000);
                 for i in (0..8).rev() {
                     if (player & opp_side).bits != 0 {
                         return i;
                     } else {
-                        opp_side.bits >>= 1;
+                        opp_side.bits >>= 8;
                     }
                 }
             }
             Team::TWO => {
                 let player = self.blue & leicht_figuren;
-                let mut opp_side = bitboard!(0x101010101010101);
+                let mut opp_side = bitboard!(0xFF);
                 for i in (0..8).rev() {
                     if (player & opp_side).bits != 0 {
                         return i;
                     } else {
-                        opp_side.bits <<= 1;
+                        opp_side.bits <<= 8;
                     }
                 }
             }
@@ -376,6 +379,8 @@ impl Board {
         0
     }
 
+    /// Puts a new piece onto the board. <br>
+    /// Replaces the piece at that position
     #[inline]
     pub fn set_piece(&mut self, pos: u8, piece: Piece) {
         match piece.piece_type {
@@ -393,6 +398,8 @@ impl Board {
         }
     }
 
+    /// Counts the amount of available moves for a certain team.<br>
+    /// Faster than getting the size of the available_moves() vector.
     #[inline]
     pub fn count_moves(&self, team: Team) -> u8 {
         let player = match team {
@@ -426,6 +433,7 @@ impl Board {
         count as u8
     }
 
+    /// Iterates over each move for a certain team, without auxiliary space
     #[inline]
     pub fn for_each_move<F: FnMut(Move)>(&self, team: Team, f: &mut F) {
         for_each_move!(self, team, mov, {
@@ -433,6 +441,7 @@ impl Board {
         });
     }
 
+    /// Returns: the available moves for a team
     #[inline]
     pub fn available_moves(&self, team: Team) -> ThinVec<Move> {
         let mut moves = ThinVec::with_capacity(25);
@@ -468,10 +477,11 @@ impl Display for Board {
 
 #[cfg(test)]
 mod test {
-    use crate::bitboard;
-    use crate::game::{Bitboard, Board, Move, Piece, PieceType, Team};
     use rand::SeedableRng;
     use rand_xoshiro::Xoshiro128Plus;
+
+    use crate::bitboard;
+    use crate::game::{Bitboard, Board, Move, Piece, PieceType, Team};
 
     #[test]
     fn test_frontmost_piece() {
@@ -495,7 +505,7 @@ mod test {
                 stacked: false,
             },
         );
-        assert_eq!(board.leichtfigur_fortschritt(Team::TWO), 2);
+        assert_eq!(board.leichtfigur_fortschritt(Team::TWO), 0);
     }
 
     #[test]
@@ -516,37 +526,49 @@ mod test {
         let mut rng = Xoshiro128Plus::seed_from_u64(2);
         let mut board = Board::new_random(&mut rng);
 
-        let m = Move {
+        let mut points = board.apply_move(&Move{
+            from: 6,
+            to: 52,
+            piece: PieceType::Robbe
+        }, Team::ONE);
+        assert_eq!(points, 0);
+
+        points = board.apply_move(&Move{
+            from: 60,
+            to: 52,
+            piece: PieceType::Seestern
+        }, Team::TWO);
+        assert_eq!(points, 0);
+
+        points = board.apply_move(&Move {
+            from: 1,
+            to: 52,
+            piece: PieceType::Moewe
+        }, Team::ONE);
+        assert_eq!(points, 1);
+
+       points = board.apply_move(&Move {
             from: 0,
-            to: 14,
-            piece: PieceType::Herzmuschel,
-        };
+            to: 62,
+            piece: PieceType::Herzmuschel
+        }, Team::ONE);
+        assert_eq!(points, 1);
 
-        assert_eq!(board.apply_move(&m, Team::ONE), 0);
+        points = board.apply_move(&Move {
+            from: 56,
+            to: 11,
+            piece: PieceType::Herzmuschel
+        }, Team::TWO);
+        assert_eq!(points, 0);
 
-        let m = Move {
-            from: 14,
-            to: 7,
-            piece: PieceType::Herzmuschel,
-        };
+        board.double.set_bit(11);
+        points = board.apply_move(&Move {
+            from: 11,
+            to: 2,
+            piece: PieceType::Herzmuschel
+        }, Team::TWO);
+        assert_eq!(points, 2);
 
-        assert_eq!(board.apply_move(&m, Team::ONE), 1);
-
-        let m = Move {
-            from: 63,
-            to: 57,
-            piece: PieceType::Herzmuschel,
-        };
-
-        assert_eq!(board.apply_move(&m, Team::TWO), 0);
-
-        let m = Move {
-            from: 57,
-            to: 56,
-            piece: PieceType::Herzmuschel,
-        };
-        board.double.set_bit(57);
-        assert_eq!(board.apply_move(&m, Team::TWO), 2);
     }
 
     #[test]

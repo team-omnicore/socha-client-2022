@@ -1,8 +1,8 @@
 use crate::algorithms::{Algorithm, EvaluationFunction, MinMaxState};
 use crate::for_each_move;
 use crate::game::{Gamestate, IGamestate, Move, Team};
-use std::thread;
 use std::sync::{Arc, Mutex};
+use std::thread;
 
 #[derive(Clone, Copy)]
 pub struct ParallelMinmax<E: MinMaxState + IGamestate> {
@@ -26,11 +26,7 @@ impl ParallelMinmax<Gamestate> {
         }
     }
 
-    fn recommend_move(
-        &self,
-        state: Gamestate,
-    ) -> <Gamestate as IGamestate>::MoveType {
-
+    fn recommend_move(&self, state: Gamestate) -> <Gamestate as IGamestate>::MoveType {
         println!("Using {} threads", self.worker_count);
 
         let algo = self.clone();
@@ -45,7 +41,7 @@ impl ParallelMinmax<Gamestate> {
 
         for chunk in chunks {
             let values = Arc::clone(&move_value);
-            let handle = thread::spawn(move ||{
+            let handle = thread::spawn(move || {
                 for mov in chunk {
                     let mut child = state.clone();
                     child.apply_move(&mov);
@@ -101,7 +97,7 @@ impl ParallelMinmax<Gamestate> {
                 alpha = <Gamestate as MinMaxState>::EvalType::max(alpha, eval);
 
                 if beta <= alpha {
-                    return max_eval;//* β-cutoff *
+                    return max_eval; //* β-cutoff *
                 }
             });
             return max_eval;
@@ -118,7 +114,7 @@ impl ParallelMinmax<Gamestate> {
                 beta = <Gamestate as MinMaxState>::EvalType::min(beta, eval);
 
                 if beta <= alpha {
-                    return min_eval;//* α-cutoff *
+                    return min_eval; //* α-cutoff *
                 }
             });
             return min_eval;

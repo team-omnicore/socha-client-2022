@@ -17,8 +17,8 @@ impl From<SCPieceType> for PieceType {
 
 impl From<Move> for SCMove {
     fn from(m: Move) -> Self {
-        let from = Vec2::new((m.from % 8) as i32, 7 - (m.from / 8) as i32);
-        let to = Vec2::new((m.to % 8) as i32, 7 - (m.to / 8) as i32);
+        let from = Vec2::new((m.from / 8) as i32, (m.from % 8) as i32);
+        let to = Vec2::new((m.to / 8) as i32, (m.to % 8) as i32);
         Self::new(from, to)
     }
 }
@@ -52,8 +52,7 @@ impl From<SCBoard> for Board {
             .pieces()
             .iter()
             .map(|(coord, piece)| {
-                //println!("{} {} at {}", piece.team(), piece.piece_type(), coord);
-                let pos = (8 * (7 - coord.y) + coord.x) as u8; //TODO cfg!(straight_board)
+                let pos = (8 * coord.x + coord.y) as u8;
                 let piece = Piece::from(*piece);
                 (pos, piece)
             })

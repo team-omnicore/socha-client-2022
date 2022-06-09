@@ -4,12 +4,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Fixed minmax algorithm and alpha-beta">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Reverted horizontal boards to vertical boards, like in chess.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/algorithms/parallel_minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/parallel_minmax.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/client.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/bridge.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/bridge.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/move_generation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/move_generation.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="fix-workflow" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -76,7 +80,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="discord-application" />
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -86,7 +90,7 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Run Debug">
+  <component name="RunManager" selected="Cargo.Test game::board::test::test_board_points">
     <configuration name="Build CPU-Unkown" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Copt-level=3" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -151,6 +155,86 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Run client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package client --bin client" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test board::test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::board::test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test game::board::test::test_board_points" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::board::test::test_board_points -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test game::board::test::test_frontmost_piece" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::board::test::test_frontmost_piece -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test game::gamestate::tests::test_draw" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::gamestate::tests::test_draw -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run native" type="ShConfigurationType" singleton="false">
       <option name="SCRIPT_TEXT" value="./target/release/client" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
@@ -173,8 +257,22 @@
       <item itemvalue="Cargo.Build CPU-Unkown" />
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.Build Socha" />
+      <item itemvalue="Cargo.Test game::gamestate::tests::test_draw" />
+      <item itemvalue="Cargo.Test board::test" />
+      <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
+      <item itemvalue="Cargo.Run client" />
       <item itemvalue="Shell Script.Run native" />
+      <item itemvalue="Cargo.Test game::board::test::test_board_points" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Cargo.Test game::board::test::test_board_points" />
+        <item itemvalue="Cargo.Run client" />
+        <item itemvalue="Cargo.Test board::test" />
+        <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
+        <item itemvalue="Cargo.Test game::gamestate::tests::test_draw" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
@@ -217,6 +315,8 @@
       <workItem from="1651001990156" duration="1741000" />
       <workItem from="1651176405669" duration="592000" />
       <workItem from="1651503097011" duration="4061000" />
+      <workItem from="1654683799818" duration="23169000" />
+      <workItem from="1654765804655" duration="2677000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -344,6 +444,18 @@
     <MESSAGE value="Remove remaining module" />
     <MESSAGE value="Fixed minmax algorithm and alpha-beta" />
     <MESSAGE value="Savestate 22/04/2022 20:48" />
-    <option name="LAST_COMMIT_MESSAGE" value="Savestate 22/04/2022 20:48" />
+    <MESSAGE value="Reverted horizontal boards to vertical boards, like in chess." />
+    <option name="LAST_COMMIT_MESSAGE" value="Reverted horizontal boards to vertical boards, like in chess." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/client/src/game/board.rs</url>
+          <line>352</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
