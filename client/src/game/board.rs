@@ -470,6 +470,16 @@ impl Board {
         });
         moves
     }
+
+    /// Returns: an iterator over all the tiles, in the order of the ascending position
+    #[inline]
+    pub fn iter_tiles(&self) -> TileIter {
+        return TileIter {
+            board: self.clone(),
+            front: 0,
+            back: 63,
+        };
+    }
 }
 
 impl Display for Board {
@@ -492,6 +502,57 @@ impl Display for Board {
         }
         out.push_str("╚══════════════════════════╝");
         write!(f, "{}", out)
+    }
+}
+
+pub struct TileIter {
+    board: Board,
+    front: i32,
+    back: i32,
+}
+
+pub enum Tile {
+    Empty,
+    Piece(Piece),
+}
+
+impl Iterator for TileIter {
+    type Item = Tile;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        return if self.front > (self.len() - 1) as i32 {
+            None
+        } else {
+            return if let Some(piece) = self.board.piece_at(self.front as u8) {
+                self.front += 1;
+                Some(Tile::Piece(piece))
+            } else {
+                self.front += 1;
+                Some(Tile::Empty)
+            };
+        };
+    }
+}
+
+impl DoubleEndedIterator for TileIter {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        return if self.back < 0 {
+            None
+        } else {
+            return if let Some(piece) = self.board.piece_at(self.back as u8) {
+                self.back -= 1;
+                Some(Tile::Piece(piece))
+            } else {
+                self.back -= 1;
+                Some(Tile::Empty)
+            };
+        };
+    }
+}
+
+impl ExactSizeIterator for TileIter {
+    fn len(&self) -> usize {
+        return 64;
     }
 }
 

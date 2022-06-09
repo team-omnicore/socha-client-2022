@@ -4,9 +4,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Use wrapper functions in board">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove test of tie in gamestate.rs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/fen.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/fen.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +76,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="discord-application" />
+    <property name="settings.editor.selected.configurable" value="language.rust.cargo" />
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -84,10 +86,42 @@
       <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.test">
+  <component name="RunManager" selected="Cargo.Bench game::fen::tests::bench_fen">
+    <configuration name="Bench game::fen::tests::bench_fen" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="bench --package client --lib game::fen::tests::bench_fen -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Build CPU-Unkown" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Copt-level=3" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="NIGHTLY" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Build Native (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="rustc --bin client --release -- -Ctarget-cpu=native -Copt-level=3 -Ztune-cpu=native --emit asm -Cllvm-args=--x86-asm-syntax=intel" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
       <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
@@ -149,72 +183,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Run client" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package client --bin client" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test board::test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package client --lib game::board::test" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test game::board::test::test_board_points" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package client --lib game::board::test::test_board_points -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test game::board::test::test_frontmost_piece" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package client --lib game::board::test::test_frontmost_piece -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test" />
+    <configuration name="Test game::fen::tests::test_to_fen" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::fen::tests::test_to_fen -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -250,25 +220,21 @@
       <item itemvalue="Cargo.Run Debug" />
       <item itemvalue="Cargo.Build CPU-Unkown" />
       <item itemvalue="Cargo.Build Native" />
+      <item itemvalue="Cargo.Build Native (1)" />
       <item itemvalue="Cargo.Build Socha" />
-      <item itemvalue="Cargo.Test board::test" />
-      <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
-      <item itemvalue="Cargo.Run client" />
-      <item itemvalue="Cargo.Test game::board::test::test_board_points" />
       <item itemvalue="Shell Script.Run native" />
-      <item itemvalue="Cargo.test" />
+      <item itemvalue="Cargo.Test game::fen::tests::test_to_fen" />
+      <item itemvalue="Cargo.Bench game::fen::tests::bench_fen" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.test" />
-        <item itemvalue="Cargo.Test game::board::test::test_board_points" />
-        <item itemvalue="Cargo.Run client" />
-        <item itemvalue="Cargo.Test board::test" />
-        <item itemvalue="Cargo.Test game::board::test::test_frontmost_piece" />
+        <item itemvalue="Cargo.Bench game::fen::tests::bench_fen" />
+        <item itemvalue="Cargo.Test game::fen::tests::test_to_fen" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
+    <option name="runExternalLinterOnTheFly" value="true" />
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
@@ -410,7 +376,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654770187902</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Remove const keyword, so code can compile.">
+      <created>1654770665538</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1654770665538</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Remove test of tie in gamestate.rs">
+      <created>1654770859467</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1654770859467</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -479,17 +459,23 @@
     <MESSAGE value="Add a warning to documentation of on_finish_line()" />
     <MESSAGE value="Add useful helper function for constructing a random starting gamestate" />
     <MESSAGE value="Use wrapper functions in board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Use wrapper functions in board" />
+    <MESSAGE value="Remove const keyword, so code can compile." />
+    <MESSAGE value="Remove test of tie in gamestate.rs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove test of tie in gamestate.rs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/client/src/game/board.rs</url>
-          <line>221</line>
+          <line>218</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
