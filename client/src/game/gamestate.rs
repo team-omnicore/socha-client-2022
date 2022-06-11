@@ -119,9 +119,9 @@ impl Display for Gamestate {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rand::{SeedableRng};
-    use rand_xoshiro::Xoshiro128Plus;
     use crate::game::PieceType;
+    use rand::SeedableRng;
+    use rand_xoshiro::Xoshiro128Plus;
 
     #[test]
     fn test_points_system() {

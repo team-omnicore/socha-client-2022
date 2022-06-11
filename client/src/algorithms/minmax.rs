@@ -74,7 +74,6 @@ impl MinMax<Gamestate> {
 
             let mut child = state.clone();
             child.apply_move(&mov);
-            
 
             let value = self.min_max(
                 child,

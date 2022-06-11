@@ -8,7 +8,7 @@ pub trait IGamestate: Copy + Clone {
     fn available_moves(&self, team: Team) -> ThinVec<Self::MoveType>;
 
     /// Get the available moves for the current player
-    fn available_moves_current_player(&self) -> ThinVec<Self::MoveType>{
+    fn available_moves_current_player(&self) -> ThinVec<Self::MoveType> {
         self.available_moves(self.current_player())
     }
 
@@ -35,9 +35,3 @@ pub trait IGamestate: Copy + Clone {
 }
 
 pub trait IMove {}
-
-pub trait Evaluable {
-    /// Evaluate the state and return it's value.<br>
-    /// Higher is better, lower is worse.
-    fn evaluate(&self, team: Team) -> i32;
-}
