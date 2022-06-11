@@ -6,7 +6,7 @@ use mcts::tree_policy::*;
 use mcts::transposition_table::*;
 use thincollections::thin_vec::ThinVec;
 use crate::algorithms::Algorithm;
-use crate::algorithms::heuristics::EVAL_2603_1;
+use crate::algorithms::heuristics::{EVAL_2603_1, EVAL_END};
 use crate::game::{Gamestate, IGamestate, Move, Team};
 
 impl TranspositionHash for Gamestate {
@@ -36,14 +36,29 @@ impl GameState for Gamestate {
     }
 
     fn make_move(&mut self, mov: &Self::Move) {
-        self.apply_move(mov)
+        self.apply_move(mov);
+        self.next_player();
+    }
+}
+
+struct Eval {
+    player1: i32,
+    player2: i32,
+}
+
+impl Eval {
+    fn new(player1: i32, player2: i32) -> Self {
+        Self {
+            player1,
+            player2
+        }
     }
 }
 
 impl Evaluator<MyMCTS> for MyEvaluator {
-    type StateEvaluation = i32;
+    type StateEvaluation = Eval;
 
-    fn evaluate_new_state(&self, state: &Gamestate, _: &MoveList<MyMCTS>, _: Option<SearchHandle<MyMCTS>>) -> (Vec<MoveEvaluation<MyMCTS>>, Self::StateEvaluation) {
+    fn evaluate_new_state(&self, state: &Gamestate, moves: &MoveList<MyMCTS>, _: Option<SearchHandle<MyMCTS>>) -> (Vec<MoveEvaluation<MyMCTS>>, Self::StateEvaluation) {
 
         /*
             let mut move_evals = vec![];
@@ -53,15 +68,18 @@ impl Evaluator<MyMCTS> for MyEvaluator {
                 move_evals.push(EVAL_2603_1(&new_state, new_state.current_player) as i64)
             } */
 
-            (vec![] ,EVAL_2603_1(state, state.current_player))
+            (vec![(); moves.len()], Eval::new(EVAL_2603_1(state, Team::ONE), EVAL_2603_1(state, Team::TWO)))
     }
 
     fn evaluate_existing_state(&self, state: &Gamestate, _: &Self::StateEvaluation, _: SearchHandle<MyMCTS>) -> Self::StateEvaluation {
-        EVAL_2603_1(state, state.current_player)
+        Eval::new(EVAL_2603_1(state, Team::ONE), EVAL_2603_1(state, Team::TWO))
     }
 
-    fn interpret_evaluation_for_player(&self, evaluation: &Self::StateEvaluation, _: &Player<MyMCTS>) -> i64 {
-        *evaluation as i64
+    fn interpret_evaluation_for_player(&self, evaluation: &Self::StateEvaluation, player: &Player<MyMCTS>) -> i64 {
+        return match player {
+            Team::ONE => evaluation.player1 as i64,
+            Team::TWO => evaluation.player2 as i64
+        }
     }
 }
 

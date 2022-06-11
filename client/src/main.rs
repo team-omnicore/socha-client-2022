@@ -59,7 +59,7 @@ fn main() {
     //let algorithm = MinMax::new(6, EVAL_2603_1);
     //let algorithm = MonteCarloTreeSearch::new(2000000.0, Duration::from_millis(1800));
 
-    let algorithm = CratesMCTS::new(200.0, Duration::from_millis(1800));
+    let algorithm = CratesMCTS::new(0.5, Duration::from_millis(1600));
     let mut client = Client::new(algorithm, args.reservation.clone());
 
     log::info!("Reservation: {:?}", args.reservation.clone());
