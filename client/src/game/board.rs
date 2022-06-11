@@ -98,7 +98,7 @@ macro_rules! for_each_move {
     };
 }
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Hash)]
 pub struct Board {
     pub blue: Bitboard,
     pub red: Bitboard,

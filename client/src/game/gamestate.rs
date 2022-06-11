@@ -4,7 +4,7 @@ use socha_client_2022::util::{SCError, SCResult};
 use std::fmt::{Display, Formatter};
 use thincollections::thin_vec::ThinVec;
 
-#[derive(Debug, Copy, PartialEq, Clone)]
+#[derive(Debug, Copy, PartialEq, Clone, Hash)]
 pub struct Gamestate {
     pub board: Board,
     pub round: u8,

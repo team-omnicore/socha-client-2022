@@ -4,13 +4,15 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Fixed minmax algorithm and alpha-beta">
-      <change beforePath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ostseeschach_bot.iml" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="try implementing crate mcts">
+      <change afterPath="$PROJECT_DIR$/client/src/algorithms/crates_mcts.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/heuristics/evaluation_functions.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mcts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mcts.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mcts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/custom_mcts.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/bitboard.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/bitboard.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/traits.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/traits.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,12 +36,20 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="mcts" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/events/mod.rs" root0="SKIP_INSPECTION" />
@@ -301,7 +311,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="mcts" />
+                        <option value="crates_mcts" />
                       </list>
                     </value>
                   </entry>
