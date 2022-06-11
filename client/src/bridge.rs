@@ -1,4 +1,4 @@
-use crate::game::{Board, Gamestate, Move, Piece, PieceType, Team};
+use crate::game::{Board, Gamestate, IGamestate, Move, Piece, PieceType, Team};
 use socha_client_2022::game::{
     Board as SCBoard, Move as SCMove, Piece as SCPiece, PieceType as SCPieceType, State as SCState,
     Team as SCTeam, Vec2,
@@ -72,11 +72,12 @@ impl From<SCState> for Gamestate {
             (*state.ambers().get(&SCTeam::One).unwrap_or(&0)) as u8,
             (*state.ambers().get(&SCTeam::Two).unwrap_or(&0)) as u8,
         ];
-        Gamestate {
+        let serialised = Gamestate {
             board,
             round,
-            current_player,
             ambers,
-        }
+        };
+        assert_eq!(serialised.current_player(), current_player);
+        serialised
     }
 }

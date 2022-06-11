@@ -114,7 +114,6 @@ impl Fen for Gamestate {
         let state = Gamestate {
             board,
             round,
-            current_player: if round % 2 == 0 { Team::TWO } else { Team::ONE },
             ambers: [points_red, points_blu],
         };
 

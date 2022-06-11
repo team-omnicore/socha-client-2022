@@ -4,7 +4,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove test of tie in gamestate.rs" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Move more functionality into upper trait of gamestate">
+      <change beforePath="$PROJECT_DIR$/client/src/bridge.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/bridge.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/client.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/fen.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/fen.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,7 +90,7 @@
       <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Bench game::fen::tests::bench_fen">
+  <component name="RunManager" selected="Cargo.test">
     <configuration name="Bench game::fen::tests::bench_fen" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="bench --package client --lib game::fen::tests::bench_fen -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -205,6 +210,40 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="check" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run native" type="ShConfigurationType" singleton="false">
       <option name="SCRIPT_TEXT" value="./target/release/client" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
@@ -228,12 +267,16 @@
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.Build Native (1)" />
       <item itemvalue="Cargo.Build Socha" />
+      <item itemvalue="Cargo.check" />
+      <item itemvalue="Cargo.test" />
       <item itemvalue="Cargo.Test game::fen::tests::test_to_fen" />
       <item itemvalue="Cargo.Bench game::fen::tests::bench_fen" />
       <item itemvalue="Shell Script.Run native" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.test" />
+        <item itemvalue="Cargo.check" />
         <item itemvalue="Cargo.Bench game::fen::tests::bench_fen" />
         <item itemvalue="Cargo.Test game::fen::tests::test_to_fen" />
       </list>
@@ -399,7 +442,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654770859467</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Move more functionality into upper trait of gamestate">
+      <created>1654982684099</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1654982684099</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -469,7 +519,8 @@
     <MESSAGE value="Use wrapper functions in board" />
     <MESSAGE value="Remove const keyword, so code can compile." />
     <MESSAGE value="Remove test of tie in gamestate.rs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove test of tie in gamestate.rs" />
+    <MESSAGE value="Move more functionality into upper trait of gamestate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Move more functionality into upper trait of gamestate" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

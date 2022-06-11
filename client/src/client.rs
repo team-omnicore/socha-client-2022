@@ -10,7 +10,7 @@ use socha_client_2022::protocol::ScoreCause;
 use socha_client_2022::util::SCResult;
 
 use crate::algorithms::Algorithm;
-use crate::game::{Fen, Gamestate, Team};
+use crate::game::{Fen, Gamestate, IGamestate, Team};
 
 struct ClientDelegate<E: Algorithm> {
     inner: E,
@@ -26,7 +26,7 @@ impl<E: Algorithm> SCClientDelegate for ClientDelegate<E> {
 
         if let Some(player) = self.client_team {
             if let Some(time) = self.time_tracker {
-                if gamestate.current_player == player {
+                if gamestate.current_player() == player {
                     info!(
                         "Enemy took: {:?}",
                         time.elapsed()
