@@ -4,8 +4,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove current_player attribute from gamestate">
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/minmax.rs" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove unused code and format">
+      <change afterPath="$PROJECT_DIR$/client/src/algorithms/random_pick_delay.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -453,7 +454,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654983074874</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Remove use of deprecated code">
+      <created>1654983411251</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1654983411251</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Remove unused code and format">
+      <created>1654983508168</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1654983508168</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,7 +540,9 @@
     <MESSAGE value="Remove test of tie in gamestate.rs" />
     <MESSAGE value="Move more functionality into upper trait of gamestate" />
     <MESSAGE value="Remove current_player attribute from gamestate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove current_player attribute from gamestate" />
+    <MESSAGE value="Remove use of deprecated code" />
+    <MESSAGE value="Remove unused code and format" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unused code and format" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

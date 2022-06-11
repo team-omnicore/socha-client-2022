@@ -3,6 +3,7 @@ pub mod heuristics;
 mod minmax;
 //mod parallel_minmax;
 mod random_pick;
+mod random_pick_delay;
 
 pub use algorithm::*;
 pub use minmax::*;
