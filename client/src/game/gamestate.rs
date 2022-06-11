@@ -93,17 +93,14 @@ impl IGamestate for Gamestate {
     fn apply_move(&mut self, game_move: &Self::MoveType) {
         let points = self.board.apply_move(game_move, self.current_player); //Apply the move to the board, return the points gotten by jumping on other pieces
         self.ambers[self.current_player as usize] += points;
+
+        self.current_player = self.current_player.opponent(); //Next player
+        self.round += 1;
     }
 
     #[inline]
     fn game_over(&self) -> bool {
         (self.round % 2 == 0 && (self.ambers[0] >= 2 || self.ambers[1] >= 2)) || self.round >= 60
-    }
-
-    #[inline]
-    fn next_player(&mut self) {
-        self.current_player = self.current_player.opponent();
-        self.round += 1;
     }
 }
 
@@ -149,8 +146,6 @@ mod tests {
         gamestate.apply_move(&m);
         //println!("{}", gamestate.board);
         //println!("{:?}", gamestate.ambers);
-
-        gamestate.next_player();
 
         let m = Move {
             from: 63,

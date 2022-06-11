@@ -74,7 +74,7 @@ impl MinMax<Gamestate> {
 
             let mut child = state.clone();
             child.apply_move(&mov);
-            child.next_player();
+            
 
             let value = self.min_max(
                 child,
@@ -117,7 +117,6 @@ impl MinMax<Gamestate> {
             for_each_move!(state.board, team, mov, {
                 let mut child = state.clone();
                 child.apply_move(&mov);
-                child.next_player();
 
                 let eval = self.min_max(child, depth - 1, team.opponent(), alpha, beta);
                 max_eval = <Gamestate as MinMaxState>::EvalType::max(max_eval, eval);
@@ -134,7 +133,6 @@ impl MinMax<Gamestate> {
             for_each_move!(state.board, team, mov, {
                 let mut child = state.clone();
                 child.apply_move(&mov);
-                child.next_player();
 
                 let eval = self.min_max(child, depth - 1, team.opponent(), alpha, beta);
                 min_eval = <Gamestate as MinMaxState>::EvalType::min(min_eval, eval);

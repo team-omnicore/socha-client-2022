@@ -19,9 +19,6 @@ pub trait IGamestate: Copy + Clone {
 
     /// Return, whether the game has ended with this gamestate
     fn game_over(&self) -> bool;
-
-    /// Set the current player to the next player
-    fn next_player(&mut self);
 }
 
 pub trait IMove {}
