@@ -80,8 +80,8 @@ impl MinMax<Gamestate> {
                 child,
                 dynamic_depth - 1,
                 self.my_team.opponent(),
-                <Gamestate as MinMaxState>::EvalType::min_value(),
-                <Gamestate as MinMaxState>::EvalType::max_value(),
+                <Gamestate as MinMaxState>::EvalType::MIN,
+                <Gamestate as MinMaxState>::EvalType::MAX,
             );
 
             last_duration = start_timer.elapsed();
@@ -113,7 +113,7 @@ impl MinMax<Gamestate> {
 
         if is_maximizing {
             //Maximizing player (Client player)
-            let mut max_eval = <Gamestate as MinMaxState>::EvalType::min_value();
+            let mut max_eval = <Gamestate as MinMaxState>::EvalType::MIN;
             for_each_move!(state.board, team, mov, {
                 let mut child = state.clone();
                 child.apply_move(&mov);
@@ -129,7 +129,7 @@ impl MinMax<Gamestate> {
             return max_eval;
         } else {
             //Minimizing player (Enemy player)
-            let mut min_eval = <Gamestate as MinMaxState>::EvalType::max_value();
+            let mut min_eval = <Gamestate as MinMaxState>::EvalType::MAX;
             for_each_move!(state.board, team, mov, {
                 let mut child = state.clone();
                 child.apply_move(&mov);
