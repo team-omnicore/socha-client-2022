@@ -80,6 +80,15 @@ impl IGamestate for Gamestate {
     }
 
     #[inline]
+    fn current_player(&self) -> Team {
+        if self.round % 2 == 1 {
+            Team::ONE
+        } else {
+            Team::TWO
+        }
+    }
+
+    #[inline]
     fn count_moves(&self, team: Team) -> u8 {
         self.board.count_moves(team)
     }
