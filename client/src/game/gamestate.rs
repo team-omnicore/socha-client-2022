@@ -6,7 +6,7 @@ use thincollections::thin_vec::ThinVec;
 #[derive(Debug, Copy, PartialEq, Clone)]
 pub struct Gamestate {
     pub board: Board,
-    pub round: u8,
+    pub turn: u8,
     pub ambers: [u8; 2], //[ONE | TWO]
 }
 
@@ -16,7 +16,7 @@ impl Gamestate {
     pub const fn new(board: Board) -> Self {
         Gamestate {
             board,
-            round: 1,
+            turn: 1,
             ambers: [0, 0],
         }
     }
@@ -79,7 +79,7 @@ impl IGamestate for Gamestate {
 
     #[inline]
     fn current_player(&self) -> Team {
-        if self.round % 2 == 1 {
+        if self.turn % 2 == 1 {
             Team::ONE
         } else {
             Team::TWO
@@ -101,12 +101,12 @@ impl IGamestate for Gamestate {
         let points = self.board.apply_move(game_move, self.current_player()); //Apply the move to the board, return the points gotten by jumping on other pieces
         self.ambers[self.current_player() as usize] += points;
 
-        self.round += 1; //Next round
+        self.turn += 1; //Next round
     }
 
     #[inline]
     fn game_over(&self) -> bool {
-        (self.round % 2 == 0 && (self.ambers[0] >= 2 || self.ambers[1] >= 2)) || self.round >= 60
+        (self.turn % 2 == 0 && (self.ambers[0] >= 2 || self.ambers[1] >= 2)) || self.turn >= 60
     }
 }
 
@@ -129,7 +129,7 @@ mod tests {
         let board = Board::new_random(&mut rng);
         let mut gamestate = Gamestate {
             board,
-            round: 1,
+            turn: 1,
             ambers: [0, 0],
         };
 

@@ -4,9 +4,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove unused code and format">
-      <change afterPath="$PROJECT_DIR$/client/src/algorithms/random_pick_delay.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/algorithms/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/algorithms/mod.rs" afterDir="false" />
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Added algorithm for delaying a move for a certain amount of time">
+      <change afterPath="$PROJECT_DIR$/client/src/algorithms/negamax.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/bridge.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/bridge.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +89,7 @@
       <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.test">
+  <component name="RunManager" selected="Cargo.Build Native">
     <configuration name="Bench game::fen::tests::bench_fen" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="bench --package client --lib game::fen::tests::bench_fen -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -468,7 +469,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654983508168</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Added algorithm for delaying a move for a certain amount of time">
+      <created>1654983922090</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1654983922090</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +550,8 @@
     <MESSAGE value="Remove current_player attribute from gamestate" />
     <MESSAGE value="Remove use of deprecated code" />
     <MESSAGE value="Remove unused code and format" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove unused code and format" />
+    <MESSAGE value="Added algorithm for delaying a move for a certain amount of time" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added algorithm for delaying a move for a certain amount of time" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -46,7 +46,7 @@ impl Fen for Gamestate {
         fen.pop().unwrap();
         fen.push_str(&*format!(
             " {} {}/{}",
-            self.round, self.ambers[0], self.ambers[1]
+            self.turn, self.ambers[0], self.ambers[1]
         ));
         fen
     }
@@ -113,7 +113,7 @@ impl Fen for Gamestate {
 
         let state = Gamestate {
             board,
-            round,
+            turn: round,
             ambers: [points_red, points_blu],
         };
 
