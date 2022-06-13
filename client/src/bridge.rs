@@ -71,11 +71,6 @@ impl From<SCState> for Gamestate {
             (*state.ambers().get(&SCTeam::One).unwrap_or(&0)) as u8,
             (*state.ambers().get(&SCTeam::Two).unwrap_or(&0)) as u8,
         ];
-        let serialised = Gamestate {
-            board,
-            turn,
-            ambers,
-        };
-        serialised
+        Gamestate::new_with(board, turn, ambers)
     }
 }

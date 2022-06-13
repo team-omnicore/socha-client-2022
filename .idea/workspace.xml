@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Added algorithm for delaying a move for a certain amount of time">
-      <change afterPath="$PROJECT_DIR$/client/src/algorithms/negamax.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/game/zobrist.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/bridge.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/bridge.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/fen.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/fen.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/gamestate.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/gamestate.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/piece_type.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/piece_type.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="crates_mcts" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,16 +75,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;language.rust.cargo.check&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
-}</component>
+}]]></component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="cargo build --release" />
@@ -89,7 +93,7 @@
       <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Build Native">
+  <component name="RunManager" selected="Cargo.Test game::zobrist::tests::test_init">
     <configuration name="Bench game::fen::tests::bench_fen" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="bench --package client --lib game::fen::tests::bench_fen -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -209,8 +213,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="check" />
+    <configuration name="Test game::zobrist::tests::init_zobrist" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::zobrist::tests::init_zobrist -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -226,8 +230,25 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test" />
+    <configuration name="Test game::zobrist::tests::test_init" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::zobrist::tests::test_init -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test game::zobrist::tests::test_zobrist_to_primitive" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package client --lib game::zobrist::tests::test_zobrist_to_primitive -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -266,16 +287,18 @@
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.Build Native (1)" />
       <item itemvalue="Cargo.Build Socha" />
-      <item itemvalue="Cargo.check" />
-      <item itemvalue="Cargo.test" />
+      <item itemvalue="Cargo.Test game::zobrist::tests::init_zobrist" />
+      <item itemvalue="Cargo.Test game::zobrist::tests::test_init" />
+      <item itemvalue="Cargo.Test game::zobrist::tests::test_zobrist_to_primitive" />
       <item itemvalue="Cargo.Test game::fen::tests::test_to_fen" />
       <item itemvalue="Cargo.Bench game::fen::tests::bench_fen" />
       <item itemvalue="Shell Script.Run native" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.test" />
-        <item itemvalue="Cargo.check" />
+        <item itemvalue="Cargo.Test game::zobrist::tests::test_init" />
+        <item itemvalue="Cargo.Test game::zobrist::tests::init_zobrist" />
+        <item itemvalue="Cargo.Test game::zobrist::tests::test_zobrist_to_primitive" />
         <item itemvalue="Cargo.Bench game::fen::tests::bench_fen" />
         <item itemvalue="Cargo.Test game::fen::tests::test_to_fen" />
       </list>

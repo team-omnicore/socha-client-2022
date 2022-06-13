@@ -1,4 +1,4 @@
-use crate::game::{Board, Fen, IGamestate, Move, Team};
+use crate::game::{zobrist, Board, Fen, IGamestate, Move, Team, Tile};
 use rand::Rng;
 use std::fmt::{Display, Formatter};
 use thincollections::thin_vec::ThinVec;
@@ -8,17 +8,27 @@ pub struct Gamestate {
     pub board: Board,
     pub turn: u8,
     pub ambers: [u8; 2], //[ONE | TWO]
+    pub hash: u64,
 }
 
 impl Gamestate {
-    /// Constructs a new gamestate with default starting settings
+    /// Constructs a new gamestate with default starting settings and initialises its hash
     #[inline]
-    pub const fn new(board: Board) -> Self {
-        Gamestate {
+    pub fn new(board: Board) -> Self {
+        Self::new_with(board, 1, [0, 0])
+    }
+
+    /// Constructs a new gamestate with the given parameters and initialises its hash
+    #[inline]
+    pub fn new_with(board: Board, turn: u8, ambers: [u8; 2]) -> Self {
+        let mut state = Self {
             board,
-            turn: 1,
-            ambers: [0, 0],
-        }
+            turn,
+            ambers,
+            hash: 0,
+        };
+        state.recalculate_hash();
+        state
     }
 
     /// Constructs a new gamestate with a random starting board
@@ -67,6 +77,25 @@ impl Gamestate {
         }
         None
     }
+
+    /// Recalculates the Zobrist hash, discarding the previous hash information.
+    #[inline]
+    pub fn recalculate_hash(&mut self) -> u64 {
+        self.hash = 0;
+        for (pos, piece) in self
+            .board
+            .iter_tiles()
+            .enumerate()
+            .filter_map(|(pos, tile)| match tile {
+                Tile::Empty => None,
+                Tile::Piece(piece) => Some((pos, piece)),
+            })
+        {
+            self.hash ^= zobrist::hash_for_piece(piece, pos as u8);
+        }
+        self.hash ^= zobrist::hash_for_score(self.ambers);
+        self.hash
+    }
 }
 
 impl IGamestate for Gamestate {
@@ -98,10 +127,29 @@ impl IGamestate for Gamestate {
 
     #[inline]
     fn apply_move(&mut self, game_move: &Self::MoveType) {
-        let points = self.board.apply_move(game_move, self.current_player()); //Apply the move to the board, return the points gotten by jumping on other pieces
-        self.ambers[self.current_player() as usize] += points;
+        //////////////// BEFORE APPLY MOVE!!! ///////////////////
+        //Remove old piece which is getting moved
+        let from_before = self.board.piece_at(game_move.from).unwrap();
+        self.hash ^= zobrist::hash_for_piece(from_before, game_move.from);
+        //Remove old piece which is getting moved onto
+        if let Some(to_before) = self.board.piece_at(game_move.to) {
+            self.hash ^= zobrist::hash_for_piece(to_before, game_move.to);
+        }
+        //Remove old score
+        self.hash ^= zobrist::hash_for_score(self.ambers);
+        /////////////////////////////////////////////////////////
 
+        let points = self.board.apply_move(game_move, self.current_player()); //Apply the move to the board, return the points gotten by jumping on other pieces
+        self.ambers[self.current_player() as usize] += points; //add points
         self.turn += 1; //Next round
+
+        ///////////////// AFTER APPLY MOVE!!! ///////////////////
+        //Add new piece
+        if let Some(to_after) = self.board.piece_at(game_move.to) {
+            self.hash ^= zobrist::hash_for_piece(to_after, game_move.to);
+        }
+        self.hash ^= zobrist::hash_for_score(self.ambers);
+        /////////////////////////////////////////////////////////
     }
 
     #[inline]
@@ -127,11 +175,7 @@ mod tests {
     fn test_points_system() {
         let mut rng = Xoshiro128Plus::seed_from_u64(2);
         let board = Board::new_random(&mut rng);
-        let mut gamestate = Gamestate {
-            board,
-            turn: 1,
-            ambers: [0, 0],
-        };
+        let mut gamestate = Gamestate::new(board);
 
         let m = Move {
             from: 0,

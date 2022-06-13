@@ -9,6 +9,7 @@ mod piece_type;
 mod short_form;
 mod team;
 mod traits;
+mod zobrist;
 
 pub use bitboard::*;
 pub use board::*;

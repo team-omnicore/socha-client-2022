@@ -404,7 +404,8 @@ impl Board {
     }
 
     /// Puts a new piece onto the board. <br>
-    /// Replaces the piece at that position
+    /// Replaces the piece at that position <br>
+    /// CAUTION: DOES NOT UPDATE GAMESTATE HASH!
     #[inline]
     pub fn set_piece(&mut self, pos: u8, piece: Piece) {
         match piece.piece_type {

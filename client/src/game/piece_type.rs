@@ -7,13 +7,13 @@ use socha_client_2022::util::{SCError, SCResult};
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PieceType {
     /// Moves only diagonally forwards.
-    Herzmuschel,
+    Herzmuschel = 0,
     /// Moves only to adjacent fields.
-    Moewe,
+    Moewe = 1,
     /// Moves only diagonally or forwards.
-    Seestern,
+    Seestern = 2,
     /// Like a knight in chess. Only non-light figure.
-    Robbe,
+    Robbe = 3,
 }
 
 impl PieceType {
