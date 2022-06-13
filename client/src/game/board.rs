@@ -297,12 +297,8 @@ impl Board {
 
                 //Check for finish line, else clear that piece and add one point.
                 if Self::on_finish_line(new_piece, team) {
-                    self.red &= !new_piece;
-                    self.blue &= !new_piece;
+                    *friendly &= !new_piece;
                     self.muscheln &= !new_piece;
-                    self.seesterne &= !new_piece;
-                    self.moewen &= !new_piece;
-                    self.robben &= !new_piece;
                     points += 1;
                 }
             }
@@ -328,12 +324,8 @@ impl Board {
 
                 //Check for finish line, else clear that piece and add one point.
                 if Self::on_finish_line(new_piece, team) {
-                    self.red &= !new_piece;
-                    self.blue &= !new_piece;
-                    self.muscheln &= !new_piece;
+                    *friendly &= !new_piece;
                     self.seesterne &= !new_piece;
-                    self.moewen &= !new_piece;
-                    self.robben &= !new_piece;
                     points += 1;
                 }
             }
@@ -359,12 +351,8 @@ impl Board {
 
                 //Check for finish line, else clear that piece and add one point.
                 if Self::on_finish_line(new_piece, team) {
-                    self.red &= !new_piece;
-                    self.blue &= !new_piece;
-                    self.muscheln &= !new_piece;
-                    self.seesterne &= !new_piece;
+                    *friendly &= !new_piece;
                     self.moewen &= !new_piece;
-                    self.robben &= !new_piece;
                     points += 1;
                 }
             }

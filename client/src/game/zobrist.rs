@@ -1221,22 +1221,4 @@ mod tests {
         );
         println!("{:?}", points_lookup);
     }
-
-    #[test]
-    fn test_init() {
-        let mut g = Gamestate::load_fen("mrshmsrh/8/8/8/8/8/8/HRSMHSRM 0 0/0").unwrap();
-
-        loop {
-            while !g.game_over() {
-                let moves = g.available_moves_current_player();
-                let m = moves.choose(&mut thread_rng()).unwrap();
-                g.apply_move(&m);
-                let h1 = g.hash;
-                let h2 = g.recalculate_hash();
-                assert_eq!(h1, h2);
-            }
-            println!("Sucessfully one game");
-            g = Gamestate::new_random(&mut thread_rng());
-        }
-    }
 }
