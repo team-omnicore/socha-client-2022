@@ -111,7 +111,7 @@ impl Fen for Gamestate {
             .parse::<u8>()
             .unwrap();
 
-        let mut state = Gamestate::new_with(board, round, [points_red, points_blu]);
+        let state = Gamestate::new_with(board, round, [points_red, points_blu]);
         Ok(state)
     }
 }
