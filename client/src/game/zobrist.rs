@@ -1164,18 +1164,31 @@ const POINTS_KEYS: [[u64; 2]; 4] = [
 /// Calculates the separate hash for a piece
 #[inline]
 pub fn hash_for_piece(piece: Piece, pos: u8) -> u64 {
-    PIECE_KEYS[pos as usize][piece.piece_type as usize][piece.team as usize][piece.stacked as usize]
+    *unsafe {
+        PIECE_KEYS
+            .get_unchecked(pos as usize)
+            .get_unchecked(piece.piece_type as usize)
+            .get_unchecked(piece.team as usize)
+            .get_unchecked(piece.stacked as usize)
+    }
 }
 
 /// Calculates the separate hash for a score
 #[inline]
 pub fn hash_for_score(score: [u8; 2]) -> u64 {
-    POINTS_KEYS[score[0] as usize][0] ^ POINTS_KEYS[score[1] as usize][1]
+    unsafe {
+        *POINTS_KEYS
+            .get_unchecked(score[0] as usize)
+            .get_unchecked(0) ^
+        *POINTS_KEYS
+            .get_unchecked(score[1] as usize)
+            .get_unchecked(1)
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::game::{Fen, Gamestate, IGamestate, Move, PieceType, Team};
+    use crate::game::{Fen, Gamestate, IGamestate};
     use rand::prelude::SliceRandom;
     use rand::{thread_rng, RngCore};
 

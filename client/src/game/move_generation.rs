@@ -494,22 +494,22 @@ pub fn seestern_gen_moves(seestern: Bitboard, player: Team) -> Bitboard {
 
 #[inline]
 pub fn robbe_lookup_moves(pos: u8) -> Bitboard {
-    bitboard!(LOOKUP_ROBBEN[pos as usize])
+    bitboard!(*unsafe { LOOKUP_ROBBEN.get_unchecked(pos as usize) })
 }
 
 #[inline]
 pub fn moewe_lookup_moves(pos: u8) -> Bitboard {
-    bitboard!(LOOKUP_MOEWEN[pos as usize])
+    bitboard!(*unsafe { LOOKUP_MOEWEN.get_unchecked(pos as usize) })
 }
 
 #[inline]
 pub fn muschel_lookup_moves(pos: u8, player: Team) -> Bitboard {
-    bitboard!(LOOKUP_MUSCHELN[(((player as u8) << 6) + pos) as usize])
+    bitboard!(*unsafe { LOOKUP_MUSCHELN.get_unchecked((((player as u8) << 6) + pos) as usize) })
 }
 
 #[inline]
 pub fn seestern_lookup_moves(pos: u8, player: Team) -> Bitboard {
-    bitboard!(LOOKUP_SEESTERN[(((player as u8) << 6) + pos) as usize])
+    bitboard!(*unsafe { LOOKUP_SEESTERN.get_unchecked((((player as u8) << 6) + pos) as usize) })
 }
 
 //------------------------------------------------------------------------------------------------//
