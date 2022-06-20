@@ -1,0 +1,10 @@
+[package]
+name = "perft"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+client = {path="../client"}
+clap = { version = "3.1.0", features = ["derive"] }
+rand = "0.8"
+intset = "1.0.2"
