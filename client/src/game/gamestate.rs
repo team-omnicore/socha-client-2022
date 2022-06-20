@@ -1,9 +1,10 @@
 use crate::game::{zobrist, Board, Fen, IGamestate, Move, Team, Tile};
 use rand::Rng;
 use std::fmt::{Display, Formatter};
+use std::hash::{Hash, Hasher};
 use thincollections::thin_vec::ThinVec;
 
-#[derive(Debug, Copy, PartialEq, Clone)]
+#[derive(Debug, Copy, Clone)]
 pub struct Gamestate {
     pub board: Board,
     pub turn: u8,
@@ -15,7 +16,7 @@ impl Gamestate {
     /// Constructs a new gamestate with default starting settings and initialises its hash
     #[inline]
     pub fn new(board: Board) -> Self {
-        Self::new_with(board, 1, [0, 0])
+        Self::new_with(board, 0, [0, 0])
     }
 
     /// Constructs a new gamestate with the given parameters and initialises its hash
@@ -108,7 +109,7 @@ impl IGamestate for Gamestate {
 
     #[inline]
     fn current_player(&self) -> Team {
-        if self.turn % 2 == 1 {
+        if self.turn % 2 == 0 {
             Team::ONE
         } else {
             Team::TWO
@@ -213,5 +214,17 @@ mod tests {
         gamestate.apply_move(&m);
         //println!("{}", gamestate.board);
         //println!("{:?}", gamestate.ambers);
+    }
+}
+
+impl Hash for Gamestate {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        state.write_u64(self.hash);
+    }
+}
+
+impl PartialEq for Gamestate {
+    fn eq(&self, other: &Self) -> bool {
+        self.hash == other.hash
     }
 }
