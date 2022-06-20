@@ -2,7 +2,6 @@
 
 members=[
     "client",
-    "gym",
     "perft"
 ]
 

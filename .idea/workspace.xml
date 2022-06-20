@@ -4,9 +4,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Lookup without bounds-checking (unsafe!)">
+    <list default="true" id="d8c8dc4e-5398-475a-b5f6-8c7afc7fd3cf" name="Changes" comment="Remove gym">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/board.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/board.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym/src/main.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="testing" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -50,7 +52,6 @@
     <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/events/mod.rs" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/writer.rs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/client/src/game/gamestate.rs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/gym/src/main.rs" root0="SKIP_INSPECTION" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
@@ -77,7 +78,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RunAnythingCache">
@@ -88,7 +89,7 @@
       <command value="cargo test" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.test">
+  <component name="RunManager" selected="Cargo.Build Perft Native">
     <configuration name="Build CPU-Unkown" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Copt-level=3" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -109,6 +110,23 @@
     <configuration name="Build Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="rustc --bin client --release -- -Ctarget-cpu=native -Copt-level=3 -Ztune-cpu=native" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/client" />
+      <option name="channel" value="NIGHTLY" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Build Perft Native" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="rustc --bin perft --release -- -Ctarget-cpu=native -Copt-level=3 -Ztune-cpu=native -C overflow-checks=no -C lto=fat -C embed-bitcode=y" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/perft" />
       <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
@@ -157,23 +175,6 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Run native" type="ShConfigurationType" singleton="false">
       <option name="SCRIPT_TEXT" value="./target/release/client" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
@@ -188,7 +189,7 @@
       <option name="EXECUTE_SCRIPT_FILE" value="false" />
       <envs />
       <method v="2">
-        <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build Native" run_configuration_type="CargoCommandRunConfiguration" />
+        <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build perft" run_configuration_type="CargoCommandRunConfiguration" />
       </method>
     </configuration>
     <list>
@@ -196,14 +197,9 @@
       <item itemvalue="Cargo.Build CPU-Unkown" />
       <item itemvalue="Cargo.Build Native" />
       <item itemvalue="Cargo.Build Socha" />
-      <item itemvalue="Cargo.test" />
+      <item itemvalue="Cargo.Build Perft Native" />
       <item itemvalue="Shell Script.Run native" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Cargo.test" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="runExternalLinterOnTheFly" value="true" />
@@ -252,6 +248,18 @@
       <workItem from="1654962092777" duration="483000" />
       <workItem from="1654962587544" duration="172000" />
       <workItem from="1654962769124" duration="443000" />
+      <workItem from="1655295661014" duration="1528000" />
+      <workItem from="1655369546951" duration="6885000" />
+      <workItem from="1655539443333" duration="602000" />
+      <workItem from="1655542953412" duration="625000" />
+      <workItem from="1655548284878" duration="80000" />
+      <workItem from="1655548417858" duration="3419000" />
+      <workItem from="1655641636454" duration="271000" />
+      <workItem from="1655641921526" duration="77000" />
+      <workItem from="1655642004697" duration="46000" />
+      <workItem from="1655642058008" duration="7000" />
+      <workItem from="1655719062540" duration="23000" />
+      <workItem from="1655727793084" duration="332000" />
     </task>
     <task id="LOCAL-00001" summary="Added new Evaluation Function">
       <created>1648340767138</created>
@@ -414,7 +422,35 @@
       <option name="project" value="LOCAL" />
       <updated>1655080230054</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Add simple perft">
+      <created>1655727967115</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1655727967115</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Clean up implementation and fix #10 which was forgotten in earlier commit">
+      <created>1655728032587</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1655728032587</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Add forgotten cargo.toml">
+      <created>1655728055147</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1655728055147</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Remove gym">
+      <created>1655728074310</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1655728074310</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -465,10 +501,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/socha-client-rust-2022" />
     </ignored-roots>
-    <MESSAGE value="Don't log xml-nodes to info! anymore" />
-    <MESSAGE value="Announce leaving a room to the server" />
-    <MESSAGE value="Pass reservation to Client" />
-    <MESSAGE value="Add team to ClientDelegate::on_game_end() so debug messages can be clearer" />
     <MESSAGE value="Retrieve socha-client-rust-2022 from git over cargo" />
     <MESSAGE value="Delete failing tests for the time being and cleaned up workspace cargo.toml" />
     <MESSAGE value="Remove feature that requires nightly" />
@@ -490,7 +522,11 @@
     <MESSAGE value="Added algorithm for delaying a move for a certain amount of time" />
     <MESSAGE value="Added incrementally updated zobrist hash to gamestate" />
     <MESSAGE value="Lookup without bounds-checking (unsafe!)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lookup without bounds-checking (unsafe!)" />
+    <MESSAGE value="Add simple perft" />
+    <MESSAGE value="Clean up implementation and fix #10 which was forgotten in earlier commit" />
+    <MESSAGE value="Add forgotten cargo.toml" />
+    <MESSAGE value="Remove gym" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove gym" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
